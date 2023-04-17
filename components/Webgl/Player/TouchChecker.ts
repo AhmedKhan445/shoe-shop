@@ -1,7 +1,7 @@
+import { store } from "@/store";
 import { SetStateAction } from "react";
 
-export const keyChecker = (
-  event: KeyboardEvent,
+export const touchChecker = (
   setIsForward: React.Dispatch<SetStateAction<boolean>>,
   setIsBackward: React.Dispatch<SetStateAction<boolean>>,
   setIsLeft: React.Dispatch<SetStateAction<boolean>>,
@@ -13,7 +13,21 @@ export const keyChecker = (
   setTurning: React.Dispatch<SetStateAction<number>>,
   turning: number
 ) => {
-  if (event.key.toLowerCase() === "w") {
+  store.touchTurnLeft = () => {
+    if (turning === 2) {
+      setTurning(0);
+    } else {
+      setTurning(turning + 0.25);
+    }
+  };
+  store.touchTurnRight = () => {
+    if (turning === -2) {
+      setTurning(0);
+    } else {
+      setTurning(turning - 0.25);
+    }
+  };
+  store.touchForwardDown = () => {
     switch (turning) {
       case 0.25:
       case -1.75:
@@ -48,28 +62,15 @@ export const keyChecker = (
         setIsForward(true);
         break;
     }
-  }
-  // if (event.key.toLowerCase() === "s") {
-  //   setIsBackward(true);
-  // }
-  // if (event.key.toLowerCase() === "a") {
-  //   setIsLeft(true);
-  // }
-  // if (event.key.toLowerCase() === "d") {
-  //   setIsRight(true);
-  // }
-  if (event.key.toLowerCase() === "q") {
-    if (turning === 2) {
-      setTurning(0);
-    } else {
-      setTurning(turning + 0.25);
-    }
-  }
-  if (event.key.toLowerCase() === "e") {
-    if (turning === -2) {
-      setTurning(0);
-    } else {
-      setTurning(turning - 0.25);
-    }
-  }
+  };
+  store.touchForwardUp = () => {
+    setIsForward(false);
+    setIsBackward(false);
+    setIsLeft(false);
+    setIsRight(false);
+    setIsRightTop(false);
+    setIsRightBottom(false);
+    setIsLeftBottom(false);
+    setIsLeftTop(false);
+  };
 };

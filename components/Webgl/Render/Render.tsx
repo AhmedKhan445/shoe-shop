@@ -19,13 +19,13 @@ import { useSnapshot } from "valtio";
 const Render = () => {
   const [camera, setCamera] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [touchForward, setTouchForward] = useState<boolean>(false);
 
   const handleClick = () => {
     setCamera(!camera);
   };
 
-  const { touchTurnLeft, touchTurnRight } = useSnapshot(store);
+  const { touchTurnLeft, touchTurnRight, touchForwardDown, touchForwardUp } =
+    useSnapshot(store);
 
   return (
     <main className={s.main}>
@@ -36,7 +36,7 @@ const Render = () => {
         <button onClick={touchTurnLeft}>
           <TiArrowBack />
         </button>
-        <button>
+        <button onPointerDown={touchForwardDown} onPointerUp={touchForwardUp}>
           <BsFillCaretUpFill />
         </button>
         <button onClick={touchTurnRight} data-flip>
@@ -49,7 +49,7 @@ const Render = () => {
 
         <Suspense fallback={null}>
           <Physics>
-            <Debug />
+            {/* <Debug /> */}
             <Building />
 
             {/* Gate */}

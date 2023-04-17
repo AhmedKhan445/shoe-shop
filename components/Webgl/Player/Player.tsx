@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { keyChecker } from "./keyChecker";
 import { store } from "@/store";
+import { touchChecker } from "./TouchChecker";
 
 type props = {
   camera: boolean;
@@ -14,8 +15,8 @@ type props = {
 const Player: React.FC<props> = ({ camera }) => {
   const rigidBody = useRef<RapierRigidBody>(null);
   const meshRef = useRef<THREE.Mesh>(null);
-  const cameraRef = useRef<any>();
-  useHelper(cameraRef, THREE.CameraHelper);
+  const cameraRef = useRef<THREE.PerspectiveCamera>(null);
+  // useHelper(cameraRef, THREE.CameraHelper);
 
   const [isForward, setIsForward] = useState<boolean>(false);
   const [isBackward, setIsBackward] = useState<boolean>(false);
@@ -28,24 +29,24 @@ const Player: React.FC<props> = ({ camera }) => {
   const [turning, setTurning] = useState<number>(0);
   const [active, setActive] = useState<boolean>(true);
 
-  console.log(turning);
+  // Touch Controls
 
   useEffect(() => {
-    store.touchTurnLeft = () => {
-      if (turning === 2) {
-        setTurning(0);
-      } else {
-        setTurning(turning + 0.25);
-      }
-    };
-    store.touchTurnRight = () => {
-      if (turning === -2) {
-        setTurning(0);
-      } else {
-        setTurning(turning - 0.25);
-      }
-    };
+    touchChecker(
+      setIsForward,
+      setIsBackward,
+      setIsLeft,
+      setIsRight,
+      setIsRightTop,
+      setIsRightBottom,
+      setIsLeftBottom,
+      setIsLeftTop,
+      setTurning,
+      turning
+    );
   }, [turning]);
+
+  // Keyboard Controls
 
   useEffect(() => {
     const keyDownHandler = (event: KeyboardEvent) => {
@@ -78,7 +79,14 @@ const Player: React.FC<props> = ({ camera }) => {
     document.addEventListener("keydown", keyDownHandler);
     document.addEventListener("keyup", keyUpHandler);
 
-    // camera
+    return () => {
+      document.removeEventListener("keydown", keyDownHandler);
+      document.removeEventListener("keyup", keyUpHandler);
+    };
+  }, [isBackward, isForward, isLeft, isRight, turning]);
+
+  //Camera Turning Controls
+  useEffect(() => {
     if (turning === 2 || turning === -2) {
       setActive(false);
       gsap
@@ -94,12 +102,9 @@ const Player: React.FC<props> = ({ camera }) => {
           .to(cameraRef.current!.rotation, { y: Math.PI * turning });
       }
     }
-    return () => {
-      document.removeEventListener("keydown", keyDownHandler);
-      document.removeEventListener("keyup", keyUpHandler);
-    };
-  }, [isBackward, isForward, isLeft, isRight, turning]);
+  }, [turning, active]);
 
+  // Controls Functionality
   useFrame(() => {
     if (rigidBody.current) {
       if (isForward) {
@@ -124,7 +129,6 @@ const Player: React.FC<props> = ({ camera }) => {
 
   return (
     <RigidBody
-      // enabledRotations={[false, true, false]}
       lockRotations={true}
       ref={rigidBody}
       colliders={"hull"}
@@ -143,13 +147,3 @@ const Player: React.FC<props> = ({ camera }) => {
 };
 
 export default Player;
-
-// rigidBody.current?.setRotation(
-//   quat().setFromEuler(
-//     euler().setFromVector3(
-//       new THREE.Vector3(0, Math.PI * turning, 0),
-//       "XYZ"
-//     )
-//   ),
-//   true
-// );
