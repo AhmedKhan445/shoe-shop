@@ -16,24 +16,31 @@ export const keyChecker = (
   if (event.key.toLowerCase() === "w") {
     switch (turning) {
       case 0.25:
+      case -1.75:
         setIsLeftTop(true);
         break;
       case 0.5:
+      case -1.5:
         setIsLeft(true);
         break;
       case 0.75:
+      case -1.25:
         setIsLeftBottom(true);
         break;
       case 1:
+      case -1:
         setIsBackward(true);
         break;
       case 1.25:
+      case -0.75:
         setIsRightBottom(true);
         break;
       case 1.5:
+      case -0.5:
         setIsRight(true);
         break;
       case 1.75:
+      case -0.25:
         setIsRightTop(true);
         break;
 

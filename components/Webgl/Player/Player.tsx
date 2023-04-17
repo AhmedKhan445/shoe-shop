@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { keyChecker } from "./keyChecker";
+import { store } from "@/store";
 
 type props = {
   camera: boolean;
@@ -28,6 +29,23 @@ const Player: React.FC<props> = ({ camera }) => {
   const [active, setActive] = useState<boolean>(true);
 
   console.log(turning);
+
+  useEffect(() => {
+    store.touchTurnLeft = () => {
+      if (turning === 2) {
+        setTurning(0);
+      } else {
+        setTurning(turning + 0.25);
+      }
+    };
+    store.touchTurnRight = () => {
+      if (turning === -2) {
+        setTurning(0);
+      } else {
+        setTurning(turning - 0.25);
+      }
+    };
+  }, [turning]);
 
   useEffect(() => {
     const keyDownHandler = (event: KeyboardEvent) => {

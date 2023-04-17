@@ -4,3 +4,26 @@
   height: 100%;
   position: relative;
 }
+
+.buttongroup {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  z-index: 10;
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 75px;
+    width: 75px;
+    font-size: 42px;
+    border-radius: 8px;
+    border: 2px solid black;
+    &[data-flip] {
+      transform: scaleX(-1);
+    }
+  }
+}
