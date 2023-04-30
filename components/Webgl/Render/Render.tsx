@@ -15,6 +15,8 @@ import {
 import { TiArrowBack } from "react-icons/ti";
 import { store } from "@/store";
 import { useSnapshot } from "valtio";
+import ProductDetail from "@/components/Html/ProductDetail/ProductDetail";
+import AnimatedCamera from "../AnimatedCamera/AnimatedCamera";
 
 const Render = () => {
   const [camera, setCamera] = useState<boolean>(false);
@@ -32,6 +34,7 @@ const Render = () => {
       <button data-cam onMouseDown={handleClick}>
         Camera Change
       </button>
+
       <div className={s.buttongroup}>
         <button onClick={touchTurnLeft}>
           <TiArrowBack />
@@ -43,13 +46,17 @@ const Render = () => {
           <TiArrowBack />
         </button>
       </div>
+
+      <ProductDetail />
+
       <Canvas camera={{ position: [2, 2, 5] }}>
-        <OrbitControls />
+        {/* <OrbitControls /> */}
         <Environment preset="city" />
 
         <Suspense fallback={null}>
           <Physics>
             {/* <Debug /> */}
+            <AnimatedCamera />
             <Building />
 
             {/* Gate */}
@@ -60,7 +67,7 @@ const Render = () => {
               sensor
               onIntersectionEnter={() => setIsOpen(true)}
             />
-            <Player camera={camera} />
+            <Player camera={true} />
           </Physics>
         </Suspense>
       </Canvas>
