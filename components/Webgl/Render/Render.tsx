@@ -1,40 +1,44 @@
 import { Canvas } from "@react-three/fiber";
 import s from "./render.module.scss";
-import { Environment, OrbitControls } from "@react-three/drei";
+import {
+  AdaptiveDpr,
+  Environment,
+  Html,
+  OrbitControls,
+  Stats,
+} from "@react-three/drei";
 import { Suspense, useState } from "react";
-import { Physics, CuboidCollider, Debug } from "@react-three/rapier";
+import { Debug, Physics } from "@react-three/rapier";
 import Player from "../Player/Player";
 import { Building } from "../Model/Building";
 import { Door } from "../Model/Door";
-import {
-  BsFillCaretRightFill,
-  BsFillCaretLeftFill,
-  BsFillCaretDownFill,
-  BsFillCaretUpFill,
-} from "react-icons/bs";
+import { BsFillCaretUpFill } from "react-icons/bs";
 import { TiArrowBack } from "react-icons/ti";
 import { store } from "@/store";
 import { useSnapshot } from "valtio";
 import ProductDetail from "@/components/Html/ProductDetail/ProductDetail";
 import AnimatedCamera from "../AnimatedCamera/AnimatedCamera";
+import SubscriptionPopup from "@/components/Html/SubscriptionPopup/SubscriptionPopup";
+import InvisibleWall from "../Model/InvisibleWall";
+import SignIn from "@/components/Html/SignIn/SignIn";
+import TrackingPopup from "@/components/Html/TrackingPopup/TrackingPopup";
+import { Sandals } from "../Model/Sandals";
 
 const Render = () => {
-  const [camera, setCamera] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
+  const [isWallOpen, setIsWallOpen] = useState<boolean>(false);
 
-  const handleClick = () => {
-    setCamera(!camera);
-  };
-
-  const { touchTurnLeft, touchTurnRight, touchForwardDown, touchForwardUp } =
-    useSnapshot(store);
+  const {
+    touchTurnLeft,
+    touchTurnRight,
+    touchForwardDown,
+    touchForwardUp,
+    user,
+  } = useSnapshot(store);
 
   return (
     <main className={s.main}>
-      <button data-cam onMouseDown={handleClick}>
-        Camera Change
-      </button>
-
       <div className={s.buttongroup}>
         <button onClick={touchTurnLeft}>
           <TiArrowBack />
@@ -49,28 +53,48 @@ const Render = () => {
 
       <ProductDetail />
 
-      <Canvas camera={{ position: [2, 2, 5] }}>
-        {/* <OrbitControls /> */}
-        <Environment preset="city" />
+      <SubscriptionPopup
+        setIsWallOpen={setIsWallOpen}
+        isPopupOpen={isPopupOpen}
+        setIsPopupOpen={setIsPopupOpen}
+      />
 
-        <Suspense fallback={null}>
-          <Physics>
-            {/* <Debug /> */}
+      {user ? (
+        <>
+          <TrackingPopup />
+          <Canvas camera={{ position: [2, 2, 5] }}>
+            {/* <OrbitControls /> */}
+
+            <Stats />
+            <AdaptiveDpr />
+            <Environment preset="city" />
+
             <AnimatedCamera />
-            <Building />
-
-            {/* Gate */}
-            <Door isOpen={isOpen} />
-            <CuboidCollider
-              position={[0, 3, 4]}
-              args={[3, 3, 6]}
-              sensor
-              onIntersectionEnter={() => setIsOpen(true)}
-            />
-            <Player camera={true} />
-          </Physics>
-        </Suspense>
-      </Canvas>
+            <Suspense
+              fallback={
+                <Html center>
+                  <h1 style={{ color: "white" }}>Loading..</h1>
+                </Html>
+              }
+            >
+              <Physics>
+                {/* <Debug /> */}
+                <Player camera={true} />
+                <Building />
+                <Sandals />
+                <Door isOpen={isOpen} />
+                <InvisibleWall
+                  setIsOpen={setIsOpen}
+                  isWallOpen={isWallOpen}
+                  setIsPopupOpen={setIsPopupOpen}
+                />
+              </Physics>
+            </Suspense>
+          </Canvas>
+        </>
+      ) : (
+        <SignIn />
+      )}
     </main>
   );
 };

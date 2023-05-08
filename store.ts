@@ -25,8 +25,17 @@ type storeType = {
   shoeDetailPopupIsActive: boolean;
   shoeDetail: shoeDetailType;
   animatedCameraConfig: animatedCameraConfigType;
+  animatedSecondCameraConfig: animatedCameraConfigType;
   shoeRotatingMesh: THREE.Object3D<THREE.Event> | null;
   shoeCameraDefault: boolean;
+  ladyshoeCameraDefault: boolean;
+  user:
+    | {
+        name?: string | null | undefined;
+        email?: string | null | undefined;
+        image?: string | null | undefined;
+      }
+    | undefined;
 };
 
 export const store = proxy<storeType>({
@@ -45,6 +54,9 @@ export const store = proxy<storeType>({
     stripePrice: "",
   },
   animatedCameraConfig: { x: 18, y: 2.5, z: -14.4 },
+  animatedSecondCameraConfig: { x: 42, y: 2.5, z: -25.3 },
   shoeRotatingMesh: null,
   shoeCameraDefault: false,
+  ladyshoeCameraDefault: false,
+  user: undefined,
 });

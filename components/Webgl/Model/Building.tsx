@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useCursor, useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import { RigidBody } from "@react-three/rapier";
@@ -401,6 +401,18 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF("/building.glb") as GLTFResult;
   const [hovered, setHovered] = useState<boolean>(false);
 
+  const fixedMeshOne = useRef<THREE.Mesh>(null);
+  const fixedMeshTwo = useRef<THREE.Mesh>(null);
+  const fixedMeshThree = useRef<THREE.Mesh>(null);
+
+  // fixing pivot point
+
+  useEffect(() => {
+    fixedMeshOne.current?.geometry.center();
+    fixedMeshTwo.current?.geometry.center();
+    fixedMeshThree.current?.geometry.center();
+  }, []);
+
   useCursor(hovered);
 
   const handleShoe = (
@@ -411,18 +423,15 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
       detail: string[];
       price: number;
       stripePrice: string;
-    }
+    },
+    cameraConfig: { x: number; y: number; z: number }
   ) => {
     store.shoeCameraDefault = true;
+    store.animatedCameraConfig = cameraConfig;
+
     store.shoeDetailPopupIsActive = true;
     store.shoeDetail = detail;
     store.shoeRotatingMesh = object;
-    // camera config setter
-    store.animatedCameraConfig = {
-      x: 16.7,
-      y: 3.9,
-      z: -8.0,
-    };
   };
   return (
     <group scale={1.8} {...props} dispose={null}>
@@ -487,19 +496,27 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
       />
       <mesh
         onClick={(e) =>
-          handleShoe(e.object, {
-            heading: "GENESIS",
-            subheading: "(Future Ultra high-top sneaker)",
-            detail: [
-              "Black calf leather",
-              "Metal gold special materiel",
-              "Black elastic",
-              "Black rubber",
-              "Black nylon",
-            ],
-            price: 0,
-            stripePrice: "",
-          })
+          handleShoe(
+            e.object,
+            {
+              heading: "GENESIS",
+              subheading: "(Future Ultra high-top sneaker)",
+              detail: [
+                "Black calf leather",
+                "Metal gold special materiel",
+                "Black elastic",
+                "Black rubber",
+                "Black nylon",
+              ],
+              price: 0,
+              stripePrice: "",
+            },
+            {
+              x: 22.11,
+              y: 2.2,
+              z: -4.2,
+            }
+          )
         }
         onPointerEnter={() => setHovered(true)}
         onPointerLeave={() => setHovered(false)}
@@ -563,27 +580,36 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
       />
       <mesh
         onClick={(e) =>
-          handleShoe(e.object, {
-            heading: "Al Buraq",
-            subheading: "(chunky sock design)",
-            detail: [
-              "Black calf leather",
-              "White calf leather",
-              "White Lycra",
-              "Arrow white black special laces",
-              "Black rubber",
-            ],
-            price: 0,
-            stripePrice: "",
-          })
+          handleShoe(
+            e.object,
+            {
+              heading: "Al Buraq",
+              subheading: "(chunky sock design)",
+              detail: [
+                "Black calf leather",
+                "White calf leather",
+                "White Lycra",
+                "Arrow white black special laces",
+                "Black rubber",
+              ],
+              price: 0,
+              stripePrice: "",
+            },
+            {
+              x: 17.8,
+              y: 2.6,
+              z: -5.7,
+            }
+          )
         }
+        ref={fixedMeshOne}
         onPointerEnter={() => setHovered(true)}
         onPointerLeave={() => setHovered(false)}
         castShadow
         receiveShadow
         geometry={nodes.toecap002.geometry}
         material={materials["Shoe 7"]}
-        position={[9.77, 1.34, -2.17]}
+        position={[10, 1.5, -2.17]}
         rotation={[Math.PI, -1.25, 0]}
         scale={-0.15}
       />
@@ -870,24 +896,7 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
         position={[25.97, 0.88, -16.78]}
         rotation={[-1.55, 0.04, 2.58]}
         scale={0.02}
-        onClick={(e) =>
-          handleShoe(e.object, {
-            heading: "HERA",
-            subheading: "(simple cut high heel)",
-            detail: [
-              "Calf leather",
-              "Printed python print black special material",
-              "Varnish patent leather black special material",
-              "Black goat lining",
-              "Varnish patent leather",
-              "Gold varnish",
-            ],
-            price: 245.99,
-            stripePrice: "",
-          })
-        }
-        onPointerEnter={() => setHovered(true)}
-        onPointerLeave={() => setHovered(false)}
+        visible={false}
       >
         <mesh
           castShadow
@@ -924,22 +933,7 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
         position={[25.07, 0.89, -17.3]}
         rotation={[3.14, 0.45, 2.52]}
         scale={[0.02, 0.02, 0.01]}
-        onClick={(e) =>
-          handleShoe(e.object, {
-            heading: "CASIOPEA",
-            subheading: "(simple cut high heel)",
-            detail: [
-              "Varnish patent leather black special material",
-              "Varnish patent leather Liliac special material",
-              "Black goat lining",
-              "Varnish patent leather black varnish",
-            ],
-            price: 0,
-            stripePrice: "",
-          })
-        }
-        onPointerEnter={() => setHovered(true)}
-        onPointerLeave={() => setHovered(false)}
+        visible={false}
       >
         <mesh
           castShadow
@@ -975,15 +969,17 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
         rotation={[-Math.PI / 2, 0, -Math.PI]}
         scale={[-0.03, -0.01, -0.01]}
       />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Seat.geometry}
-        material={materials["rubber black low"]}
-        position={[20.09, -0.06, -18.9]}
-        rotation={[0, -0.51, 0]}
-        scale={1.9}
-      />
+      <RigidBody type="fixed" colliders="hull">
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Seat.geometry}
+          material={materials["rubber black low"]}
+          position={[20.09, -0.06, -18.9]}
+          rotation={[0, -0.51, 0]}
+          scale={1.9}
+        />
+      </RigidBody>
       <mesh
         castShadow
         receiveShadow
@@ -1098,21 +1094,29 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
       />
       <mesh
         onClick={(e) =>
-          handleShoe(e.object, {
-            heading: "Elites Of Tomorrow",
-            subheading: "(vintage high top)",
-            detail: [
-              "Varnish patent leather",
-              "black special material",
-              "White marble rubber",
-              "Metal gold special material",
-              "Calf leather croc print black special material",
-              "Canary cotton",
-              "Canary nylon",
-            ],
-            price: 236.9,
-            stripePrice: "",
-          })
+          handleShoe(
+            e.object,
+            {
+              heading: "Elites Of Tomorrow",
+              subheading: "(vintage high top)",
+              detail: [
+                "Varnish patent leather",
+                "black special material",
+                "White marble rubber",
+                "Metal gold special material",
+                "Calf leather croc print black special material",
+                "Canary cotton",
+                "Canary nylon",
+              ],
+              price: 236.9,
+              stripePrice: "",
+            },
+            {
+              x: 26.5,
+              y: 3,
+              z: -2.7,
+            }
+          )
         }
         onPointerEnter={() => setHovered(true)}
         onPointerLeave={() => setHovered(false)}
@@ -1189,19 +1193,27 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
       </group>
       <mesh
         onClick={(e) =>
-          handleShoe(e.object, {
-            heading: "CASANOVA",
-            subheading: "(contemporary sock runner)",
-            detail: [
-              "Black calf leather",
-              "Black lycra",
-              "Arrow white black special laces",
-              "Black elastic",
-              "Black rubber",
-            ],
-            price: 227.99,
-            stripePrice: "",
-          })
+          handleShoe(
+            e.object,
+            {
+              heading: "CASANOVA",
+              subheading: "(contemporary sock runner)",
+              detail: [
+                "Black calf leather",
+                "Black lycra",
+                "Arrow white black special laces",
+                "Black elastic",
+                "Black rubber",
+              ],
+              price: 227.99,
+              stripePrice: "",
+            },
+            {
+              x: 16,
+              y: 2.7,
+              z: -7.1,
+            }
+          )
         }
         onPointerEnter={() => setHovered(true)}
         onPointerLeave={() => setHovered(false)}
@@ -1215,23 +1227,9 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
       />
       <group
         position={[25.6, 0.94, -17.3]}
-        rotation={[-1.53, 0.05, 2.5]}
+        rotation={[-1.53, 0, 2.5]}
         scale={0.02}
-        onClick={(e) =>
-          handleShoe(e.object, {
-            heading: "PEARLY",
-            subheading: "(full cut high heel)",
-            detail: [
-              "Glitter pink special material",
-              "Fuxia goat lining",
-              "Varnish patent leather white varnish",
-            ],
-            price: 0,
-            stripePrice: "",
-          })
-        }
-        onPointerEnter={() => setHovered(true)}
-        onPointerLeave={() => setHovered(false)}
+        visible={false}
       >
         <mesh
           castShadow
@@ -1270,24 +1268,28 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
           material={materials["heel inner low"]}
         />
       </group>
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Object_2002.geometry}
-        material={materials["ground 1.001"]}
-        position={[17.67, 1.44, -7.04]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={[0.08, 0.08, 0.06]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Object_2001.geometry}
-        material={materials["ground 1.001"]}
-        position={[17.69, 1.44, -14.71]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={[0.08, 0.08, 0.06]}
-      />
+      <RigidBody type="fixed" colliders="hull">
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Object_2002.geometry}
+          material={materials["ground 1.001"]}
+          position={[17.67, 1.44, -7.04]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          scale={[0.08, 0.08, 0.06]}
+        />
+      </RigidBody>
+      <RigidBody type="fixed" colliders="hull">
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Object_2001.geometry}
+          material={materials["ground 1.001"]}
+          position={[17.69, 1.44, -14.71]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          scale={[0.08, 0.08, 0.06]}
+        />
+      </RigidBody>
       <mesh
         castShadow
         receiveShadow
@@ -1323,86 +1325,107 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
         rotation={[-Math.PI / 2, 0, -Math.PI]}
         scale={[-0.03, -0.01, -0.01]}
       />
-      <group
-        position={[9.41, -0.03, -9.53]}
-        rotation={[-Math.PI, 0.09, -Math.PI]}
-        scale={0.05}
-      >
+      <RigidBody type="fixed" colliders="hull">
+        <group
+          position={[9.41, -0.03, -9.53]}
+          rotation={[-Math.PI, 0.09, -Math.PI]}
+          scale={0.05}
+        >
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.MASH2_ReproMesh2_logo_0001_1.geometry}
+            material={materials["logo.001"]}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.MASH2_ReproMesh2_logo_0001_2.geometry}
+            material={materials["GLOW ALPHA"]}
+          />
+        </group>
+      </RigidBody>
+      <RigidBody type="fixed" colliders="hull">
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.MASH2_ReproMesh2_logo_0001_1.geometry}
-          material={materials["logo.001"]}
+          geometry={nodes.long008.geometry}
+          material={materials["wall met"]}
+          position={[24, 0, -18.3]}
+          rotation={[0, -Math.PI / 6, 0]}
         />
+      </RigidBody>
+      <RigidBody type="fixed" colliders="hull">
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.MASH2_ReproMesh2_logo_0001_2.geometry}
-          material={materials["GLOW ALPHA"]}
+          geometry={nodes.long007.geometry}
+          material={materials["wall met"]}
+          position={[24, 0, -3.95]}
+          rotation={[0, Math.PI / 6, 0]}
         />
-      </group>
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.long008.geometry}
-        material={materials["wall met"]}
-        position={[24, 0, -18.3]}
-        rotation={[0, -Math.PI / 6, 0]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.long007.geometry}
-        material={materials["wall met"]}
-        position={[24, 0, -3.95]}
-        rotation={[0, Math.PI / 6, 0]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.long006.geometry}
-        material={materials["wall met"]}
-        position={[7.74, 0, -19.43]}
-        rotation={[0, 0.36, 0]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.long005.geometry}
-        material={materials["wall met"]}
-        position={[9.1, 0, -2.28]}
-        rotation={[0, -0.37, 0]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.long002.geometry}
-        material={materials["wall met"]}
-        position={[-2.5, 0, -7.3]}
-      />
+      </RigidBody>
+      <RigidBody type="fixed" colliders="hull">
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.long006.geometry}
+          material={materials["wall met"]}
+          position={[7.74, 0, -19.43]}
+          rotation={[0, 0.36, 0]}
+        />
+      </RigidBody>
+      <RigidBody type="fixed" colliders="hull">
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.long005.geometry}
+          material={materials["wall met"]}
+          position={[9.1, 0, -2.28]}
+          rotation={[0, -0.37, 0]}
+        />
+      </RigidBody>
+      <RigidBody type="fixed" colliders="hull">
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.long002.geometry}
+          material={materials["wall met"]}
+          position={[-2.5, 0, -7.3]}
+        />
+      </RigidBody>
       <mesh
         onClick={(e) =>
-          handleShoe(e.object, {
-            heading: "BARRICADE",
-            subheading: "(chunky sock design)",
-            detail: [
-              "Varnish patent leather black special material",
-              "Metal gold special material",
-              "Black lycra",
-              "Black cotton",
-              "White rubber",
-            ],
-            price: 0,
-            stripePrice: "",
-          })
+          handleShoe(
+            e.object,
+            {
+              heading: "BARRICADE",
+              subheading: "(chunky sock design)",
+              detail: [
+                "Varnish patent leather black special material",
+                "Metal gold special material",
+                "Black lycra",
+                "Black cotton",
+                "White rubber",
+              ],
+              price: 0,
+              stripePrice: "",
+            },
+            {
+              x: 25.5,
+              y: 1.6,
+              z: -2.7,
+            }
+          )
         }
+        ref={fixedMeshThree}
         onPointerEnter={() => setHovered(true)}
         onPointerLeave={() => setHovered(false)}
         castShadow
         receiveShadow
         geometry={nodes.logo008.geometry}
         material={materials["Shoe 4"]}
-        position={[13.93, 0.78, -0.04]}
+        position={[14.2, 0.95, -0.04]}
         rotation={[0, -1.28, -Math.PI]}
         scale={-0.15}
       />
@@ -1426,20 +1449,28 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
       />
       <mesh
         onClick={(e) =>
-          handleShoe(e.object, {
-            heading: "GOLDIE",
-            subheading: "(classic runner style)",
-            detail: [
-              "Gold leather pyramid special material",
-              "Black calf leather",
-              "Python print white special material",
-              "Metal silver special material",
-              "Arrow white black laces",
-              "White rubber",
-            ],
-            price: 0,
-            stripePrice: "",
-          })
+          handleShoe(
+            e.object,
+            {
+              heading: "GOLDIE",
+              subheading: "(classic runner style)",
+              detail: [
+                "Gold leather pyramid special material",
+                "Black calf leather",
+                "Python print white special material",
+                "Metal silver special material",
+                "Arrow white black laces",
+                "White rubber",
+              ],
+              price: 0,
+              stripePrice: "",
+            },
+            {
+              x: 11.3,
+              y: 3.9,
+              z: -8.4,
+            }
+          )
         }
         onPointerEnter={() => setHovered(true)}
         onPointerLeave={() => setHovered(false)}
@@ -1469,30 +1500,32 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
         rotation={[Math.PI / 2, 0, -0.36]}
         scale={[4.27, 2.5, 4.27]}
       />
-      <group
-        position={[28.57, -0.06, -14.75]}
-        rotation={[-Math.PI, 0.48, -Math.PI]}
-        scale={1.53}
-      >
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane009.geometry}
-          material={materials["ground 1.002"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane009_1.geometry}
-          material={materials["gold LOW"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane009_2.geometry}
-          material={materials["GLOW LOW"]}
-        />
-      </group>
+      <RigidBody type="fixed" colliders="hull">
+        <group
+          position={[28.57, -0.06, -14.75]}
+          rotation={[-Math.PI, 0.48, -Math.PI]}
+          scale={1.53}
+        >
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Plane009.geometry}
+            material={materials["ground 1.002"]}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Plane009_1.geometry}
+            material={materials["gold LOW"]}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Plane009_2.geometry}
+            material={materials["GLOW LOW"]}
+          />
+        </group>
+      </RigidBody>
       <group
         position={[1.68, 2.82, -12.04]}
         rotation={[0, 0, Math.PI]}
@@ -1529,60 +1562,71 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
           material={materials["Light.003"]}
         />
       </group>
-      <group
-        position={[1.05, 0.93, -13.58]}
-        rotation={[Math.PI / 2, 0, 2.78]}
-        scale={1.41}
-      >
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane019.geometry}
-          material={materials["Material.008"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane019_1.geometry}
-          material={materials["gold LOW"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane019_2.geometry}
-          material={materials["Marble Finish"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane019_3.geometry}
-          material={materials["Black murble low"]}
-        />
-      </group>
+      <RigidBody type="fixed" colliders="hull">
+        <group
+          position={[1.05, 0.93, -13.58]}
+          rotation={[Math.PI / 2, 0, 2.78]}
+          scale={1.41}
+        >
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Plane019.geometry}
+            material={materials["Material.008"]}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Plane019_1.geometry}
+            material={materials["gold LOW"]}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Plane019_2.geometry}
+            material={materials["Marble Finish"]}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Plane019_3.geometry}
+            material={materials["Black murble low"]}
+          />
+        </group>
+      </RigidBody>
       <mesh
         onClick={(e) =>
-          handleShoe(e.object, {
-            heading: "ESCOBAR",
-            subheading: "(rich slipper design)",
-            detail: [
-              "Metal gold special material",
-              "Calf leather",
-              "printed python print black special material",
-              "Black goat lining",
-              "Black elastic",
-              "Gold eyelet metal",
-            ],
-            price: 210,
-            stripePrice: "",
-          })
+          handleShoe(
+            e.object,
+            {
+              heading: "ESCOBAR",
+              subheading: "(rich slipper design)",
+              detail: [
+                "Metal gold special material",
+                "Calf leather",
+                "printed python print black special material",
+                "Black goat lining",
+                "Black elastic",
+                "Gold eyelet metal",
+              ],
+              price: 210,
+              stripePrice: "",
+            },
+            {
+              x: 11.4,
+              y: 1.5,
+              z: -9,
+            }
+          )
         }
+        ref={fixedMeshTwo}
         onPointerEnter={() => setHovered(true)}
         onPointerLeave={() => setHovered(false)}
         castShadow
         receiveShadow
         geometry={nodes.insole_logo003.geometry}
         material={materials["Shoe 3"]}
-        position={[6.23, 0.81, -3.98]}
+        position={[6.35, 0.87, -3.98]}
         rotation={[-0.02, 1.05, -3.12]}
         scale={-0.16}
       />
@@ -1652,24 +1696,28 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
         geometry={nodes.GP_Layer.geometry}
         material={materials.gold}
       />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.glass.geometry}
-        material={materials["Glass clean"]}
-        position={[1.05, 1.45, 1.96]}
-        rotation={[-Math.PI / 2, 0, -Math.PI]}
-        scale={[-0.03, -0.01, -0.01]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.FireplaceHole001.geometry}
-        material={materials["ground 1.005"]}
-        position={[65.61, -0.97, -10.76]}
-        rotation={[0, -1.57, 0]}
-        scale={0.62}
-      />
+      <RigidBody type="fixed" colliders="hull">
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.glass.geometry}
+          material={materials["Glass clean"]}
+          position={[1.05, 1.45, 1.96]}
+          rotation={[-Math.PI / 2, 0, -Math.PI]}
+          scale={[-0.03, -0.01, -0.01]}
+        />
+      </RigidBody>
+      <RigidBody type="fixed" colliders="hull">
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.FireplaceHole001.geometry}
+          material={materials["ground 1.005"]}
+          position={[65.61, -0.97, -10.76]}
+          rotation={[0, -1.57, 0]}
+          scale={0.62}
+        />
+      </RigidBody>
       <group
         position={[64.29, -1.51, -11.99]}
         rotation={[-1.26, 0.13, 0.42]}
@@ -1705,12 +1753,14 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
           geometry={nodes.scheit3_4.geometry}
           material={materials["mantel_clock_01.001"]}
         />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.scheit3_5.geometry}
-          material={materials["ground 1.003"]}
-        />
+        <RigidBody type="fixed" colliders="hull">
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.scheit3_5.geometry}
+            material={materials["ground 1.003"]}
+          />
+        </RigidBody>
       </group>
       <group
         position={[32.03, -0.06, -12.82]}
@@ -1794,23 +1844,27 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
         position={[56.4, -1.76, -10.67]}
         scale={[1.8, 0.02, 1.8]}
       />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Cylinder047.geometry}
-        material={materials["GLOW LOW"]}
-        position={[56.43, -1.48, -10.69]}
-        scale={[1.41, 0.29, 1.41]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Cylinder003.geometry}
-        material={materials["Material.056"]}
-        position={[41.08, 0.59, -10.97]}
-        rotation={[0, 0, -Math.PI / 2]}
-        scale={[1.25, 7.43, 1.25]}
-      />
+      <RigidBody type="fixed" colliders="hull">
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder047.geometry}
+          material={materials["GLOW LOW"]}
+          position={[56.43, -1.48, -10.69]}
+          scale={[1.41, 0.29, 1.41]}
+        />
+      </RigidBody>
+      <RigidBody type="fixed" colliders="trimesh">
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder003.geometry}
+          material={materials["Material.056"]}
+          position={[41.08, 0.59, -10.97]}
+          rotation={[0, 0, -Math.PI / 2]}
+          scale={[1.25, 7.43, 1.25]}
+        />
+      </RigidBody>
       <mesh
         castShadow
         receiveShadow
@@ -1956,24 +2010,26 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
           material={materials["Light.004"]}
         />
       </group>
-      <group
-        position={[18.93, -0.06, -16.69]}
-        rotation={[0, -0.51, 0]}
-        scale={[0.91, 0.31, 0.75]}
-      >
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube015.geometry}
-          material={materials["white mat"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube015_1.geometry}
-          material={materials["black mat"]}
-        />
-      </group>
+      <RigidBody type="fixed" colliders="hull">
+        <group
+          position={[18.93, -0.06, -16.69]}
+          rotation={[0, -0.51, 0]}
+          scale={[0.91, 0.31, 0.75]}
+        >
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Cube015.geometry}
+            material={materials["white mat"]}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Cube015_1.geometry}
+            material={materials["black mat"]}
+          />
+        </group>
+      </RigidBody>
       <group position={[56.85, 1.23, -10.8]}>
         <mesh
           castShadow
@@ -1988,31 +2044,35 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
           material={materials["Material.053"]}
         />
       </group>
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Cube008.geometry}
-        material={materials["Black murble low.001"]}
-        position={[56.85, 1.23, -10.8]}
-      />
-      <group
-        position={[16.42, 1.21, -0.52]}
-        rotation={[Math.PI, 0, Math.PI]}
-        scale={[0.76, 0.96, 0.96]}
-      >
+      <RigidBody type="fixed" colliders="trimesh">
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Cube021.geometry}
-          material={materials["wall met"]}
+          geometry={nodes.Cube008.geometry}
+          material={materials["Black murble low.001"]}
+          position={[56.85, 1.23, -10.8]}
         />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube021_1.geometry}
-          material={materials["pink glow"]}
-        />
-      </group>
+      </RigidBody>
+      <RigidBody type="fixed" colliders="hull">
+        <group
+          position={[16.42, 1.21, -0.52]}
+          rotation={[Math.PI, 0, Math.PI]}
+          scale={[0.76, 0.96, 0.96]}
+        >
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Cube021.geometry}
+            material={materials["wall met"]}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Cube021_1.geometry}
+            material={materials["pink glow"]}
+          />
+        </group>
+      </RigidBody>
       <group position={[-2.52, 0, 1.54]} scale={[0.76, 0.96, 0.96]}>
         <mesh
           castShadow
@@ -2191,15 +2251,17 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
         rotation={[0, 0, Math.PI]}
         scale={0.37}
       />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.chesterfield_couch.geometry}
-        material={materials["rubber browen low"]}
-        position={[64.52, -1.73, -18.64]}
-        rotation={[0, -Math.PI / 4, 0]}
-        scale={0.44}
-      />
+      <RigidBody type="fixed" colliders="hull">
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.chesterfield_couch.geometry}
+          material={materials["rubber browen low"]}
+          position={[64.52, -1.73, -18.64]}
+          rotation={[0, -Math.PI / 4, 0]}
+          scale={0.44}
+        />
+      </RigidBody>
       <mesh
         castShadow
         receiveShadow
@@ -2236,51 +2298,53 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
         rotation={[Math.PI, 0, Math.PI]}
         scale={1.24}
       />
-      <group
-        position={[0.39, -0.06, -15.19]}
-        rotation={[0, 0.37, 0]}
-        scale={1.29}
-      >
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cylinder011.geometry}
-          material={materials["Material.011"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cylinder011_1.geometry}
-          material={materials["Material.009"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube011.geometry}
-          material={materials.Fabric}
-          rotation={[-0.17, 0, 0]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube012.geometry}
-          material={materials.Fabric}
-          rotation={[-1.66, 0, -Math.PI]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube015_2.geometry}
-          material={materials["Material.010"]}
-          rotation={[-0.17, 0, 0]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cylinder.geometry}
-          material={materials["Material.009"]}
-        />
-      </group>
+      <RigidBody type="fixed" colliders="hull">
+        <group
+          position={[0.39, -0.06, -15.19]}
+          rotation={[0, 0.37, 0]}
+          scale={1.29}
+        >
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Cylinder011.geometry}
+            material={materials["Material.011"]}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Cylinder011_1.geometry}
+            material={materials["Material.009"]}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Cube011.geometry}
+            material={materials.Fabric}
+            rotation={[-0.17, 0, 0]}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Cube012.geometry}
+            material={materials.Fabric}
+            rotation={[-1.66, 0, -Math.PI]}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Cube015_2.geometry}
+            material={materials["Material.010"]}
+            rotation={[-0.17, 0, 0]}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Cylinder.geometry}
+            material={materials["Material.009"]}
+          />
+        </group>
+      </RigidBody>
       <group
         position={[23.31, 0.94, -17.88]}
         rotation={[Math.PI, 0, Math.PI]}
@@ -2388,20 +2452,28 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
       />
       <mesh
         onClick={(e) =>
-          handleShoe(e.object, {
-            heading: "LUNAR",
-            subheading: "(hooks low top)",
-            detail: [
-              "Textyle blue special material",
-              "White calf leather",
-              "White cotton",
-              "White rubber",
-              "Black nylon",
-              "Gold eyelet metal",
-            ],
-            price: 234.95,
-            stripePrice: "",
-          })
+          handleShoe(
+            e.object,
+            {
+              heading: "LUNAR",
+              subheading: "(hooks low top)",
+              detail: [
+                "Textyle blue special material",
+                "White calf leather",
+                "White cotton",
+                "White rubber",
+                "Black nylon",
+                "Gold eyelet metal",
+              ],
+              price: 234.95,
+              stripePrice: "",
+            },
+            {
+              x: 14.1,
+              y: 3.1,
+              z: -7.2,
+            }
+          )
         }
         onPointerEnter={() => setHovered(true)}
         onPointerLeave={() => setHovered(false)}
@@ -2520,12 +2592,14 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
           geometry={nodes.Plane047_1.geometry}
           material={materials["ground 1.003"]}
         />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane047_2.geometry}
-          material={materials["Black murble low"]}
-        />
+        <RigidBody type="fixed" colliders="hull">
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Plane047_2.geometry}
+            material={materials["Black murble low"]}
+          />
+        </RigidBody>
         <mesh
           castShadow
           receiveShadow
@@ -2589,18 +2663,26 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
       </group>
       <mesh
         onClick={(e) =>
-          handleShoe(e.object, {
-            heading: "MEDUSA",
-            subheading: "(Rich slipper design)",
-            detail: [
-              "Python print white special material",
-              "Metal Gold special material",
-              "Beige goat lining",
-              "Gold eyelet metal",
-            ],
-            price: 0,
-            stripePrice: "",
-          })
+          handleShoe(
+            e.object,
+            {
+              heading: "MEDUSA",
+              subheading: "(Rich slipper design)",
+              detail: [
+                "Python print white special material",
+                "Metal Gold special material",
+                "Beige goat lining",
+                "Gold eyelet metal",
+              ],
+              price: 0,
+              stripePrice: "",
+            },
+            {
+              x: 15.65,
+              y: 1.3,
+              z: -6.8,
+            }
+          )
         }
         onPointerEnter={() => setHovered(true)}
         onPointerLeave={() => setHovered(false)}
@@ -2614,20 +2696,28 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
       />
       <mesh
         onClick={(e) =>
-          handleShoe(e.object, {
-            heading: "RAMESSES ll",
-            subheading: "(vintage high top)",
-            detail: [
-              "Gold leather pyramid special material",
-              "Black rubber",
-              "Black calf leather",
-              "Varnish patent leather black special material",
-              "Mouton cotton",
-              "Mouton nylon",
-            ],
-            price: 220.5,
-            stripePrice: "",
-          })
+          handleShoe(
+            e.object,
+            {
+              heading: "RAMESSES ll",
+              subheading: "(vintage high top)",
+              detail: [
+                "Gold leather pyramid special material",
+                "Black rubber",
+                "Black calf leather",
+                "Varnish patent leather black special material",
+                "Mouton cotton",
+                "Mouton nylon",
+              ],
+              price: 220.5,
+              stripePrice: "",
+            },
+            {
+              x: 16.7,
+              y: 3.9,
+              z: -8.0,
+            }
+          )
         }
         onPointerEnter={() => setHovered(true)}
         onPointerLeave={() => setHovered(false)}
@@ -2636,7 +2726,7 @@ export function Building(props: JSX.IntrinsicElements["group"]) {
         geometry={nodes.outsole007.geometry}
         material={materials["rubber black low.001"]}
         position={[9.38, 2.06, -3.22]}
-        rotation={[-3.01, -1.26, 0.13]}
+        rotation={[-3.01, -1.26, 0]}
       />
     </group>
   );
