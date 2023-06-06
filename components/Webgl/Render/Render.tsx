@@ -67,7 +67,9 @@ const Render = () => {
 
             <Stats />
             <AdaptiveDpr />
-            <Environment preset="city" />
+
+            <ambientLight intensity={0.5} />
+            {/* <Environment preset="city" /> */}
 
             <AnimatedCamera />
             <Suspense
