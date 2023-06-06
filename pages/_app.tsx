@@ -10,7 +10,7 @@ export default function App({
   pageProps: { session, ...pageProps },
 }: AppProps) {
   return (
-    <SessionProvider session={session}>
+    <SessionProvider session={session} basePath={process.env.NEXTAUTH_URL}>
       <ApolloProvider client={client}>
         <Component {...pageProps} />
       </ApolloProvider>
