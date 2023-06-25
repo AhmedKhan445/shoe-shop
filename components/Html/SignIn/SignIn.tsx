@@ -1,29 +1,53 @@
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import s from "./signin.module.scss";
-import { FcGoogle } from "react-icons/fc";
-import { useEffect } from "react";
-import { store } from "@/store";
+import { useState } from "react";
+import Image from "next/image";
+import { buttonData } from "./data";
 
 const SignIn = () => {
-  const { data, status } = useSession();
-
-  useEffect(() => {
-    store.user = data?.user;
-  }, [data]);
+  const [isSignUp, setIsSignUp] = useState<boolean>(true);
 
   return (
-    <div className={s.login}>
-      {status === "loading" ? (
-        <h1>Checking User Account...</h1>
-      ) : status === "authenticated" ? (
-        <h1>User Sign In</h1>
-      ) : (
-        <button onClick={() => signIn("google")} className={s.login_google}>
-          <FcGoogle />
-          Sign in with Google
-        </button>
-      )}
-    </div>
+    <section className={s.main}>
+      <div className={s.container}>
+        <div className={s.detail}>
+          <div className={s.logo}>
+            <Image src="/logo.png" alt="brand-logo" fill />
+          </div>
+
+          <div className={s.head}>
+            <h2>{isSignUp ? "Create an Account" : "Sign in"}</h2>
+            <p>Wellcome to the King.</p>
+          </div>
+
+          <div className={s.buttonGroup}>
+            {buttonData.map(({ Icon, name, provider }, i) => {
+              return (
+                <button key={i} onClick={() => signIn(provider)}>
+                  <Icon />
+                  <span>
+                    {isSignUp ? "Sign Up" : "Sign in"} with {name}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {isSignUp ? (
+            <p>
+              Already have an Account?{" "}
+              <span onClick={() => setIsSignUp(false)}>Sign in</span>
+            </p>
+          ) : (
+            <></>
+          )}
+        </div>
+
+        <div className={s.background}>
+          <Image src="/sign-up-side.png" alt="shoe-img" fill />
+        </div>
+      </div>
+    </section>
   );
 };
 

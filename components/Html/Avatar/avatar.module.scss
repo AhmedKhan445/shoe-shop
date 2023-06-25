@@ -1,0 +1,26 @@
+@import "../../../styles/breakpoint";
+
+$white: rgb(255, 255, 255);
+$black: rgb(0, 0, 0);
+$light-gray: rgb(128, 128, 128, 0.3);
+$gray: rgb(128, 128, 128, 1);
+
+.main {
+  position: fixed;
+  z-index: 20;
+  right: 0;
+  top: 0;
+  background-color: $white;
+  border-radius: 0px 0px 0px 30px;
+  padding: 10px;
+  display: flex;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  img {
+    border-radius: 999px;
+  }
+}

@@ -29,13 +29,6 @@ type storeType = {
   shoeRotatingMesh: THREE.Object3D<THREE.Event> | null;
   shoeCameraDefault: boolean;
   ladyshoeCameraDefault: boolean;
-  user:
-    | {
-        name?: string | null | undefined;
-        email?: string | null | undefined;
-        image?: string | null | undefined;
-      }
-    | undefined;
 };
 
 export const store = proxy<storeType>({
@@ -58,5 +51,4 @@ export const store = proxy<storeType>({
   shoeRotatingMesh: null,
   shoeCameraDefault: false,
   ladyshoeCameraDefault: false,
-  user: undefined,
 });

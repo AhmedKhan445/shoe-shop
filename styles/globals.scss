@@ -1,5 +1,9 @@
 $background: rgb(22, 19, 23);
 
+:root {
+  --smooth-ease: cubic-bezier(0.51, 0.92, 0.24, 1.15);
+}
+
 *,
 *::after,
 *::before {
@@ -29,4 +33,13 @@ button {
     background-color: white;
     border: 2px solid gray;
   }
+}
+
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 1px;
+  min-height: 100vh;
+  position: relative;
 }
