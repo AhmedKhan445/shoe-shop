@@ -1,8 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import s from "./popup.module.scss";
 import { IoClose } from "react-icons/io5";
-import { useSnapshot } from "valtio";
-import { store } from "@/store";
 import { useState } from "react";
 import { BiCurrentLocation } from "react-icons/bi";
 import { auth } from "@/firebase/clientApp";

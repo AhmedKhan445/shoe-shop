@@ -1,4 +1,3 @@
-import { signIn } from "next-auth/react";
 import s from "./signin.module.scss";
 import { useState } from "react";
 import Image from "next/image";

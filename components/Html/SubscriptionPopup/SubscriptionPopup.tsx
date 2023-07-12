@@ -1,4 +1,3 @@
-import { useState } from "react";
 import s from "./popup.module.scss";
 import { IoClose } from "react-icons/io5";
 import {
@@ -7,10 +6,7 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
-import { PaymentMethod, StripeError } from "@stripe/stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import { useSnapshot } from "valtio";
-import { store } from "@/store";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/clientApp";
 

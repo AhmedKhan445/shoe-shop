@@ -23,13 +23,12 @@ import InvisibleWall from "../Model/InvisibleWall";
 import SignIn from "@/components/Html/SignIn/SignIn";
 import TrackingPopup from "@/components/Html/TrackingPopup/TrackingPopup";
 import { Sandals } from "../Model/Sandals";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Loader from "@/components/Html/Loader/Loader";
 import Avatar from "@/components/Html/Avatar/Avatar";
 import OrderList from "@/components/Html/OrderList/OrderList";
 import TrackingOrder from "@/components/Html/TrackingOrder/TrackingOrder";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useAuthState, useUpdateProfile } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/clientApp";
 
 const Render = () => {
@@ -42,10 +41,8 @@ const Render = () => {
 
   //LOGIN SESSTION DETAIL
   const [user, loading] = useAuthState(auth);
-
-  const { touchTurnLeft, touchTurnRight, touchForwardDown, touchForwardUp } =
-    useSnapshot(store);
-
+  console.log(user);
+  //CHECK USER SIGN IN OR SIGN OUT
   const conditionalLogin = () => {
     if (loading) {
       return <Loader />;
@@ -54,7 +51,8 @@ const Render = () => {
     }
   };
 
-  console.log(user);
+  const { touchTurnLeft, touchTurnRight, touchForwardDown, touchForwardUp } =
+    useSnapshot(store);
 
   return (
     <main className={s.main}>

@@ -7,7 +7,8 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { gql, useMutation } from "@apollo/client";
 import { useEffect } from "react";
-import { useSession } from "next-auth/react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/firebase/clientApp";
 
 const UPDATE_ORDER = gql`
   mutation publishOrder($id: ID, $paymentId: String, $status: String) {
@@ -50,7 +51,7 @@ const ProductDetail = () => {
     shoeRotateLeft,
   } = useSnapshot(store);
 
-  const { data: userData } = useSession();
+  const [user] = useAuthState(auth);
 
   const { push, query } = useRouter();
 
@@ -87,8 +88,8 @@ const ProductDetail = () => {
       const { data: orderData } = await createOrderOnCMS({
         variables: {
           order: {
-            name: userData?.user?.name,
-            email: userData?.user?.email,
+            name: user?.displayName,
+            email: user?.email,
             productName: shoeDetail.heading,
             price: String(shoeDetail.price),
             statues: "canceled",
