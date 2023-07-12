@@ -7,7 +7,7 @@ import {
 
 type ButtonData = {
   name: string;
-  provider: string;
+  provider: "google" | "facebook" | "twitter" | "github";
   Icon: () => JSX.Element;
 };
 
@@ -28,7 +28,7 @@ export const buttonData: ButtonData[] = [
     Icon: TwiiterIcon,
   },
   {
-    name: "GitHub",
+    name: "Github",
     provider: "github",
     Icon: GithubIcon,
   },

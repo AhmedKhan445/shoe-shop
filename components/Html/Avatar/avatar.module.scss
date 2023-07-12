@@ -7,13 +7,45 @@ $gray: rgb(128, 128, 128, 1);
 
 .main {
   position: fixed;
-  z-index: 20;
-  right: 0;
-  top: 0;
-  background-color: $white;
-  border-radius: 0px 0px 0px 30px;
-  padding: 10px;
+  z-index: 10;
+  right: 10px;
+  top: 10px;
   display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.stack {
+  display: flex;
+  gap: 20px;
+}
+
+.profile {
+  background-color: $white;
+  border-radius: 999px;
+  padding: 5px;
+  overflow: hidden;
+  cursor: pointer;
+  width: 60px;
+  box-shadow: rgba(255, 255, 255, 0.5) 0px 0px 0px 0px;
+  transition-property: transform, box-shadow, width;
+  transition-duration: 0.2s, 0.2s, 0.6s;
+  transition-timing-function: var(--smooth-ease);
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: rgba(255, 255, 255, 0.5) -3px 3px 3.2px 0px;
+  }
+  &[data-open="true"] {
+    border-radius: 0px 25px 0px 25px;
+    width: 200px;
+    @include lg {
+      width: 300px;
+    }
+    &:hover {
+      transform: scale(1);
+    }
+  }
 }
 
 .user {
@@ -22,5 +54,68 @@ $gray: rgb(128, 128, 128, 1);
   gap: 10px;
   img {
     border-radius: 999px;
+  }
+  h2 {
+    font-size: 1.125rem;
+    line-height: calc(1.125rem * 1.4);
+    transition: 0.2s opacity ease-in-out;
+    font-weight: 600;
+    opacity: 0;
+    font-family: "Unbounded Variable", sans-serif;
+    &[data-open="true"] {
+      opacity: 1;
+    }
+  }
+}
+
+.tab {
+  background-color: $white;
+  border-radius: 0px 20px 0px 20px;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  gap: 10px;
+  width: fit-content;
+  padding: 10px;
+  font-size: 1rem;
+  line-height: calc(1rem * 1.5);
+  font-weight: 400;
+  border: none;
+  font-family: "Unbounded Variable", sans-serif;
+  cursor: pointer;
+  display: flex;
+  gap: 10px;
+  transition-property: transform, background-color, color, box-shadow;
+  transition-duration: 0.3s;
+  transition-timing-function: var(--smooth-ease);
+  transform: translateX(150%);
+  box-shadow: rgba(234, 76, 76, 0.5) 0px 0px 0px 0px;
+  &[data-open="true"] {
+    transform: translateX(0%);
+  }
+  &:hover {
+    color: $white;
+    background-color: #ea4c4c;
+    box-shadow: rgba(234, 76, 76, 0.5) -3px 3px 3.2px 0px;
+  }
+}
+
+.order {
+  border-radius: 999px;
+  padding: 10px;
+  height: 60px;
+  width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $white;
+  font-size: 2rem;
+  cursor: pointer;
+  box-shadow: rgba(255, 255, 255, 0.5) 0px 0px 0px 0px;
+  transition: 0.3s all var(--smooth-ease);
+  border: none;
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: rgba(255, 255, 255, 0.5) -3px 3px 3.2px 0px;
   }
 }

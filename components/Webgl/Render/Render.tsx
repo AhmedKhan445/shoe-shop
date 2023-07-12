@@ -27,31 +27,52 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Loader from "@/components/Html/Loader/Loader";
 import Avatar from "@/components/Html/Avatar/Avatar";
+import OrderList from "@/components/Html/OrderList/OrderList";
+import TrackingOrder from "@/components/Html/TrackingOrder/TrackingOrder";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/firebase/clientApp";
 
 const Render = () => {
+  //STATES
+  const [isOrderHistoryShow, setIsOrderHistoryShow] = useState<boolean>(false);
+  const [isOrderTrackShow, setIsOrderTrackShow] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
   const [isWallOpen, setIsWallOpen] = useState<boolean>(false);
 
-  const { data, status } = useSession();
+  //LOGIN SESSTION DETAIL
+  const [user, loading] = useAuthState(auth);
 
   const { touchTurnLeft, touchTurnRight, touchForwardDown, touchForwardUp } =
     useSnapshot(store);
 
-  const conditionalRender = () => {
-    if (status === "loading") {
+  const conditionalLogin = () => {
+    if (loading) {
       return <Loader />;
-    } else if (status === "unauthenticated") {
+    } else if (user === null) {
       return <SignIn />;
     }
   };
 
-  console.log(data);
+  console.log(user);
 
   return (
     <main className={s.main}>
-      {/* <Avatar /> */}
-      {conditionalRender()}
+      {/* POPUPS */}
+      {conditionalLogin()}
+      <OrderList
+        isOrderHistoryShow={isOrderHistoryShow}
+        setIsOrderHistoryShow={setIsOrderHistoryShow}
+        setIsOrderTrackShow={setIsOrderTrackShow}
+      />
+      <TrackingOrder
+        isOrderTrackShow={isOrderTrackShow}
+        setIsOrderTrackShow={setIsOrderTrackShow}
+      />
+
+      {/* HEADER */}
+      <Avatar setIsOrderHistoryShow={setIsOrderHistoryShow} />
+
       {/* <div className={s.buttongroup}>
           <button onClick={touchTurnLeft}>
             <TiArrowBack />

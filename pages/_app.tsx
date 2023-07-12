@@ -1,4 +1,5 @@
 import "@/styles/globals.scss";
+import "@fontsource/unbounded/400.css";
 import "@fontsource/unbounded/600.css";
 import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";

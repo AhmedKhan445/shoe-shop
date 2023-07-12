@@ -3,9 +3,50 @@ import s from "./signin.module.scss";
 import { useState } from "react";
 import Image from "next/image";
 import { buttonData } from "./data";
+import {
+  useSignInWithFacebook,
+  useSignInWithGithub,
+  useSignInWithGoogle,
+  useSignInWithTwitter,
+} from "react-firebase-hooks/auth";
+import { auth } from "@/firebase/clientApp";
 
 const SignIn = () => {
+  //FIREBASE SIGN IN
+  const [signInWithGoogle] = useSignInWithGoogle(auth);
+  const [signInWithFacebook] = useSignInWithFacebook(auth);
+  const [signInWithTwitter] = useSignInWithTwitter(auth);
+  const [signInWithGithub] = useSignInWithGithub(auth);
+
+  //STATES
   const [isSignUp, setIsSignUp] = useState<boolean>(true);
+
+  //FUNCTIONS
+
+  const handleSignIn = (
+    provider: "google" | "facebook" | "twitter" | "github"
+  ) => {
+    switch (provider) {
+      case "google":
+        signInWithGoogle();
+        break;
+
+      case "facebook":
+        signInWithFacebook();
+        break;
+
+      case "twitter":
+        signInWithTwitter();
+        break;
+
+      case "github":
+        signInWithGithub();
+        break;
+
+      default:
+        break;
+    }
+  };
 
   return (
     <section className={s.main}>
@@ -23,7 +64,7 @@ const SignIn = () => {
           <div className={s.buttonGroup}>
             {buttonData.map(({ Icon, name, provider }, i) => {
               return (
-                <button key={i} onClick={() => signIn(provider)}>
+                <button key={i} onClick={() => handleSignIn(provider)}>
                   <Icon />
                   <span>
                     {isSignUp ? "Sign Up" : "Sign in"} with {name}
