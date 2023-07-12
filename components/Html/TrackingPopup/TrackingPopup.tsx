@@ -5,6 +5,8 @@ import { useSnapshot } from "valtio";
 import { store } from "@/store";
 import { useState } from "react";
 import { BiCurrentLocation } from "react-icons/bi";
+import { auth } from "@/firebase/clientApp";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const GET_TRACKING_DATA = gql`
   query filterOrder($email: String) {
@@ -29,7 +31,7 @@ type dataType = {
 };
 
 const TrackingPopup = () => {
-  const { user } = useSnapshot(store);
+  const [user] = useAuthState(auth);
 
   const { loading, error, data } = useQuery(GET_TRACKING_DATA, {
     variables: { email: user?.email },

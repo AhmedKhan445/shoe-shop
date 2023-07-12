@@ -11,6 +11,8 @@ import { PaymentMethod, StripeError } from "@stripe/stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useSnapshot } from "valtio";
 import { store } from "@/store";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/firebase/clientApp";
 
 export const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
@@ -30,7 +32,8 @@ type formprops = {
 const Form: React.FC<formprops> = ({ setIsWallOpen, setIsPopupOpen }) => {
   const stripe = useStripe();
   const elements = useElements();
-  const { user } = useSnapshot(store);
+
+  const [user] = useAuthState(auth);
 
   const handleClick = async () => {
     try {
@@ -45,7 +48,7 @@ const Form: React.FC<formprops> = ({ setIsWallOpen, setIsPopupOpen }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: user?.name,
+          name: user?.displayName,
           email: user?.email,
           paymentMethod: paymentMethod?.paymentMethod?.id,
         }),
