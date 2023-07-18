@@ -1,5 +1,5 @@
 import s from "./signin.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { buttonData } from "./data";
 import {
@@ -9,13 +9,50 @@ import {
   useSignInWithTwitter,
 } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/clientApp";
+import { toast } from "react-toastify";
+import { store } from "@/store";
 
-const SignIn = () => {
+type Props = {
+  setIsCodeVerify: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const SignIn: React.FC<Props> = ({ setIsCodeVerify }) => {
   //FIREBASE SIGN IN
-  const [signInWithGoogle] = useSignInWithGoogle(auth);
-  const [signInWithFacebook] = useSignInWithFacebook(auth);
-  const [signInWithTwitter] = useSignInWithTwitter(auth);
-  const [signInWithGithub] = useSignInWithGithub(auth);
+  const [signInWithGoogle, googleUser, googleLoading, googleError] =
+    useSignInWithGoogle(auth);
+  const [signInWithFacebook, facebookUser, facebookLoading, facebookError] =
+    useSignInWithFacebook(auth);
+  const [signInWithTwitter, twitterUser, twitterLoading, twitterError] =
+    useSignInWithTwitter(auth);
+  const [signInWithGithub, githubUser, gihtubLoading, githubError] =
+    useSignInWithGithub(auth);
+
+  //TWO-FACTOR ERROR HANDLE PROCESS TO CODE VERIFICATION
+  useEffect(() => {
+    if (googleError?.code === "auth/multi-factor-auth-required") {
+      setIsCodeVerify(true);
+      store.signInMultiFactorAuthError = googleError;
+    } else if (facebookError?.code === "auth/multi-factor-auth-required") {
+      setIsCodeVerify(true);
+      store.signInMultiFactorAuthError = facebookError;
+    } else if (twitterError?.code === "auth/multi-factor-auth-required") {
+      setIsCodeVerify(true);
+      store.signInMultiFactorAuthError = twitterError;
+    } else if (githubError?.code === "auth/multi-factor-auth-required") {
+      setIsCodeVerify(true);
+      store.signInMultiFactorAuthError = githubError;
+    }
+  }, [googleError, twitterError, githubError, facebookError, setIsCodeVerify]);
+
+  //GITHUB SAME EMAIL ERROR HANDLE
+  useEffect(() => {
+    if (githubError?.code === "auth/account-exists-with-different-credential") {
+      console.log("work");
+      toast.error("Your email already register try sign in with google.", {
+        theme: "colored",
+      });
+    }
+  }, [githubError]);
 
   //STATES
   const [isSignUp, setIsSignUp] = useState<boolean>(true);
@@ -52,7 +89,12 @@ const SignIn = () => {
       <div className={s.container}>
         <div className={s.detail}>
           <div className={s.logo}>
-            <Image src="/logo.png" alt="brand-logo" fill />
+            <Image
+              src="/logo.png"
+              alt="brand-logo"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              fill
+            />
           </div>
 
           <div className={s.head}>
@@ -84,7 +126,13 @@ const SignIn = () => {
         </div>
 
         <div className={s.background}>
-          <Image src="/sign-up-side.png" alt="shoe-img" fill />
+          <Image
+            priority
+            src="/sign-up-side.png"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            alt="shoe-img"
+            fill
+          />
         </div>
       </div>
     </section>

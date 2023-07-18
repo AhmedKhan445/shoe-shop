@@ -15,7 +15,7 @@ $background: rgb(22, 19, 23);
 html,
 body,
 #__next {
-  min-height: 100vh;
+  max-height: 100svh;
   height: 100%;
   font-family: system-ui;
   background-color: $background;
@@ -40,6 +40,6 @@ main {
   align-items: center;
   justify-content: center;
   height: 1px;
-  min-height: 100vh;
+  max-height: 100svh;
   position: relative;
 }

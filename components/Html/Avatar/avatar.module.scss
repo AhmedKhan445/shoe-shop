@@ -28,6 +28,7 @@ $gray: rgb(128, 128, 128, 1);
   overflow: hidden;
   cursor: pointer;
   width: 60px;
+  height: 60px;
   box-shadow: rgba(255, 255, 255, 0.5) 0px 0px 0px 0px;
   transition-property: transform, box-shadow, width;
   transition-duration: 0.2s, 0.2s, 0.6s;
@@ -52,6 +53,7 @@ $gray: rgb(128, 128, 128, 1);
   display: flex;
   align-items: center;
   gap: 10px;
+  height: 50px;
   img {
     border-radius: 999px;
   }
@@ -59,10 +61,12 @@ $gray: rgb(128, 128, 128, 1);
     font-size: 1.125rem;
     line-height: calc(1.125rem * 1.4);
     transition: 0.2s opacity ease-in-out;
+    transition-delay: 0s;
     font-weight: 600;
     opacity: 0;
     font-family: "Unbounded Variable", sans-serif;
     &[data-open="true"] {
+      transition-delay: 0.4s;
       opacity: 1;
     }
   }
@@ -86,17 +90,29 @@ $gray: rgb(128, 128, 128, 1);
   display: flex;
   gap: 10px;
   transition-property: transform, background-color, color, box-shadow;
+  transition-delay: 0s, 0s, 0s, 0s;
   transition-duration: 0.3s;
   transition-timing-function: var(--smooth-ease);
   transform: translateX(150%);
   box-shadow: rgba(234, 76, 76, 0.5) 0px 0px 0px 0px;
-  &[data-open="true"] {
-    transform: translateX(0%);
-  }
   &:hover {
     color: $white;
     background-color: #ea4c4c;
     box-shadow: rgba(234, 76, 76, 0.5) -3px 3px 3.2px 0px;
+  }
+  &[data-color] {
+    &:hover {
+      color: $white;
+      background-color: #4c69ea;
+      box-shadow: rgba(76, 155, 234, 0.5) -3px 3px 3.2px 0px;
+    }
+  }
+  &[data-open="true"] {
+    transition-delay: 0.4s, 0s, 0s, 0s;
+    transform: translateX(0%);
+    &[data-delay="2"] {
+      transition-delay: 0.6s, 0s, 0s, 0s;
+    }
   }
 }
 

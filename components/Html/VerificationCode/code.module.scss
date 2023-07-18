@@ -1,0 +1,128 @@
+@import "../../../styles/breakpoint";
+
+$white: #ffffff;
+$black: #000000;
+
+.main {
+  position: fixed;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  &[data-active="true"] {
+    opacity: 1;
+    pointer-events: all;
+  }
+  &[data-active="false"] {
+    transition-delay: 0.8s;
+  }
+}
+
+.container {
+  transform: scale(0);
+  background-color: $white;
+  padding: 20px;
+  border-radius: 20px 0px 20px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 92%;
+  transition: all 0.4s var(--smooth-ease);
+  border: 4px solid $black;
+  height: fit-content;
+  @include lg {
+    width: fit-content;
+    min-width: 300px;
+  }
+
+  &[data-active="false"] {
+    transition-delay: 0.3s;
+    h1 {
+      transition-delay: 0s;
+    }
+  }
+
+  &[data-active="true"] {
+    pointer-events: all;
+    transform: scale(1);
+    h1 {
+      transition-delay: 0.3s;
+      opacity: 1;
+    }
+  }
+
+  h1 {
+    opacity: 0;
+    transition: all 0.2s ease-in-out;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: all 0.2s ease-in-out;
+  transition-delay: 0s;
+  opacity: 0;
+  &[data-active="true"] {
+    transition-delay: 0.5s;
+    opacity: 1;
+  }
+  label {
+    font-size: 1.5rem;
+    line-height: calc(1.5rem * 1.4);
+    font-weight: 500;
+  }
+  &_input {
+    input {
+      width: 100%;
+      border: none;
+      font-size: 1.5rem;
+      text-align: center;
+      line-height: calc(1.5rem * 1.5);
+      padding-inline: 10px;
+      height: 40px;
+      border: 1px solid $black;
+      border-radius: 4px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
+
+.submit {
+  height: 40px;
+  width: 100%;
+  border: none;
+  color: $white;
+  background-color: $black;
+  border-radius: 4px;
+  font-size: 1.125rem;
+  line-height: calc(1.125rem * 1.5);
+  transition: all 0.3s var(--smooth-ease);
+  cursor: pointer;
+  margin-top: 10px;
+  &:hover {
+    transform: scale(1.05);
+  }
+  &:active {
+    transform: scale(0.9);
+  }
+  &:disabled {
+    &:hover {
+      transform: scale(1);
+    }
+    &:active {
+      transform: scale(1);
+    }
+  }
+}

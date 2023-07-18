@@ -1,22 +1,26 @@
 import Image from "next/image";
 import s from "./avatar.module.scss";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { LuLogOut } from "react-icons/lu";
 import { FaCartPlus } from "react-icons/fa6";
+import { AiTwotoneSetting } from "react-icons/ai";
 import { auth } from "@/firebase/clientApp";
 import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
 
 type Props = {
   setIsOrderHistoryShow: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSettingShow: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Avatar: React.FC<Props> = ({ setIsOrderHistoryShow }) => {
+const Avatar: React.FC<Props> = ({
+  setIsOrderHistoryShow,
+  setIsSettingShow,
+}) => {
   //SIGN OUT
   const [signOut] = useSignOut(auth);
 
   //STATES
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [delay, setDelay] = useState<number>(0.4);
 
   //LOGIN DATA
   const [user] = useAuthState(auth);
@@ -30,17 +34,14 @@ const Avatar: React.FC<Props> = ({ setIsOrderHistoryShow }) => {
     setIsOrderHistoryShow((prev) => !prev);
   };
 
-  //ADD TRANSTITION DELAY ON CONDITION
-  useEffect(() => {
-    if (isOpen) {
-      const timer = setTimeout(() => {
-        setDelay(0);
-      }, 200);
-      return () => clearTimeout(timer);
-    } else {
-      setDelay(0.4);
-    }
-  }, [delay, isOpen]);
+  const handleSetting = () => {
+    setIsSettingShow(true);
+  };
+
+  const handleSignOut = () => {
+    signOut();
+    setIsOpen(false);
+  };
 
   return (
     <div className={s.main}>
@@ -56,21 +57,23 @@ const Avatar: React.FC<Props> = ({ setIsOrderHistoryShow }) => {
               width={50}
               alt="user-avatar"
             />
-            <h2 style={{ transitionDelay: `${delay}s` }} data-open={isOpen}>
-              {user?.displayName}
-            </h2>
+            <h2 data-open={isOpen}>{user?.displayName}</h2>
           </div>
         </div>
       </div>
-
       <button
-        style={{ transitionDelay: `${delay}s, 0s, 0s, 0s` }}
+        data-color
         data-open={isOpen}
         className={s.tab}
-        onClick={() => {
-          signOut();
-          setIsOpen(false);
-        }}
+        onClick={handleSetting}
+      >
+        <AiTwotoneSetting /> Account Settings
+      </button>
+      <button
+        data-delay="2"
+        data-open={isOpen}
+        className={s.tab}
+        onClick={handleSignOut}
       >
         <LuLogOut /> Logout
       </button>

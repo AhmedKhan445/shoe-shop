@@ -1,5 +1,6 @@
 import { proxy } from "valtio";
 import * as THREE from "three";
+import type { AuthError } from "firebase/auth";
 
 type shoeDetailType = {
   heading: string;
@@ -16,6 +17,8 @@ type animatedCameraConfigType = {
 };
 
 type storeType = {
+  verificationId: string | undefined;
+  signInMultiFactorAuthError: AuthError | undefined;
   touchTurnLeft: () => void;
   touchTurnRight: () => void;
   touchForwardDown: () => void;
@@ -32,6 +35,8 @@ type storeType = {
 };
 
 export const store = proxy<storeType>({
+  verificationId: undefined,
+  signInMultiFactorAuthError: undefined,
   touchTurnLeft: () => console.log("working"),
   touchTurnRight: () => console.log("working"),
   touchForwardDown: () => console.log("working"),

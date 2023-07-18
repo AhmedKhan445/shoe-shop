@@ -28,26 +28,32 @@ import Loader from "@/components/Html/Loader/Loader";
 import Avatar from "@/components/Html/Avatar/Avatar";
 import OrderList from "@/components/Html/OrderList/OrderList";
 import TrackingOrder from "@/components/Html/TrackingOrder/TrackingOrder";
-import { useAuthState, useUpdateProfile } from "react-firebase-hooks/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/clientApp";
+import Settings from "@/components/Html/Settings/Settings";
+import PhoneVerification from "@/components/Html/PhoneVerification/PhoneVerification";
+import VerificationCode from "@/components/Html/VerificationCode/VerificationCode";
 
 const Render = () => {
   //STATES
   const [isOrderHistoryShow, setIsOrderHistoryShow] = useState<boolean>(false);
   const [isOrderTrackShow, setIsOrderTrackShow] = useState<boolean>(false);
+  const [isSettingShow, setIsSettingShow] = useState<boolean>(false);
+  const [isPhoneVerify, setIsPhoneVerify] = useState<boolean>(false);
+  const [isCodeVerify, setIsCodeVerify] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
   const [isWallOpen, setIsWallOpen] = useState<boolean>(false);
 
   //LOGIN SESSTION DETAIL
   const [user, loading] = useAuthState(auth);
-  console.log(user);
+
   //CHECK USER SIGN IN OR SIGN OUT
   const conditionalLogin = () => {
     if (loading) {
       return <Loader />;
     } else if (user === null) {
-      return <SignIn />;
+      return <SignIn setIsCodeVerify={setIsCodeVerify} />;
     }
   };
 
@@ -58,6 +64,20 @@ const Render = () => {
     <main className={s.main}>
       {/* POPUPS */}
       {conditionalLogin()}
+      <VerificationCode
+        isCodeVerify={isCodeVerify}
+        setIsCodeVerify={setIsCodeVerify}
+      />
+      <PhoneVerification
+        isPhoneVerify={isPhoneVerify}
+        setIsPhoneVerify={setIsPhoneVerify}
+        setIsCodeVerify={setIsCodeVerify}
+      />
+      <Settings
+        isSettingShow={isSettingShow}
+        setIsSettingShow={setIsSettingShow}
+        setIsPhoneVerify={setIsPhoneVerify}
+      />
       <OrderList
         isOrderHistoryShow={isOrderHistoryShow}
         setIsOrderHistoryShow={setIsOrderHistoryShow}
@@ -69,7 +89,10 @@ const Render = () => {
       />
 
       {/* HEADER */}
-      <Avatar setIsOrderHistoryShow={setIsOrderHistoryShow} />
+      <Avatar
+        setIsSettingShow={setIsSettingShow}
+        setIsOrderHistoryShow={setIsOrderHistoryShow}
+      />
 
       {/* <div className={s.buttongroup}>
           <button onClick={touchTurnLeft}>
