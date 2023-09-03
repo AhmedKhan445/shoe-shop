@@ -1,0 +1,41 @@
+@import "../../../styles/breakpoint";
+
+$white: rgb(255, 255, 255);
+$black: rgb(0, 0, 0);
+$light-gray: rgb(128, 128, 128, 0.5);
+$gray: rgb(128, 128, 128, 1);
+
+.main {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  z-index: 40;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
+  display: none;
+  transition: 0.3s all linear;
+  opacity: 1;
+  &[data-hide="true"] {
+    opacity: 0;
+  }
+  @include lg {
+    display: flex;
+  }
+}
+
+.container {
+  position: relative;
+  height: 500px;
+  width: 60%;
+  border: 4px solid $black;
+  background-color: $light-gray;
+  border-radius: 25px 0px 25px 0px;
+  @include lg {
+    min-width: 800px;
+    max-width: 950px;
+  }
+  img {
+    object-fit: contain;
+  }
+}

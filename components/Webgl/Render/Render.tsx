@@ -9,8 +9,6 @@ import {
 } from "@react-three/drei";
 import { Suspense, useEffect, useState } from "react";
 import { Debug, Physics } from "@react-three/rapier";
-import Player from "../Player/Player";
-import { Building } from "../Model/Building";
 import { Door } from "../Model/Door";
 import { BsFillCaretUpFill } from "react-icons/bs";
 import { TiArrowBack } from "react-icons/ti";
@@ -33,9 +31,19 @@ import { auth } from "@/firebase/clientApp";
 import Settings from "@/components/Html/Settings/Settings";
 import PhoneVerification from "@/components/Html/PhoneVerification/PhoneVerification";
 import VerificationCode from "@/components/Html/VerificationCode/VerificationCode";
+import { Building } from "../Model/Building";
+import ControlGuide from "@/components/Html/ControlGuide/ControlGuide";
+import { Viproom } from "../Model/Viproom";
+import { Vipshoe } from "../Model/Vipshoe";
+import { Shoes } from "../Model/Shoes";
+import Player from "../Player/Player";
 
 const Render = () => {
   //STATES
+  const { isShowSignIn } = useSnapshot(store);
+  const [playerPositionX, setPlayerPositionX] = useState<number>(0);
+  const [playerPositionY, setPlayerPositionY] = useState<number>(0);
+  const [playerPositionZ, setPlayerPositionZ] = useState<number>(10);
   const [isOrderHistoryShow, setIsOrderHistoryShow] = useState<boolean>(false);
   const [isOrderTrackShow, setIsOrderTrackShow] = useState<boolean>(false);
   const [isSettingShow, setIsSettingShow] = useState<boolean>(false);
@@ -46,14 +54,14 @@ const Render = () => {
   const [isWallOpen, setIsWallOpen] = useState<boolean>(false);
 
   //LOGIN SESSTION DETAIL
-  const [user, loading] = useAuthState(auth);
+  const [user] = useAuthState(auth);
 
   //CHECK USER SIGN IN OR SIGN OUT
   const conditionalLogin = () => {
-    if (loading) {
-      return <Loader />;
-    } else if (user === null) {
-      return <SignIn setIsCodeVerify={setIsCodeVerify} />;
+    if (user === null) {
+      if (isShowSignIn) {
+        return <SignIn setIsCodeVerify={setIsCodeVerify} />;
+      }
     }
   };
 
@@ -61,7 +69,7 @@ const Render = () => {
     useSnapshot(store);
 
   return (
-    <main className={s.main}>
+    <main id="render" className={s.main}>
       {/* POPUPS */}
       {conditionalLogin()}
       <VerificationCode
@@ -94,56 +102,74 @@ const Render = () => {
         setIsOrderHistoryShow={setIsOrderHistoryShow}
       />
 
+      {/* OLD CODE */}
       {/* <div className={s.buttongroup}>
-          <button onClick={touchTurnLeft}>
-            <TiArrowBack />
-          </button>
-          <button onPointerDown={touchForwardDown} onPointerUp={touchForwardUp}>
-            <BsFillCaretUpFill />
-          </button>
-          <button onClick={touchTurnRight} data-flip>
-            <TiArrowBack />
-          </button>
-        </div>
+        <button onClick={touchTurnLeft}>
+          <TiArrowBack />
+        </button>
+        <button onPointerDown={touchForwardDown} onPointerUp={touchForwardUp}>
+          <BsFillCaretUpFill />
+        </button>
+        <button onClick={touchTurnRight} data-flip>
+          <TiArrowBack />
+        </button>
+      </div> */}
 
-        <ProductDetail />
+      <ProductDetail />
 
-        <SubscriptionPopup
-          setIsWallOpen={setIsWallOpen}
-          isPopupOpen={isPopupOpen}
-          setIsPopupOpen={setIsPopupOpen}
-        />
+      {/* <SubscriptionPopup
+        setIsWallOpen={setIsWallOpen}
+        isPopupOpen={isPopupOpen}
+        setIsPopupOpen={setIsPopupOpen}
+      /> */}
 
-        <TrackingPopup />
-        <Canvas camera={{ position: [2, 2, 5] }}>
-          <Stats />
-          <AdaptiveDpr />
+      {/* <TrackingPopup /> */}
+      <Canvas camera={{ position: [2, 2, 5] }}>
+        <Stats />
+        <AdaptiveDpr />
 
-          <ambientLight intensity={0.5} />
-          <Environment preset="city" />
+        <ambientLight intensity={0.5} />
+        <Environment files="/env.hdr" />
 
-          <AnimatedCamera />
-          <Suspense
-            fallback={
-              <Html center>
-                <h1 style={{ color: "white" }}>Loading..</h1>
-              </Html>
-            }
-          >
-            <Physics>
-              <Player camera={true} />
-              <Building />
-              <Sandals />
-              <Door isOpen={isOpen} />
-              <InvisibleWall
-                setIsOpen={setIsOpen}
-                isWallOpen={isWallOpen}
-                setIsPopupOpen={setIsPopupOpen}
-              />
-            </Physics>
-          </Suspense>
-        </Canvas> */}
-      <h1
+        <AnimatedCamera />
+        {/* <OrbitControls /> */}
+        <Suspense
+          fallback={
+            <Html fullscreen>
+              <Loader />
+            </Html>
+          }
+        >
+          {/* GUIDE */}
+          {/* <ControlGuide /> */}
+
+          {/* <Physics> */}
+          <Viproom />
+          <Vipshoe />
+          <Building
+            setPositionX={setPlayerPositionX}
+            setPositionZ={setPlayerPositionZ}
+            setPositionY={setPlayerPositionY}
+          />
+          <Player
+            cameraDefault
+            positionX={playerPositionX}
+            positionY={playerPositionY}
+            positionZ={playerPositionZ}
+          />
+          <Sandals />
+          <Shoes />
+
+          {/* <Door isOpen={isOpen} /> */}
+          {/* <InvisibleWall
+              setIsOpen={setIsOpen}
+              isWallOpen={isWallOpen}
+              setIsPopupOpen={setIsPopupOpen}
+            /> */}
+          {/* </Physics> */}
+        </Suspense>
+      </Canvas>
+      {/* <h1
         style={{
           fontSize: 62,
           textAlign: "center",
@@ -152,7 +178,7 @@ const Render = () => {
         }}
       >
         3D WORLD
-      </h1>
+      </h1> */}
     </main>
   );
 };

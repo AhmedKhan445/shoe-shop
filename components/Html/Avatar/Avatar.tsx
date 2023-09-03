@@ -6,6 +6,7 @@ import { FaCartPlus } from "react-icons/fa6";
 import { AiTwotoneSetting } from "react-icons/ai";
 import { auth } from "@/firebase/clientApp";
 import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
+import { store } from "@/store";
 
 type Props = {
   setIsOrderHistoryShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -27,7 +28,11 @@ const Avatar: React.FC<Props> = ({
 
   //FUNCTIONS
   const handleProfile = () => {
-    setIsOpen((prev) => !prev);
+    if (user) {
+      setIsOpen((prev) => !prev);
+    } else {
+      store.isShowSignIn = true;
+    }
   };
 
   const handleOrderHistory = () => {
@@ -52,6 +57,7 @@ const Avatar: React.FC<Props> = ({
         <div data-open={isOpen} onClick={handleProfile} className={s.profile}>
           <div className={s.user}>
             <Image
+              priority
               src={user?.photoURL ? user.photoURL : "/unknown.png"}
               height={50}
               width={50}

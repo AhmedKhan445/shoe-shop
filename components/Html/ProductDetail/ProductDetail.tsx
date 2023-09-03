@@ -122,6 +122,10 @@ const ProductDetail = () => {
     store.ladyshoeCameraDefault = false;
   };
 
+  const handleShowSignIn = () => {
+    store.isShowSignIn = true;
+  };
+
   return (
     <>
       <div data-active={shoeDetailPopupIsActive} className={s.rotate}>
@@ -146,7 +150,9 @@ const ProductDetail = () => {
           })}
         </ul>
         <div className={s.main_box}>
-          <button onClick={handleClick}>Buy Now</button>
+          <button onClick={user === null ? handleShowSignIn : handleClick}>
+            Buy Now
+          </button>
 
           <h2>&euro;{shoeDetail.price}</h2>
         </div>

@@ -27,6 +27,7 @@ type storeType = {
   shoeRotateLeft: () => void;
   shoeDetailPopupIsActive: boolean;
   shoeDetail: shoeDetailType;
+  isShowSignIn: boolean;
   animatedCameraConfig: animatedCameraConfigType;
   animatedSecondCameraConfig: animatedCameraConfigType;
   shoeRotatingMesh: THREE.Object3D<THREE.Event> | null;
@@ -51,6 +52,7 @@ export const store = proxy<storeType>({
     price: 0,
     stripePrice: "",
   },
+  isShowSignIn: false,
   animatedCameraConfig: { x: 18, y: 2.5, z: -14.4 },
   animatedSecondCameraConfig: { x: 42, y: 2.5, z: -25.3 },
   shoeRotatingMesh: null,

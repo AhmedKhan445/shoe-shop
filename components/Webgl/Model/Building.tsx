@@ -1,38 +1,27 @@
 import * as THREE from "three";
-import React, { useEffect, useRef, useState } from "react";
-import { useCursor, useGLTF } from "@react-three/drei";
+import React, { useRef } from "react";
+import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
-import { RigidBody } from "@react-three/rapier";
-import { store } from "@/store";
-import Head from "next/head";
+import { Statue } from "./Statue";
 
 type GLTFResult = GLTF & {
   nodes: {
     Plane008: THREE.Mesh;
     VASE_2: THREE.Mesh;
-    Cylinder118: THREE.Mesh;
-    Cylinder118_1: THREE.Mesh;
-    vamp003: THREE.Mesh;
-    upper006: THREE.Mesh;
-    upper004: THREE.Mesh;
-    upper002: THREE.Mesh;
-    upper001: THREE.Mesh;
-    Undertable_Slab: THREE.Mesh;
+    Cylinder002: THREE.Mesh;
+    Cylinder002_1: THREE.Mesh;
     Torus002: THREE.Mesh;
     Torus001: THREE.Mesh;
-    toecap004: THREE.Mesh;
-    toecap002: THREE.Mesh;
     Text001: THREE.Mesh;
     superloop200_ropes_1: THREE.Mesh;
     superloop200_ropes_2: THREE.Mesh;
     superloop200_ropes_3: THREE.Mesh;
     superloop200_ropes_4: THREE.Mesh;
     superloop200_ropes_5: THREE.Mesh;
-    stitch036: THREE.Mesh;
-    StitchMatShape_11101017044: THREE.Mesh;
-    StitchMatShape_11101017044_1: THREE.Mesh;
-    StitchMatShape_11101017042: THREE.Mesh;
-    StitchMatShape_11101017042_1: THREE.Mesh;
+    StitchMatShape_11101017003: THREE.Mesh;
+    StitchMatShape_11101017003_1: THREE.Mesh;
+    StitchMatShape_11101017004: THREE.Mesh;
+    StitchMatShape_11101017004_1: THREE.Mesh;
     stitch028: THREE.Mesh;
     stitch025: THREE.Mesh;
     stitch024: THREE.Mesh;
@@ -40,7 +29,6 @@ type GLTFResult = GLTF & {
     stitch019: THREE.Mesh;
     stitch018: THREE.Mesh;
     stitch017: THREE.Mesh;
-    stitch016: THREE.Mesh;
     stitch015: THREE.Mesh;
     stitch014: THREE.Mesh;
     stitch013: THREE.Mesh;
@@ -48,51 +36,25 @@ type GLTFResult = GLTF & {
     stitch011: THREE.Mesh;
     stitch010: THREE.Mesh;
     stitch009: THREE.Mesh;
-    Plane002_1: THREE.Mesh;
-    Plane002_2: THREE.Mesh;
-    Plane017: THREE.Mesh;
-    Plane017_1: THREE.Mesh;
-    Plane024: THREE.Mesh;
-    Plane024_1: THREE.Mesh;
-    Object_0009: THREE.Mesh;
-    Object_0009_1: THREE.Mesh;
-    Object_0009_2: THREE.Mesh;
-    Object_0009_3: THREE.Mesh;
-    Object_0009_4: THREE.Mesh;
-    Plane030: THREE.Mesh;
-    Plane030_1: THREE.Mesh;
-    Plane030_2: THREE.Mesh;
-    Plane030_3: THREE.Mesh;
+    Plane006: THREE.Mesh;
+    Plane006_1: THREE.Mesh;
+    Plane010: THREE.Mesh;
+    Plane010_1: THREE.Mesh;
+    Plane011: THREE.Mesh;
+    Plane011_1: THREE.Mesh;
     side001: THREE.Mesh;
     Seat: THREE.Mesh;
     SCULPTURE001: THREE.Mesh;
-    Plane004: THREE.Mesh;
-    Plane004_1: THREE.Mesh;
+    Plane080: THREE.Mesh;
+    Plane080_1: THREE.Mesh;
     pot001: THREE.Mesh;
     plant001: THREE.Mesh;
     PLANT_2: THREE.Mesh;
     PLANT: THREE.Mesh;
-    Plane013: THREE.Mesh;
-    Plane005: THREE.Mesh;
     Plane003: THREE.Mesh;
     Plane002: THREE.Mesh;
     Plane001: THREE.Mesh;
     Plane: THREE.Mesh;
-    outsole006: THREE.Mesh;
-    outsole002: THREE.Mesh;
-    Object_3001: THREE.Mesh;
-    Object_3001_1: THREE.Mesh;
-    Object_2001_1: THREE.Mesh;
-    Object_2001_2: THREE.Mesh;
-    Object_2001_3: THREE.Mesh;
-    Object_2001_4: THREE.Mesh;
-    Object_4003: THREE.Mesh;
-    Object_0004: THREE.Mesh;
-    Object_0004_1: THREE.Mesh;
-    Object_0004_2: THREE.Mesh;
-    Object_0004_3: THREE.Mesh;
-    Object_0004_4: THREE.Mesh;
-    Object_0004_5: THREE.Mesh;
     Object_2002: THREE.Mesh;
     Object_2001: THREE.Mesh;
     NurbsPath001: THREE.Mesh;
@@ -106,27 +68,20 @@ type GLTFResult = GLTF & {
     long006: THREE.Mesh;
     long005: THREE.Mesh;
     long002: THREE.Mesh;
-    logo008: THREE.Mesh;
-    logo007: THREE.Mesh;
-    logo006: THREE.Mesh;
-    logo005: THREE.Mesh;
     logo003: THREE.Mesh;
     logo001: THREE.Mesh;
-    Plane009: THREE.Mesh;
-    Plane009_1: THREE.Mesh;
-    Plane009_2: THREE.Mesh;
+    Plane093: THREE.Mesh;
+    Plane093_1: THREE.Mesh;
+    Plane093_2: THREE.Mesh;
     BezierCurve014: THREE.Mesh;
     BezierCurve014_1: THREE.Mesh;
     BezierCurve014_2: THREE.Mesh;
     BezierCurve014_3: THREE.Mesh;
     BezierCurve014_4: THREE.Mesh;
-    Plane019: THREE.Mesh;
-    Plane019_1: THREE.Mesh;
-    Plane019_2: THREE.Mesh;
-    Plane019_3: THREE.Mesh;
-    insole_logo003: THREE.Mesh;
-    Handle_Row_2: THREE.Mesh;
-    Handle_Row_1: THREE.Mesh;
+    Plane094: THREE.Mesh;
+    Plane094_1: THREE.Mesh;
+    Plane094_2: THREE.Mesh;
+    Plane094_3: THREE.Mesh;
     ground001: THREE.Mesh;
     ground: THREE.Mesh;
     GP_Layer004: THREE.Mesh;
@@ -135,61 +90,40 @@ type GLTFResult = GLTF & {
     GP_Layer001: THREE.Mesh;
     GP_Layer: THREE.Mesh;
     glass: THREE.Mesh;
-    FireplaceHole001: THREE.Mesh;
-    scheit3: THREE.Mesh;
-    scheit3_1: THREE.Mesh;
-    scheit3_2: THREE.Mesh;
-    scheit3_3: THREE.Mesh;
-    scheit3_4: THREE.Mesh;
-    scheit3_5: THREE.Mesh;
-    Cube218: THREE.Mesh;
-    Cube218_1: THREE.Mesh;
-    Cube218_2: THREE.Mesh;
-    Circle009: THREE.Mesh;
-    Circle009_1: THREE.Mesh;
-    Cube219: THREE.Mesh;
-    Cube219_1: THREE.Mesh;
-    Cube219_2: THREE.Mesh;
-    Cylinder055: THREE.Mesh;
-    Cylinder054: THREE.Mesh;
-    Cylinder047: THREE.Mesh;
+    Cube001: THREE.Mesh;
+    Cube001_1: THREE.Mesh;
+    Cube001_2: THREE.Mesh;
+    Circle003: THREE.Mesh;
+    Circle003_1: THREE.Mesh;
+    Cube003: THREE.Mesh;
+    Cube003_1: THREE.Mesh;
+    Cube003_2: THREE.Mesh;
     Cylinder003: THREE.Mesh;
     Cube206: THREE.Mesh;
-    Cube212: THREE.Mesh;
-    Cube212_1: THREE.Mesh;
+    Cube013: THREE.Mesh;
+    Cube013_1: THREE.Mesh;
     Cube197: THREE.Mesh;
     Cube196: THREE.Mesh;
     Cube195: THREE.Mesh;
     Cube194: THREE.Mesh;
-    Cube190: THREE.Mesh;
-    Cube188: THREE.Mesh;
-    Cube187: THREE.Mesh;
-    Cube186: THREE.Mesh;
-    Cube192: THREE.Mesh;
-    Cube192_1: THREE.Mesh;
-    Cube192_2: THREE.Mesh;
-    Cube192_3: THREE.Mesh;
+    Cube023: THREE.Mesh;
+    Cube023_1: THREE.Mesh;
+    Cube023_2: THREE.Mesh;
+    Cube023_3: THREE.Mesh;
     Cube017: THREE.Mesh;
     Cube026: THREE.Mesh;
     Cube026_1: THREE.Mesh;
-    Cube015: THREE.Mesh;
-    Cube015_1: THREE.Mesh;
-    Cube199: THREE.Mesh;
-    Cube199_1: THREE.Mesh;
-    Cube008: THREE.Mesh;
-    Cube021: THREE.Mesh;
-    Cube021_1: THREE.Mesh;
-    Cube019: THREE.Mesh;
-    Cube019_1: THREE.Mesh;
-    Cube016_1: THREE.Mesh;
-    Cube016_2: THREE.Mesh;
-    Cube016_3: THREE.Mesh;
-    Cube004_1: THREE.Mesh;
-    Cube004_2: THREE.Mesh;
-    // Mesh014: THREE.Mesh;
-    // Mesh014_1: THREE.Mesh;
-    Mesh014: THREE.Mesh;
-    Mesh014_1: THREE.Mesh;
+    Cube024: THREE.Mesh;
+    Cube024_1: THREE.Mesh;
+    Cube029: THREE.Mesh;
+    Cube029_1: THREE.Mesh;
+    Cube030: THREE.Mesh;
+    Cube030_1: THREE.Mesh;
+    Cube031: THREE.Mesh;
+    Cube031_1: THREE.Mesh;
+    Cube031_2: THREE.Mesh;
+    Cube032: THREE.Mesh;
+    Cube032_1: THREE.Mesh;
     Circle043: THREE.Mesh;
     Circle042: THREE.Mesh;
     Circle041: THREE.Mesh;
@@ -200,34 +134,27 @@ type GLTFResult = GLTF & {
     Circle036: THREE.Mesh;
     Circle005: THREE.Mesh;
     Circle: THREE.Mesh;
-    chesterfield_couch: THREE.Mesh;
-    chandelier_wire: THREE.Mesh;
-    Circle139: THREE.Mesh;
-    Circle139_1: THREE.Mesh;
-    chandelier_cover: THREE.Mesh;
-    Cylinder011: THREE.Mesh;
-    Cylinder011_1: THREE.Mesh;
+    Cylinder010: THREE.Mesh;
+    Cylinder010_1: THREE.Mesh;
     Cube011: THREE.Mesh;
     Cube012: THREE.Mesh;
-    Cube015_2: THREE.Mesh;
+    Cube015: THREE.Mesh;
     Cylinder: THREE.Mesh;
-    Circle010: THREE.Mesh;
-    Circle010_1: THREE.Mesh;
-    Circle010_2: THREE.Mesh;
-    Cube018: THREE.Mesh;
-    Cube018_1: THREE.Mesh;
-    Cube018_2: THREE.Mesh;
-    Cube018_3: THREE.Mesh;
-    Cube001: THREE.Mesh;
-    Cube001_1: THREE.Mesh;
-    Cube001_2: THREE.Mesh;
-    Cube001_3: THREE.Mesh;
+    Circle006: THREE.Mesh;
+    Circle006_1: THREE.Mesh;
+    Circle006_2: THREE.Mesh;
+    Cube036: THREE.Mesh;
+    Cube036_1: THREE.Mesh;
+    Cube036_2: THREE.Mesh;
+    Cube036_3: THREE.Mesh;
+    Cube037: THREE.Mesh;
+    Cube037_1: THREE.Mesh;
+    Cube037_2: THREE.Mesh;
+    Cube037_3: THREE.Mesh;
     Cylinder015: THREE.Mesh;
     Cylinder015_1: THREE.Mesh;
     Cylinder015_2: THREE.Mesh;
     Cactus: THREE.Mesh;
-    bumper003: THREE.Mesh;
-    bumper002: THREE.Mesh;
     bubble_panel_2_white_metall_0001: THREE.Mesh;
     bubble_panel_2_Silver_0002: THREE.Mesh;
     bubble_panel_2_LAMP2_0001: THREE.Mesh;
@@ -237,136 +164,95 @@ type GLTFResult = GLTF & {
     Bolt009: THREE.Mesh;
     Bolt005: THREE.Mesh;
     Bolt004: THREE.Mesh;
-    Plane047: THREE.Mesh;
-    Plane047_1: THREE.Mesh;
-    Plane047_2: THREE.Mesh;
-    Plane047_3: THREE.Mesh;
     Cube193: THREE.Mesh;
     Cube193_1: THREE.Mesh;
     Cube193_2: THREE.Mesh;
     Cube193_3: THREE.Mesh;
-    ["02_1"]: THREE.Mesh;
-    ["02_2"]: THREE.Mesh;
-    ["02_3"]: THREE.Mesh;
-    quarter001: THREE.Mesh;
-    outsole007: THREE.Mesh;
+    ["02001"]: THREE.Mesh;
+    ["02001_1"]: THREE.Mesh;
+    ["02001_2"]: THREE.Mesh;
+    lionplace001: THREE.Mesh;
+    lionplace002: THREE.Mesh;
   };
   materials: {
-    ["rug.002"]: THREE.MeshPhysicalMaterial;
-    ["Material.025"]: THREE.MeshStandardMaterial;
-    ["Material.026"]: THREE.MeshStandardMaterial;
-    ["white base low"]: THREE.MeshStandardMaterial;
-    ["Leather Base low"]: THREE.MeshStandardMaterial;
-    ["She 6"]: THREE.MeshStandardMaterial;
-    ["red leather.002"]: THREE.MeshStandardMaterial;
-    ["Alu. Powder Coat"]: THREE.MeshStandardMaterial;
-    ["wall met"]: THREE.MeshStandardMaterial;
-    ["Shoe 7"]: THREE.MeshStandardMaterial;
-    ["gold.003"]: THREE.MeshStandardMaterial;
+    ["rug.001"]: THREE.MeshPhysicalMaterial;
+    ["Material.013"]: THREE.MeshStandardMaterial;
+    ["Material.015"]: THREE.MeshStandardMaterial;
+    ["wall met.002"]: THREE.MeshStandardMaterial;
+    ["gold.001"]: THREE.MeshStandardMaterial;
     loop_gold: THREE.MeshStandardMaterial;
     loop_emissive: THREE.MeshStandardMaterial;
     loop_chrome_brushed: THREE.MeshStandardMaterial;
     loop_plastic_black_shiny: THREE.MeshStandardMaterial;
     loop_plastic_white_matte: THREE.MeshStandardMaterial;
-    ["stitch.011"]: THREE.MeshStandardMaterial;
-    ["stitch red.001"]: THREE.MeshStandardMaterial;
-    ["stitch black.001"]: THREE.MeshStandardMaterial;
-    ["stitch white.001"]: THREE.MeshStandardMaterial;
-    ["gold LOW"]: THREE.MeshStandardMaterial;
-    ["ground 1.004"]: THREE.MeshStandardMaterial;
-    ["black 1"]: THREE.MeshStandardMaterial;
-    ["CROCODILE LOW"]: THREE.MeshStandardMaterial;
-    ["wood low"]: THREE.MeshStandardMaterial;
-    ["flag.001"]: THREE.MeshStandardMaterial;
-    flag: THREE.MeshStandardMaterial;
-    ["Material.042"]: THREE.MeshStandardMaterial;
-    ["Burlington Leather.002"]: THREE.MeshStandardMaterial;
-    ["MATE L DOOR"]: THREE.MeshStandardMaterial;
-    ["rubber black low"]: THREE.MeshStandardMaterial;
-    ["Material.023"]: THREE.MeshPhysicalMaterial;
+    ["stitch red.002"]: THREE.MeshStandardMaterial;
+    ["stitch black.003"]: THREE.MeshStandardMaterial;
+    ["stitch white.002"]: THREE.MeshStandardMaterial;
+    ["gold LOW.001"]: THREE.MeshStandardMaterial;
+    ["ground 1.005"]: THREE.MeshStandardMaterial;
+    ["MATE L DOOR.001"]: THREE.MeshStandardMaterial;
+    ["rubber black low.001"]: THREE.MeshStandardMaterial;
+    ["Material.017"]: THREE.MeshPhysicalMaterial;
     BlackPlastic: THREE.MeshStandardMaterial;
     Screen: THREE.MeshStandardMaterial;
-    ["ground 1.001"]: THREE.MeshStandardMaterial;
-    ["Material.035"]: THREE.MeshStandardMaterial;
-    ["waterLily  low"]: THREE.MeshStandardMaterial;
-    ["waterLily  low.001"]: THREE.MeshStandardMaterial;
-    ["Material.044"]: THREE.MeshStandardMaterial;
+    ["ground 1.006"]: THREE.MeshStandardMaterial;
+    ["Material.018"]: THREE.MeshStandardMaterial;
+    ["waterLily  low.002"]: THREE.MeshStandardMaterial;
+    ["waterLily  low.003"]: THREE.MeshStandardMaterial;
     ["body material"]: THREE.MeshPhysicalMaterial;
     ["animation.001"]: THREE.MeshStandardMaterial;
     animation: THREE.MeshStandardMaterial;
-    ["Shoe 5"]: THREE.MeshStandardMaterial;
-    ["Glass clean"]: THREE.MeshPhysicalMaterial;
-    ["Loewe_O_Material_u1_v1.001"]: THREE.MeshStandardMaterial;
-    ["bottom.001"]: THREE.MeshStandardMaterial;
-    ["Material.002"]: THREE.MeshStandardMaterial;
-    ["gletter low.001"]: THREE.MeshStandardMaterial;
-    ["Leather 02.001"]: THREE.MeshStandardMaterial;
-    ["Material.040"]: THREE.MeshStandardMaterial;
-    ["Material.041"]: THREE.MeshStandardMaterial;
-    ["Material.039"]: THREE.MeshStandardMaterial;
-    ["heel inner low"]: THREE.MeshStandardMaterial;
-    ["glow 1"]: THREE.MeshStandardMaterial;
+    ["glow 1.001"]: THREE.MeshStandardMaterial;
     ["Lighitng-Strings.001"]: THREE.MeshStandardMaterial;
     ["logo.001"]: THREE.MeshStandardMaterial;
     ["GLOW ALPHA"]: THREE.MeshStandardMaterial;
-    ["Shoe 4"]: THREE.MeshStandardMaterial;
-    ["logo.004"]: THREE.MeshStandardMaterial;
-    ["Shoe 8"]: THREE.MeshStandardMaterial;
-    ["ground 1.002"]: THREE.MeshStandardMaterial;
-    ["GLOW LOW"]: THREE.MeshStandardMaterial;
+    ["ground 1.007"]: THREE.MeshStandardMaterial;
+    ["GLOW LOW.001"]: THREE.MeshStandardMaterial;
     Rohdium: THREE.MeshStandardMaterial;
-    ["Material.016"]: THREE.MeshStandardMaterial;
-    ["Material.017"]: THREE.MeshStandardMaterial;
+    ["Material.028"]: THREE.MeshStandardMaterial;
+    ["Material.029"]: THREE.MeshStandardMaterial;
     Glass: THREE.MeshStandardMaterial;
     ["Light.003"]: THREE.MeshStandardMaterial;
-    ["Material.008"]: THREE.MeshStandardMaterial;
-    ["Marble Finish"]: THREE.MeshStandardMaterial;
-    ["Black murble low"]: THREE.MeshStandardMaterial;
-    ["Shoe 3"]: THREE.MeshStandardMaterial;
-    ["wood low.002"]: THREE.MeshStandardMaterial;
-    ["ground 1"]: THREE.MeshStandardMaterial;
-    gold: THREE.MeshStandardMaterial;
-    ["ground 1.005"]: THREE.MeshStandardMaterial;
-    ["Material.027"]: THREE.MeshStandardMaterial;
-    ["mantel_clock_01.001"]: THREE.MeshStandardMaterial;
-    ["ground 1.003"]: THREE.MeshStandardMaterial;
-    ["Material.030"]: THREE.MeshStandardMaterial;
-    ["Material.031"]: THREE.MeshStandardMaterial;
-    ["Material.032"]: THREE.MeshStandardMaterial;
-    ["Material.033"]: THREE.MeshStandardMaterial;
-    ["Material.034"]: THREE.MeshStandardMaterial;
-    ["WHITE GLOW"]: THREE.MeshStandardMaterial;
-    ["Material.056"]: THREE.MeshStandardMaterial;
-    ["wall met.001"]: THREE.MeshStandardMaterial;
-    stand_Metal: THREE.MeshStandardMaterial;
-    ["wood low.001"]: THREE.MeshStandardMaterial;
-    ["WHITE BLUE"]: THREE.MeshStandardMaterial;
-    Bonsai_Leaves: THREE.MeshStandardMaterial;
-    ["Material.022"]: THREE.MeshStandardMaterial;
+    ["Material.036"]: THREE.MeshStandardMaterial;
+    ["Marble Finish.001"]: THREE.MeshStandardMaterial;
+    ["Black murble low.002"]: THREE.MeshStandardMaterial;
+    ["wood low.004"]: THREE.MeshStandardMaterial;
+    ["ground 1.008"]: THREE.MeshStandardMaterial;
+    ["gold.004"]: THREE.MeshStandardMaterial;
+    ["Glass clean.001"]: THREE.MeshPhysicalMaterial;
+    ["Material.038"]: THREE.MeshStandardMaterial;
+    ["Material.049"]: THREE.MeshStandardMaterial;
+    ["Material.057"]: THREE.MeshStandardMaterial;
+    ["Material.058"]: THREE.MeshStandardMaterial;
+    ["Material.059"]: THREE.MeshStandardMaterial;
+    ["Material.060"]: THREE.MeshStandardMaterial;
+    ["wall met.003"]: THREE.MeshStandardMaterial;
+    ["stand_Metal.001"]: THREE.MeshStandardMaterial;
+    ["wood low.005"]: THREE.MeshStandardMaterial;
+    ["Bonsai_Leaves.001"]: THREE.MeshStandardMaterial;
+    ["Material.061"]: THREE.MeshStandardMaterial;
+    ["wood low.003"]: THREE.MeshStandardMaterial;
     ["Light.004"]: THREE.MeshStandardMaterial;
-    ["white mat"]: THREE.MeshStandardMaterial;
-    ["black mat"]: THREE.MeshStandardMaterial;
-    ["Black murble low.001"]: THREE.MeshStandardMaterial;
-    ["Material.053"]: THREE.MeshStandardMaterial;
-    ["pink glow"]: THREE.MeshStandardMaterial;
-    ["neon green glow.001"]: THREE.MeshStandardMaterial;
-    ["Metal Facade Aged"]: THREE.MeshStandardMaterial;
-    ["Material.012"]: THREE.MeshStandardMaterial;
-    ["Material #3.001"]: THREE.MeshStandardMaterial;
-    ["Lights - couch.001"]: THREE.MeshStandardMaterial;
+    ["white mat.001"]: THREE.MeshStandardMaterial;
+    ["black mat.001"]: THREE.MeshStandardMaterial;
+    ["pink glow.001"]: THREE.MeshStandardMaterial;
+    ["neon green glow.002"]: THREE.MeshStandardMaterial;
+    ["Metal Facade Aged.001"]: THREE.MeshStandardMaterial;
+    ["Material.063"]: THREE.MeshStandardMaterial;
     ["screw material"]: THREE.MeshStandardMaterial;
+    ["default"]: THREE.MeshStandardMaterial;
+    ["default"]: THREE.MeshStandardMaterial;
+    ["default"]: THREE.MeshStandardMaterial;
     ["light material"]: THREE.MeshStandardMaterial;
+    ["default"]: THREE.MeshStandardMaterial;
     ["LED-Lighitng.001"]: THREE.MeshStandardMaterial;
-    ["rubber browen low"]: THREE.MeshStandardMaterial;
-    black_plastic: THREE.MeshStandardMaterial;
-    silver: THREE.MeshStandardMaterial;
-    ["Material.011"]: THREE.MeshStandardMaterial;
-    ["Material.009"]: THREE.MeshStandardMaterial;
-    Fabric: THREE.MeshStandardMaterial;
-    ["Material.010"]: THREE.MeshStandardMaterial;
-    Vaso: THREE.MeshStandardMaterial;
-    Folhas: THREE.MeshStandardMaterial;
-    Terra: THREE.MeshStandardMaterial;
+    ["Material.064"]: THREE.MeshStandardMaterial;
+    ["Material.065"]: THREE.MeshStandardMaterial;
+    ["Fabric.001"]: THREE.MeshStandardMaterial;
+    ["Material.066"]: THREE.MeshStandardMaterial;
+    ["Vaso.001"]: THREE.MeshStandardMaterial;
+    ["Folhas.001"]: THREE.MeshStandardMaterial;
+    ["Terra.001"]: THREE.MeshStandardMaterial;
     ["Base.001"]: THREE.MeshPhysicalMaterial;
     ["Wire.001"]: THREE.MeshStandardMaterial;
     ["Spotlights.001"]: THREE.MeshPhysicalMaterial;
@@ -375,2358 +261,1156 @@ type GLTFResult = GLTF & {
     ["Wire.002"]: THREE.MeshStandardMaterial;
     ["Spotlights.002"]: THREE.MeshPhysicalMaterial;
     ["Light.002"]: THREE.MeshStandardMaterial;
-    ["Material.015"]: THREE.MeshStandardMaterial;
+    ["Material.067"]: THREE.MeshStandardMaterial;
     ["light 50"]: THREE.MeshStandardMaterial;
-    clay: THREE.MeshStandardMaterial;
-    ["Shoe 9"]: THREE.MeshStandardMaterial;
-    ["black pyramid low.001"]: THREE.MeshStandardMaterial;
-    ["white_metall.001"]: THREE.MeshStandardMaterial;
-    ["Silver.001"]: THREE.MeshStandardMaterial;
-    ["LAMP2.001"]: THREE.MeshStandardMaterial;
-    ["GLASS2.001"]: THREE.MeshStandardMaterial;
+    ["clay.001"]: THREE.MeshStandardMaterial;
+    ["white_metall.002"]: THREE.MeshStandardMaterial;
+    ["Silver.002"]: THREE.MeshStandardMaterial;
+    ["LAMP2.002"]: THREE.MeshStandardMaterial;
+    ["GLASS2.002"]: THREE.MeshStandardMaterial;
     metal_shower: THREE.MeshStandardMaterial;
     Base: THREE.MeshPhysicalMaterial;
     Wire: THREE.MeshStandardMaterial;
     Spotlights: THREE.MeshPhysicalMaterial;
     Light: THREE.MeshStandardMaterial;
-    ["bark_Mat.001"]: THREE.MeshStandardMaterial;
-    wheat_Mat: THREE.MeshStandardMaterial;
-    leave_1_Mat: THREE.MeshStandardMaterial;
-    ["Shoe 11"]: THREE.MeshStandardMaterial;
-    ["rubber black low.001"]: THREE.MeshPhysicalMaterial;
+    ["bark_Mat.002"]: THREE.MeshStandardMaterial;
+    ["wheat_Mat.001"]: THREE.MeshStandardMaterial;
+    ["leave_1_Mat.001"]: THREE.MeshStandardMaterial;
+    ["default"]: THREE.MeshStandardMaterial;
+    ["default"]: THREE.MeshStandardMaterial;
   };
 };
 
-export function Building(props: JSX.IntrinsicElements["group"]) {
+export function Building({
+  setPositionX,
+  setPositionY,
+  setPositionZ,
+}: {
+  setPositionX: React.Dispatch<React.SetStateAction<number>>;
+  setPositionY: React.Dispatch<React.SetStateAction<number>>;
+  setPositionZ: React.Dispatch<React.SetStateAction<number>>;
+}) {
   const { nodes, materials } = useGLTF("/building.glb") as GLTFResult;
-  const [hovered, setHovered] = useState<boolean>(false);
-
-  const fixedMeshOne = useRef<THREE.Mesh>(null);
-  const fixedMeshTwo = useRef<THREE.Mesh>(null);
-  const fixedMeshThree = useRef<THREE.Mesh>(null);
-
-  // fixing pivot point
-
-  useEffect(() => {
-    fixedMeshOne.current?.geometry.center();
-    fixedMeshTwo.current?.geometry.center();
-    fixedMeshThree.current?.geometry.center();
-  }, []);
-
-  useCursor(hovered);
-
-  const handleShoe = (
-    object: THREE.Object3D<THREE.Event>,
-    detail: {
-      heading: string;
-      subheading: string;
-      detail: string[];
-      price: number;
-      stripePrice: string;
-    },
-    cameraConfig: { x: number; y: number; z: number }
-  ) => {
-    store.shoeCameraDefault = true;
-    store.animatedCameraConfig = cameraConfig;
-
-    store.shoeDetailPopupIsActive = true;
-    store.shoeDetail = detail;
-    store.shoeRotatingMesh = object;
-  };
   return (
-    <group scale={1.8} {...props} dispose={null}>
+    <group dispose={null}>
       <group
-        position={[0, -0.02, -1.4]}
+        position={[0, -0.022, -1.399]}
         rotation={[0, Math.PI / 2, 0]}
         scale={0.04}
       >
         <mesh
-          castShadow
-          receiveShadow
           geometry={nodes.Plane008.geometry}
-          material={materials["rug.002"]}
-          position={[-9.02, 0, 0]}
-          scale={[25.24, 25.24, 32.52]}
+          material={materials["rug.001"]}
+          position={[-9.018, 0, 0]}
+          scale={[25.244, 25.244, 32.516]}
         />
       </group>
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.VASE_2.geometry}
-        material={materials["Material.025"]}
-        position={[32.03, -0.06, -12.82]}
-        rotation={[-Math.PI, 0.44, -Math.PI]}
-        scale={1.27}
+        material={materials["Material.013"]}
+        position={[32.033, -0.063, -12.817]}
+        rotation={[-Math.PI, 0.435, -Math.PI]}
+        scale={1.268}
       />
       <group
-        position={[32.03, -0.06, -12.82]}
-        rotation={[-Math.PI, 0.44, -Math.PI]}
-        scale={1.27}
+        position={[32.033, -0.063, -12.817]}
+        rotation={[-Math.PI, 0.435, -Math.PI]}
+        scale={1.268}
       >
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cylinder118.geometry}
-          material={materials["Material.025"]}
+          geometry={nodes.Cylinder002.geometry}
+          material={materials["Material.013"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cylinder118_1.geometry}
-          material={materials["Material.026"]}
+          geometry={nodes.Cylinder002_1.geometry}
+          material={materials["Material.015"]}
         />
       </group>
       <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.vamp003.geometry}
-        material={materials["white base low"]}
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.upper006.geometry}
-        material={materials["Leather Base low"]}
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
-      />
-      <mesh
-        onClick={(e) =>
-          handleShoe(
-            e.object,
-            {
-              heading: "GENESIS",
-              subheading: "(Future Ultra high-top sneaker)",
-              detail: [
-                "Black calf leather",
-                "Metal gold special materiel",
-                "Black elastic",
-                "Black rubber",
-                "Black nylon",
-              ],
-              price: 0,
-              stripePrice: "",
-            },
-            {
-              x: 22.11,
-              y: 2.2,
-              z: -4.2,
-            }
-          )
-        }
-        onPointerEnter={() => setHovered(true)}
-        onPointerLeave={() => setHovered(false)}
-        castShadow
-        receiveShadow
-        geometry={nodes.upper004.geometry}
-        material={materials["She 6"]}
-        position={[12.23, 1.05, -1.04]}
-        rotation={[Math.PI, -0.21, 0]}
-        scale={-0.14}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.upper002.geometry}
-        material={materials["red leather.002"]}
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.upper001.geometry}
-        material={materials["red leather.002"]}
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Undertable_Slab.geometry}
-        material={materials["Alu. Powder Coat"]}
-        position={[61.49, -1.26, -19.48]}
-        rotation={[0, 0, -Math.PI]}
-        scale={0.77}
-      />
-      <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Torus002.geometry}
-        material={materials["wall met"]}
-        position={[25.98, 3.06, -9.8]}
+        material={materials["wall met.002"]}
+        position={[25.978, 3.06, -9.8]}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Torus001.geometry}
-        material={materials["wall met"]}
+        material={materials["wall met.002"]}
         position={[9.15, 3.06, -10.62]}
       />
       <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.toecap004.geometry}
-        material={materials["Leather Base low"]}
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
-      />
-      <mesh
-        onClick={(e) =>
-          handleShoe(
-            e.object,
-            {
-              heading: "Al Buraq",
-              subheading: "(chunky sock design)",
-              detail: [
-                "Black calf leather",
-                "White calf leather",
-                "White Lycra",
-                "Arrow white black special laces",
-                "Black rubber",
-              ],
-              price: 0,
-              stripePrice: "",
-            },
-            {
-              x: 17.8,
-              y: 2.6,
-              z: -5.7,
-            }
-          )
-        }
-        ref={fixedMeshOne}
-        onPointerEnter={() => setHovered(true)}
-        onPointerLeave={() => setHovered(false)}
-        castShadow
-        receiveShadow
-        geometry={nodes.toecap002.geometry}
-        material={materials["Shoe 7"]}
-        position={[10, 1.5, -2.17]}
-        rotation={[Math.PI, -1.25, 0]}
-        scale={-0.15}
-      />
-      <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Text001.geometry}
-        material={materials["gold.003"]}
-        position={[-0.11, -0.02, -0.71]}
-        scale={0.68}
+        material={materials["gold.001"]}
+        position={[-0.105, -0.017, -0.711]}
+        scale={0.676}
       />
       <group
-        position={[19.3, 2.94, -16.92]}
+        position={[19.303, 2.945, -16.924]}
         rotation={[0, 0, Math.PI]}
-        scale={[0.42, 0.67, 0.42]}
+        scale={[0.418, 0.667, 0.418]}
       >
         <mesh
-          castShadow
-          receiveShadow
           geometry={nodes.superloop200_ropes_1.geometry}
           material={materials.loop_gold}
         />
         <mesh
-          castShadow
-          receiveShadow
           geometry={nodes.superloop200_ropes_2.geometry}
           material={materials.loop_emissive}
         />
         <mesh
-          castShadow
-          receiveShadow
           geometry={nodes.superloop200_ropes_3.geometry}
           material={materials.loop_chrome_brushed}
         />
         <mesh
-          castShadow
-          receiveShadow
           geometry={nodes.superloop200_ropes_4.geometry}
           material={materials.loop_plastic_black_shiny}
         />
         <mesh
-          castShadow
-          receiveShadow
           geometry={nodes.superloop200_ropes_5.geometry}
           material={materials.loop_plastic_white_matte}
         />
       </group>
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.stitch036.geometry}
-        material={materials["stitch.011"]}
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
-      />
       <group
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
+        position={[56.566, -0.712, -10.691]}
+        rotation={[-Math.PI / 2, 0.698, Math.PI / 2]}
+        scale={0.166}
       >
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.StitchMatShape_11101017044.geometry}
-          material={materials["stitch red.001"]}
+          geometry={nodes.StitchMatShape_11101017003.geometry}
+          material={materials["stitch red.002"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.StitchMatShape_11101017044_1.geometry}
-          material={materials["stitch black.001"]}
+          geometry={nodes.StitchMatShape_11101017003_1.geometry}
+          material={materials["stitch black.003"]}
         />
       </group>
       <group
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
+        position={[56.566, -0.712, -10.691]}
+        rotation={[-Math.PI / 2, 0.698, Math.PI / 2]}
+        scale={0.166}
       >
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.StitchMatShape_11101017042.geometry}
-          material={materials["stitch red.001"]}
+          geometry={nodes.StitchMatShape_11101017004.geometry}
+          material={materials["stitch red.002"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.StitchMatShape_11101017042_1.geometry}
-          material={materials["stitch black.001"]}
+          geometry={nodes.StitchMatShape_11101017004_1.geometry}
+          material={materials["stitch black.003"]}
         />
       </group>
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.stitch028.geometry}
-        material={materials["stitch black.001"]}
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
+        material={materials["stitch black.003"]}
+        position={[56.566, -0.712, -10.691]}
+        rotation={[-Math.PI / 2, 0.698, Math.PI / 2]}
+        scale={0.166}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.stitch025.geometry}
-        material={materials["stitch black.001"]}
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
+        material={materials["stitch black.003"]}
+        position={[56.566, -0.712, -10.691]}
+        rotation={[-Math.PI / 2, 0.698, Math.PI / 2]}
+        scale={0.166}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.stitch024.geometry}
-        material={materials["stitch red.001"]}
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
+        material={materials["stitch red.002"]}
+        position={[56.566, -0.712, -10.691]}
+        rotation={[-Math.PI / 2, 0.698, Math.PI / 2]}
+        scale={0.166}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.stitch020.geometry}
-        material={materials["stitch red.001"]}
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
+        material={materials["stitch red.002"]}
+        position={[56.566, -0.712, -10.691]}
+        rotation={[-Math.PI / 2, 0.698, Math.PI / 2]}
+        scale={0.166}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.stitch019.geometry}
-        material={materials["stitch black.001"]}
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
+        material={materials["stitch black.003"]}
+        position={[56.566, -0.712, -10.691]}
+        rotation={[-Math.PI / 2, 0.698, Math.PI / 2]}
+        scale={0.166}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.stitch018.geometry}
-        material={materials["stitch black.001"]}
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
+        material={materials["stitch black.003"]}
+        position={[56.566, -0.712, -10.691]}
+        rotation={[-Math.PI / 2, 0.698, Math.PI / 2]}
+        scale={0.166}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.stitch017.geometry}
-        material={materials["stitch red.001"]}
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
+        material={materials["stitch red.002"]}
+        position={[56.566, -0.712, -10.691]}
+        rotation={[-Math.PI / 2, 0.698, Math.PI / 2]}
+        scale={0.166}
       />
       <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.stitch016.geometry}
-        material={materials["stitch red.001"]}
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
-      />
-      <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.stitch015.geometry}
-        material={materials["stitch red.001"]}
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
+        material={materials["stitch red.002"]}
+        position={[56.566, -0.712, -10.691]}
+        rotation={[-Math.PI / 2, 0.698, Math.PI / 2]}
+        scale={0.166}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.stitch014.geometry}
-        material={materials["stitch red.001"]}
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
+        material={materials["stitch red.002"]}
+        position={[56.566, -0.712, -10.691]}
+        rotation={[-Math.PI / 2, 0.698, Math.PI / 2]}
+        scale={0.166}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.stitch013.geometry}
-        material={materials["stitch red.001"]}
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
+        material={materials["stitch red.002"]}
+        position={[56.566, -0.712, -10.691]}
+        rotation={[-Math.PI / 2, 0.698, Math.PI / 2]}
+        scale={0.166}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.stitch012.geometry}
-        material={materials["stitch red.001"]}
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
+        material={materials["stitch red.002"]}
+        position={[56.566, -0.712, -10.691]}
+        rotation={[-Math.PI / 2, 0.698, Math.PI / 2]}
+        scale={0.166}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.stitch011.geometry}
-        material={materials["stitch white.001"]}
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
+        material={materials["stitch white.002"]}
+        position={[56.566, -0.712, -10.691]}
+        rotation={[-Math.PI / 2, 0.698, Math.PI / 2]}
+        scale={0.166}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.stitch010.geometry}
-        material={materials["stitch white.001"]}
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
+        material={materials["stitch white.002"]}
+        position={[56.566, -0.712, -10.691]}
+        rotation={[-Math.PI / 2, 0.698, Math.PI / 2]}
+        scale={0.166}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.stitch009.geometry}
-        material={materials["stitch black.001"]}
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
+        material={materials["stitch black.003"]}
+        position={[56.566, -0.712, -10.691]}
+        rotation={[-Math.PI / 2, 0.698, Math.PI / 2]}
+        scale={0.166}
       />
       <group
-        position={[32.03, -0.06, -12.82]}
-        rotation={[-Math.PI, 0.44, -Math.PI]}
-        scale={1.27}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        position={[32.033, -0.063, -12.817]}
+        rotation={[-Math.PI, 0.435, -Math.PI]}
+        scale={1.268}
       >
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane002_1.geometry}
-          material={materials["gold LOW"]}
+          geometry={nodes.Plane006.geometry}
+          material={materials["gold LOW.001"]}
         />
-
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane002_2.geometry}
-          material={materials["ground 1.004"]}
+          geometry={nodes.Plane006_1.geometry}
+          material={materials["ground 1.005"]}
         />
       </group>
       <group
-        position={[32.03, -0.06, -12.82]}
-        rotation={[-Math.PI, 0.44, -Math.PI]}
-        scale={1.27}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        position={[32.033, -0.063, -12.817]}
+        rotation={[-Math.PI, 0.435, -Math.PI]}
+        scale={1.268}
       >
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane017.geometry}
-          material={materials["gold LOW"]}
+          geometry={nodes.Plane010.geometry}
+          material={materials["gold LOW.001"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane017_1.geometry}
-          material={materials["ground 1.004"]}
+          geometry={nodes.Plane010_1.geometry}
+          material={materials["ground 1.005"]}
         />
       </group>
       <group
-        position={[32.03, -0.06, -12.82]}
-        rotation={[-Math.PI, 0.44, -Math.PI]}
-        scale={1.27}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        position={[32.033, -0.063, -12.817]}
+        rotation={[-Math.PI, 0.435, -Math.PI]}
+        scale={1.268}
       >
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane024.geometry}
-          material={materials["gold LOW"]}
+          geometry={nodes.Plane011.geometry}
+          material={materials["gold LOW.001"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane024_1.geometry}
-          material={materials["ground 1.004"]}
-        />
-      </group>
-      <group
-        position={[25.97, 0.88, -16.78]}
-        rotation={[-1.55, 0.04, 2.58]}
-        scale={0.02}
-        visible={false}
-      >
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_0009.geometry}
-          material={materials["black 1"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_0009_1.geometry}
-          material={materials["CROCODILE LOW"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_0009_2.geometry}
-          material={materials["gold LOW"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_0009_3.geometry}
-          material={materials["wood low"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_0009_4.geometry}
-          material={materials["flag.001"]}
-        />
-      </group>
-      <group
-        position={[25.07, 0.89, -17.3]}
-        rotation={[3.14, 0.45, 2.52]}
-        scale={[0.02, 0.02, 0.01]}
-        visible={false}
-      >
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane030.geometry}
-          material={materials.flag}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane030_1.geometry}
-          material={materials["black 1"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane030_2.geometry}
-          material={materials["Material.042"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane030_3.geometry}
-          material={materials["Burlington Leather.002"]}
+          geometry={nodes.Plane011_1.geometry}
+          material={materials["ground 1.005"]}
         />
       </group>
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.side001.geometry}
-        material={materials["MATE L DOOR"]}
-        position={[-6.57, 0.14, -0.73]}
+        material={materials["MATE L DOOR.001"]}
+        position={[-6.571, 0.14, -0.731]}
         rotation={[-Math.PI / 2, 0, -Math.PI]}
-        scale={[-0.03, -0.01, -0.01]}
+        scale={[-0.028, -0.011, -0.015]}
       />
-      <RigidBody type="fixed" colliders="hull">
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Seat.geometry}
-          material={materials["rubber black low"]}
-          position={[20.09, -0.06, -18.9]}
-          rotation={[0, -0.51, 0]}
-          scale={1.9}
-        />
-      </RigidBody>
       <mesh
-        castShadow
-        receiveShadow
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        geometry={nodes.Seat.geometry}
+        material={materials["rubber black low.001"]}
+        position={[20.087, -0.063, -18.896]}
+        rotation={[0, -0.515, 0]}
+        scale={1.898}
+      />
+      <mesh
         geometry={nodes.SCULPTURE001.geometry}
-        material={materials["Material.023"]}
-        position={[31.94, -0.06, -12.67]}
-        rotation={[-Math.PI, 0.44, -Math.PI]}
-        scale={1.27}
+        material={materials["Material.017"]}
+        position={[31.937, -0.063, -12.674]}
+        rotation={[-Math.PI, 0.435, -Math.PI]}
+        scale={1.268}
       />
       <group
-        position={[0.99, 1.43, -13.59]}
-        rotation={[1.78, -0.07, 2.8]}
-        scale={1.26}
+        position={[0.99, 1.432, -13.591]}
+        rotation={[1.775, -0.074, 2.797]}
+        scale={1.262}
       >
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane004.geometry}
+          geometry={nodes.Plane080.geometry}
           material={materials.BlackPlastic}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane004_1.geometry}
+          geometry={nodes.Plane080_1.geometry}
           material={materials.Screen}
         />
       </group>
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.pot001.geometry}
-        material={materials["ground 1.001"]}
-        position={[27.08, -0.06, -15.61]}
+        material={materials["ground 1.006"]}
+        position={[27.078, -0.063, -15.608]}
         rotation={[Math.PI, 0, Math.PI]}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.plant001.geometry}
-        material={materials["Material.035"]}
-        position={[27.08, -0.06, -15.61]}
+        material={materials["Material.018"]}
+        position={[27.078, -0.063, -15.608]}
         rotation={[Math.PI, 0, Math.PI]}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.PLANT_2.geometry}
-        material={materials["waterLily  low"]}
-        position={[32.03, -0.06, -12.82]}
-        rotation={[-Math.PI, 0.44, -Math.PI]}
-        scale={1.27}
+        material={materials["waterLily  low.002"]}
+        position={[32.033, -0.063, -12.817]}
+        rotation={[-Math.PI, 0.435, -Math.PI]}
+        scale={1.268}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.PLANT.geometry}
-        material={materials["waterLily  low.001"]}
-        position={[32.82, 1.89, -12.43]}
-        rotation={[Math.PI, -0.12, Math.PI]}
-        scale={1.27}
+        material={materials["waterLily  low.003"]}
+        position={[32.817, 1.894, -12.431]}
+        rotation={[Math.PI, -0.121, Math.PI]}
+        scale={1.268}
       />
       <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Plane013.geometry}
-        material={materials["red leather.002"]}
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Plane005.geometry}
-        material={materials["Material.044"]}
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
-      />
-      <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Plane003.geometry}
         material={materials["body material"]}
-        position={[16.47, 2.35, -3.08]}
-        rotation={[-3.07, 0, 3.08]}
-        scale={1.12}
+        position={[16.468, 2.348, -3.075]}
+        rotation={[-3.072, 0, 3.076]}
+        scale={1.122}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Plane002.geometry}
         material={materials["animation.001"]}
-        position={[24.82, 4.75, -9.73]}
-        scale={7.03}
+        position={[24.823, 4.747, -9.727]}
+        scale={7.031}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Plane001.geometry}
         material={materials.animation}
-        position={[10.62, 4.75, -10.33]}
-        scale={7.03}
+        position={[10.618, 4.747, -10.332]}
+        scale={7.031}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Plane.geometry}
-        material={materials["wall met"]}
-        position={[15.97, 2.94, -10.13]}
+        material={materials["wall met.002"]}
+        position={[15.973, 2.939, -10.128]}
         scale={[18.7, 13.77, 13.77]}
       />
       <mesh
-        onClick={(e) =>
-          handleShoe(
-            e.object,
-            {
-              heading: "Elites Of Tomorrow",
-              subheading: "(vintage high top)",
-              detail: [
-                "Varnish patent leather",
-                "black special material",
-                "White marble rubber",
-                "Metal gold special material",
-                "Calf leather croc print black special material",
-                "Canary cotton",
-                "Canary nylon",
-              ],
-              price: 236.9,
-              stripePrice: "",
-            },
-            {
-              x: 26.5,
-              y: 3,
-              z: -2.7,
-            }
-          )
-        }
-        onPointerEnter={() => setHovered(true)}
-        onPointerLeave={() => setHovered(false)}
-        castShadow
-        receiveShadow
-        geometry={nodes.outsole006.geometry}
-        material={materials["Shoe 5"]}
-        position={[14.6, 1.51, -0.05]}
-        rotation={[-0.07, -1.25, 3.1]}
-        scale={[-0.13, -0.12, -0.12]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.outsole002.geometry}
-        material={materials["rubber black low"]}
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
-      />
-      <group
-        position={[56.43, -1.77, -10.68]}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        geometry={nodes.Object_2002.geometry}
+        material={materials["ground 1.006"]}
+        position={[17.672, 1.443, -7.04]}
         rotation={[-Math.PI / 2, 0, 0]}
-        scale={0}
-      >
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_3001.geometry}
-          material={materials["Glass clean"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_3001_1.geometry}
-          material={materials["MATE L DOOR"]}
-        />
-      </group>
-      <group
-        position={[-2.62, 0, 3.48]}
-        rotation={[Math.PI / 2, 0, -Math.PI / 2]}
-        scale={-0.08}
-      >
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_2001_1.geometry}
-          material={materials["Loewe_O_Material_u1_v1.001"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_2001_2.geometry}
-          material={materials["bottom.001"]}
-        />
-      </group>
-      <group
-        position={[2.48, 0, 3.48]}
-        rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
-        scale={0.08}
-      >
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_2001_3.geometry}
-          material={materials["Loewe_O_Material_u1_v1.001"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_2001_4.geometry}
-          material={materials["bottom.001"]}
-        />
-      </group>
-      <mesh
-        onClick={(e) =>
-          handleShoe(
-            e.object,
-            {
-              heading: "CASANOVA",
-              subheading: "(contemporary sock runner)",
-              detail: [
-                "Black calf leather",
-                "Black lycra",
-                "Arrow white black special laces",
-                "Black elastic",
-                "Black rubber",
-              ],
-              price: 227.99,
-              stripePrice: "",
-            },
-            {
-              x: 16,
-              y: 2.7,
-              z: -7.1,
-            }
-          )
-        }
-        onPointerEnter={() => setHovered(true)}
-        onPointerLeave={() => setHovered(false)}
-        castShadow
-        receiveShadow
-        geometry={nodes.Object_4003.geometry}
-        material={materials["Material.002"]}
-        position={[8.92, 1.4, -2.83]}
-        rotation={[Math.PI, -1.2, 0]}
-        scale={-2.03}
+        scale={[0.078, 0.078, 0.06]}
       />
-      <group
-        position={[25.6, 0.94, -17.3]}
-        rotation={[-1.53, 0, 2.5]}
-        scale={0.02}
-        visible={false}
-      >
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_0004.geometry}
-          material={materials["gletter low.001"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_0004_1.geometry}
-          material={materials["Leather 02.001"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_0004_2.geometry}
-          material={materials["Material.040"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_0004_3.geometry}
-          material={materials["Material.041"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_0004_4.geometry}
-          material={materials["Material.039"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_0004_5.geometry}
-          material={materials["heel inner low"]}
-        />
-      </group>
-      <RigidBody type="fixed" colliders="hull">
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_2002.geometry}
-          material={materials["ground 1.001"]}
-          position={[17.67, 1.44, -7.04]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          scale={[0.08, 0.08, 0.06]}
-        />
-      </RigidBody>
-      <RigidBody type="fixed" colliders="hull">
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_2001.geometry}
-          material={materials["ground 1.001"]}
-          position={[17.69, 1.44, -14.71]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          scale={[0.08, 0.08, 0.06]}
-        />
-      </RigidBody>
       <mesh
-        castShadow
-        receiveShadow
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        geometry={nodes.Object_2001.geometry}
+        material={materials["ground 1.006"]}
+        position={[17.691, 1.443, -14.713]}
+        rotation={[-Math.PI / 2, 0, 0]}
+        scale={[0.078, 0.078, 0.06]}
+      />
+      <mesh
         geometry={nodes.NurbsPath001.geometry}
-        material={materials["glow 1"]}
-        position={[-1, -0.01, -4.55]}
+        material={materials["glow 1.001"]}
+        position={[-1.004, -0.013, -4.548]}
         rotation={[Math.PI / 2, 0, -Math.PI / 2]}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.NurbsPath.geometry}
         material={materials["Lighitng-Strings.001"]}
-        position={[17.91, 2.94, -10.66]}
+        position={[17.913, 2.939, -10.659]}
         rotation={[0, 0, Math.PI]}
-        scale={0.37}
+        scale={0.365}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.mount001.geometry}
-        material={materials["MATE L DOOR"]}
-        position={[0.47, 0.44, 1.96]}
+        material={materials["MATE L DOOR.001"]}
+        position={[0.47, 0.439, 1.965]}
         rotation={[-Math.PI / 2, 0, -Math.PI]}
-        scale={[-0.03, -0.01, -0.01]}
+        scale={[-0.028, -0.011, -0.015]}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.mount.geometry}
-        material={materials["MATE L DOOR"]}
-        position={[1.62, 0.44, 1.96]}
+        material={materials["MATE L DOOR.001"]}
+        position={[1.622, 0.439, 1.965]}
         rotation={[-Math.PI / 2, 0, -Math.PI]}
-        scale={[-0.03, -0.01, -0.01]}
+        scale={[-0.028, -0.011, -0.015]}
       />
-      <RigidBody type="fixed" colliders="hull">
-        <group
-          position={[9.41, -0.03, -9.53]}
-          rotation={[-Math.PI, 0.09, -Math.PI]}
-          scale={0.05}
-        >
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.MASH2_ReproMesh2_logo_0001_1.geometry}
-            material={materials["logo.001"]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.MASH2_ReproMesh2_logo_0001_2.geometry}
-            material={materials["GLOW ALPHA"]}
-          />
-        </group>
-      </RigidBody>
-      <RigidBody type="fixed" colliders="hull">
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.long008.geometry}
-          material={materials["wall met"]}
-          position={[24, 0, -18.3]}
-          rotation={[0, -Math.PI / 6, 0]}
-        />
-      </RigidBody>
-      <RigidBody type="fixed" colliders="hull">
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.long007.geometry}
-          material={materials["wall met"]}
-          position={[24, 0, -3.95]}
-          rotation={[0, Math.PI / 6, 0]}
-        />
-      </RigidBody>
-      <RigidBody type="fixed" colliders="hull">
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.long006.geometry}
-          material={materials["wall met"]}
-          position={[7.74, 0, -19.43]}
-          rotation={[0, 0.36, 0]}
-        />
-      </RigidBody>
-      <RigidBody type="fixed" colliders="hull">
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.long005.geometry}
-          material={materials["wall met"]}
-          position={[9.1, 0, -2.28]}
-          rotation={[0, -0.37, 0]}
-        />
-      </RigidBody>
-      <RigidBody type="fixed" colliders="hull">
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.long002.geometry}
-          material={materials["wall met"]}
-          position={[-2.5, 0, -7.3]}
-        />
-      </RigidBody>
-      <mesh
-        onClick={(e) =>
-          handleShoe(
-            e.object,
-            {
-              heading: "BARRICADE",
-              subheading: "(chunky sock design)",
-              detail: [
-                "Varnish patent leather black special material",
-                "Metal gold special material",
-                "Black lycra",
-                "Black cotton",
-                "White rubber",
-              ],
-              price: 0,
-              stripePrice: "",
-            },
-            {
-              x: 25.5,
-              y: 1.6,
-              z: -2.7,
-            }
-          )
-        }
-        ref={fixedMeshThree}
-        onPointerEnter={() => setHovered(true)}
-        onPointerLeave={() => setHovered(false)}
-        castShadow
-        receiveShadow
-        geometry={nodes.logo008.geometry}
-        material={materials["Shoe 4"]}
-        position={[14.2, 0.95, -0.04]}
-        rotation={[0, -1.28, -Math.PI]}
-        scale={-0.15}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.logo007.geometry}
-        material={materials["white base low"]}
-        position={[56.23, -0.75, -10.59]}
-        rotation={[-1.3, 0.47, -3.13]}
-        scale={0.17}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.logo006.geometry}
-        material={materials["logo.004"]}
-        position={[56.23, -0.75, -10.59]}
-        rotation={[-1.3, 0.47, -3.13]}
-        scale={0.17}
-      />
-      <mesh
-        onClick={(e) =>
-          handleShoe(
-            e.object,
-            {
-              heading: "GOLDIE",
-              subheading: "(classic runner style)",
-              detail: [
-                "Gold leather pyramid special material",
-                "Black calf leather",
-                "Python print white special material",
-                "Metal silver special material",
-                "Arrow white black laces",
-                "White rubber",
-              ],
-              price: 0,
-              stripePrice: "",
-            },
-            {
-              x: 11.3,
-              y: 3.9,
-              z: -8.4,
-            }
-          )
-        }
-        onPointerEnter={() => setHovered(true)}
-        onPointerLeave={() => setHovered(false)}
-        castShadow
-        receiveShadow
-        geometry={nodes.logo005.geometry}
-        material={materials["Shoe 8"]}
-        position={[6.28, 2.06, -3.73]}
-        rotation={[0, 0.57, 0]}
-        scale={0.17}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.logo003.geometry}
-        material={materials["gold LOW"]}
-        position={[-0.01, 2.07, -15.81]}
-        rotation={[Math.PI / 2, 0, -0.37]}
-        scale={3.17}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.logo001.geometry}
-        material={materials["gold LOW"]}
-        position={[1.6, 0.54, -13]}
-        rotation={[Math.PI / 2, 0, -0.36]}
-        scale={[4.27, 2.5, 4.27]}
-      />
-      <RigidBody type="fixed" colliders="hull">
-        <group
-          position={[28.57, -0.06, -14.75]}
-          rotation={[-Math.PI, 0.48, -Math.PI]}
-          scale={1.53}
-        >
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane009.geometry}
-            material={materials["ground 1.002"]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane009_1.geometry}
-            material={materials["gold LOW"]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane009_2.geometry}
-            material={materials["GLOW LOW"]}
-          />
-        </group>
-      </RigidBody>
       <group
-        position={[1.68, 2.82, -12.04]}
-        rotation={[0, 0, Math.PI]}
-        scale={1.91}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        position={[9.41, -0.027, -9.532]}
+        rotation={[-Math.PI, 0.09, -Math.PI]}
+        scale={0.052}
       >
         <mesh
-          castShadow
-          receiveShadow
+          geometry={nodes.MASH2_ReproMesh2_logo_0001_1.geometry}
+          material={materials["logo.001"]}
+        />
+        <mesh
+          geometry={nodes.MASH2_ReproMesh2_logo_0001_2.geometry}
+          material={materials["GLOW ALPHA"]}
+        />
+      </group>
+      <mesh
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        geometry={nodes.long008.geometry}
+        material={materials["wall met.002"]}
+        position={[24.003, 0, -18.296]}
+        rotation={[0, -Math.PI / 6, 0]}
+      />
+      <mesh
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        geometry={nodes.long007.geometry}
+        material={materials["wall met.002"]}
+        position={[24.003, 0, -3.948]}
+        rotation={[0, Math.PI / 6, 0]}
+      />
+      <mesh
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        geometry={nodes.long006.geometry}
+        material={materials["wall met.002"]}
+        position={[7.736, 0, -19.43]}
+        rotation={[0, 0.364, 0]}
+      />
+      <mesh
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        geometry={nodes.long005.geometry}
+        material={materials["wall met.002"]}
+        position={[9.097, 0, -2.283]}
+        rotation={[0, -0.373, 0]}
+      />
+      <mesh
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        geometry={nodes.long002.geometry}
+        material={materials["wall met.002"]}
+        position={[-2.5, 0, -7.301]}
+      />
+      <mesh
+        geometry={nodes.logo003.geometry}
+        material={materials["gold LOW.001"]}
+        position={[-0.01, 2.072, -15.809]}
+        rotation={[Math.PI / 2, 0, -0.372]}
+        scale={3.174}
+      />
+      <mesh
+        geometry={nodes.logo001.geometry}
+        material={materials["gold LOW.001"]}
+        position={[1.597, 0.54, -13.001]}
+        rotation={[Math.PI / 2, 0, -0.362]}
+        scale={[4.27, 2.503, 4.27]}
+      />
+      <group
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        position={[28.569, -0.063, -14.748]}
+        rotation={[-Math.PI, 0.484, -Math.PI]}
+        scale={1.526}
+      >
+        <mesh
+          geometry={nodes.Plane093.geometry}
+          material={materials["ground 1.007"]}
+        />
+        <mesh
+          geometry={nodes.Plane093_1.geometry}
+          material={materials["gold LOW.001"]}
+        />
+        <mesh
+          geometry={nodes.Plane093_2.geometry}
+          material={materials["GLOW LOW.001"]}
+        />
+      </group>
+      <group
+        position={[1.68, 2.824, -12.045]}
+        rotation={[0, 0, Math.PI]}
+        scale={1.915}
+      >
+        <mesh
           geometry={nodes.BezierCurve014.geometry}
           material={materials.Rohdium}
         />
         <mesh
-          castShadow
-          receiveShadow
           geometry={nodes.BezierCurve014_1.geometry}
-          material={materials["Material.016"]}
+          material={materials["Material.028"]}
         />
         <mesh
-          castShadow
-          receiveShadow
           geometry={nodes.BezierCurve014_2.geometry}
-          material={materials["Material.017"]}
+          material={materials["Material.029"]}
         />
         <mesh
-          castShadow
-          receiveShadow
           geometry={nodes.BezierCurve014_3.geometry}
           material={materials.Glass}
         />
         <mesh
-          castShadow
-          receiveShadow
           geometry={nodes.BezierCurve014_4.geometry}
           material={materials["Light.003"]}
         />
       </group>
-      <RigidBody type="fixed" colliders="hull">
-        <group
-          position={[1.05, 0.93, -13.58]}
-          rotation={[Math.PI / 2, 0, 2.78]}
-          scale={1.41}
-        >
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane019.geometry}
-            material={materials["Material.008"]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane019_1.geometry}
-            material={materials["gold LOW"]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane019_2.geometry}
-            material={materials["Marble Finish"]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane019_3.geometry}
-            material={materials["Black murble low"]}
-          />
-        </group>
-      </RigidBody>
+      <group
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        position={[1.053, 0.929, -13.577]}
+        rotation={[Math.PI / 2, 0, 2.78]}
+        scale={1.409}
+      >
+        <mesh
+          geometry={nodes.Plane094.geometry}
+          material={materials["Material.036"]}
+        />
+        <mesh
+          geometry={nodes.Plane094_1.geometry}
+          material={materials["gold LOW.001"]}
+        />
+        <mesh
+          geometry={nodes.Plane094_2.geometry}
+          material={materials["Marble Finish.001"]}
+        />
+        <mesh
+          geometry={nodes.Plane094_3.geometry}
+          material={materials["Black murble low.002"]}
+        />
+      </group>
       <mesh
-        onClick={(e) =>
-          handleShoe(
-            e.object,
-            {
-              heading: "ESCOBAR",
-              subheading: "(rich slipper design)",
-              detail: [
-                "Metal gold special material",
-                "Calf leather",
-                "printed python print black special material",
-                "Black goat lining",
-                "Black elastic",
-                "Gold eyelet metal",
-              ],
-              price: 210,
-              stripePrice: "",
-            },
-            {
-              x: 11.4,
-              y: 1.5,
-              z: -9,
-            }
-          )
-        }
-        ref={fixedMeshTwo}
-        onPointerEnter={() => setHovered(true)}
-        onPointerLeave={() => setHovered(false)}
-        castShadow
-        receiveShadow
-        geometry={nodes.insole_logo003.geometry}
-        material={materials["Shoe 3"]}
-        position={[6.35, 0.87, -3.98]}
-        rotation={[-0.02, 1.05, -3.12]}
-        scale={-0.16}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Handle_Row_2.geometry}
-        material={materials["gold LOW"]}
-        position={[54.7, -1.51, -2.13]}
-        scale={[1.56, 1.67, 1.14]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Handle_Row_1.geometry}
-        material={materials["gold LOW"]}
-        position={[54.7, -1.15, -2.13]}
-        scale={[1.56, 1.67, 1.14]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.ground001.geometry}
-        material={materials["wood low.002"]}
-        position={[27.08, -0.06, -15.61]}
+        material={materials["wood low.004"]}
+        position={[27.078, -0.063, -15.608]}
         rotation={[Math.PI, 0, Math.PI]}
       />
-      <RigidBody type="fixed" colliders={"trimesh"}>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.ground.geometry}
-          material={materials["ground 1"]}
-          position={[21.34, -0.06, -8.68]}
-          scale={26.01}
-        />
-      </RigidBody>
       <mesh
-        castShadow
-        receiveShadow
+        onPointerEnter={() => {
+          const renderer = document.getElementById("render");
+          renderer!.style.cursor = "pointer";
+        }}
+        onPointerLeave={() => {
+          const renderer = document.getElementById("render");
+          renderer!.style.cursor = "grab";
+        }}
+        onClick={(e) => {
+          setPositionX(e.point.x);
+          setPositionY(e.point.y);
+          setPositionZ(e.point.z);
+        }}
+        geometry={nodes.ground.geometry}
+        material={materials["ground 1.008"]}
+        position={[21.344, -0.063, -8.679]}
+        scale={26.011}
+      />
+      <mesh
         geometry={nodes.GP_Layer004.geometry}
-        material={materials.gold}
-        position={[16.43, 1.24, -0.59]}
+        material={materials["gold.004"]}
+        position={[16.428, 1.242, -0.591]}
         rotation={[Math.PI, 0, Math.PI]}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.GP_Layer003.geometry}
-        material={materials.gold}
+        material={materials["gold.004"]}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.GP_Layer002.geometry}
-        material={materials.gold}
+        material={materials["gold.004"]}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.GP_Layer001.geometry}
-        material={materials.gold}
+        material={materials["gold.004"]}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.GP_Layer.geometry}
-        material={materials.gold}
+        material={materials["gold.004"]}
       />
-      <RigidBody type="fixed" colliders="hull">
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.glass.geometry}
-          material={materials["Glass clean"]}
-          position={[1.05, 1.45, 1.96]}
-          rotation={[-Math.PI / 2, 0, -Math.PI]}
-          scale={[-0.03, -0.01, -0.01]}
-        />
-      </RigidBody>
-      <RigidBody type="fixed" colliders="hull">
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.FireplaceHole001.geometry}
-          material={materials["ground 1.005"]}
-          position={[65.61, -0.97, -10.76]}
-          rotation={[0, -1.57, 0]}
-          scale={0.62}
-        />
-      </RigidBody>
+      <mesh
+        geometry={nodes.glass.geometry}
+        material={materials["Glass clean.001"]}
+        position={[1.049, 1.448, 1.965]}
+        rotation={[-Math.PI / 2, 0, -Math.PI]}
+        scale={[-0.028, -0.011, -0.015]}
+      />
       <group
-        position={[64.29, -1.51, -11.99]}
-        rotation={[-1.26, 0.13, 0.42]}
-        scale={1.08}
+        position={[32.033, -0.063, -12.817]}
+        rotation={[-Math.PI, 0.435, -Math.PI]}
+        scale={1.268}
       >
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.scheit3.geometry}
-          material={materials["wood low"]}
+          geometry={nodes.Cube001.geometry}
+          material={materials["Material.038"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.scheit3_1.geometry}
-          material={materials["Material.027"]}
+          geometry={nodes.Cube001_1.geometry}
+          material={materials["waterLily  low.003"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.scheit3_2.geometry}
-          material={materials["gold LOW"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.scheit3_3.geometry}
-          material={materials["Glass clean"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.scheit3_4.geometry}
-          material={materials["mantel_clock_01.001"]}
-        />
-        <RigidBody type="fixed" colliders="hull">
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.scheit3_5.geometry}
-            material={materials["ground 1.003"]}
-          />
-        </RigidBody>
-      </group>
-      <group
-        position={[32.03, -0.06, -12.82]}
-        rotation={[-Math.PI, 0.44, -Math.PI]}
-        scale={1.27}
-      >
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube218.geometry}
-          material={materials["Material.030"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube218_1.geometry}
-          material={materials["waterLily  low.001"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube218_2.geometry}
-          material={materials["Material.031"]}
+          geometry={nodes.Cube001_2.geometry}
+          material={materials["Material.049"]}
         />
       </group>
       <group
-        position={[32.03, -0.06, -12.82]}
-        rotation={[-Math.PI, 0.44, -Math.PI]}
-        scale={1.27}
+        position={[32.033, -0.063, -12.817]}
+        rotation={[-Math.PI, 0.435, -Math.PI]}
+        scale={1.268}
       >
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Circle009.geometry}
-          material={materials["Material.032"]}
+          geometry={nodes.Circle003.geometry}
+          material={materials["Material.057"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Circle009_1.geometry}
-          material={materials["Material.033"]}
+          geometry={nodes.Circle003_1.geometry}
+          material={materials["Material.058"]}
         />
       </group>
       <group
-        position={[32.03, -0.06, -12.82]}
-        rotation={[-Math.PI, 0.44, -Math.PI]}
-        scale={1.27}
+        position={[32.033, -0.063, -12.817]}
+        rotation={[-Math.PI, 0.435, -Math.PI]}
+        scale={1.268}
       >
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube219.geometry}
-          material={materials["Material.033"]}
+          geometry={nodes.Cube003.geometry}
+          material={materials["Material.058"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube219_1.geometry}
-          material={materials["Material.034"]}
+          geometry={nodes.Cube003_1.geometry}
+          material={materials["Material.059"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube219_2.geometry}
-          material={materials["Material.031"]}
+          geometry={nodes.Cube003_2.geometry}
+          material={materials["Material.049"]}
         />
       </group>
       <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Cylinder055.geometry}
-        material={materials["GLOW LOW"]}
-        position={[56.4, -1.76, -10.67]}
-        scale={[2.91, 0.02, 2.91]}
+        geometry={nodes.Cylinder003.geometry}
+        material={materials["Material.060"]}
+        position={[41.083, 0.586, -10.971]}
+        rotation={[0, 0, -Math.PI / 2]}
+        scale={[1.251, 7.426, 1.251]}
       />
       <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Cylinder054.geometry}
-        material={materials["WHITE GLOW"]}
-        position={[56.4, -1.76, -10.67]}
-        scale={[1.8, 0.02, 1.8]}
-      />
-      <RigidBody type="fixed" colliders="hull">
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cylinder047.geometry}
-          material={materials["GLOW LOW"]}
-          position={[56.43, -1.48, -10.69]}
-          scale={[1.41, 0.29, 1.41]}
-        />
-      </RigidBody>
-      <RigidBody type="fixed" colliders="trimesh">
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cylinder003.geometry}
-          material={materials["Material.056"]}
-          position={[41.08, 0.59, -10.97]}
-          rotation={[0, 0, -Math.PI / 2]}
-          scale={[1.25, 7.43, 1.25]}
-        />
-      </RigidBody>
-      <mesh
-        castShadow
-        receiveShadow
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
         geometry={nodes.Cube206.geometry}
-        material={materials["wall met.001"]}
-        position={[0, 3.53, -1.76]}
-        scale={3.61}
+        material={materials["wall met.003"]}
+        position={[0, 3.528, -1.763]}
+        scale={3.609}
       />
       <group
-        position={[23.36, -0.06, -17.71]}
+        position={[23.356, -0.056, -17.715]}
         rotation={[Math.PI, -0.97, Math.PI]}
-        scale={1.24}
+        scale={1.236}
       >
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube212.geometry}
-          material={materials.stand_Metal}
+          geometry={nodes.Cube013.geometry}
+          material={materials["stand_Metal.001"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube212_1.geometry}
-          material={materials["wood low.001"]}
+          geometry={nodes.Cube013_1.geometry}
+          material={materials["wood low.005"]}
         />
       </group>
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Cube197.geometry}
-        material={materials["Glass clean"]}
-        position={[16.42, 1.21, -0.52]}
+        material={materials["Glass clean.001"]}
+        position={[16.425, 1.211, -0.518]}
         rotation={[Math.PI, 0, Math.PI]}
-        scale={[0.76, 0.96, 0.96]}
+        scale={[0.755, 0.958, 0.958]}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Cube196.geometry}
-        material={materials["Glass clean"]}
-        position={[2.45, 1.26, -1.32]}
-        scale={[0.76, 0.96, 0.96]}
+        material={materials["Glass clean.001"]}
+        position={[2.455, 1.263, -1.317]}
+        scale={[0.755, 0.958, 0.958]}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Cube195.geometry}
-        material={materials["Glass clean"]}
-        position={[2.45, 1.26, -1.32]}
-        scale={[0.76, 0.96, 0.96]}
+        material={materials["Glass clean.001"]}
+        position={[2.455, 1.263, -1.317]}
+        scale={[0.755, 0.958, 0.958]}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Cube194.geometry}
-        material={materials["Glass clean"]}
-        position={[-2.52, 0, 1.54]}
-        scale={[0.76, 0.96, 0.96]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Cube190.geometry}
-        material={materials["WHITE BLUE"]}
-        position={[56.85, 1.23, -10.8]}
-        scale={[1, 1, 0.52]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Cube188.geometry}
-        material={materials["WHITE GLOW"]}
-        position={[56.85, 1.23, -10.8]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Cube187.geometry}
-        material={materials["WHITE BLUE"]}
-        position={[56.85, 1.23, -10.8]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Cube186.geometry}
-        material={materials["WHITE BLUE"]}
-        position={[56.85, 1.23, -10.8]}
+        material={materials["Glass clean.001"]}
+        position={[-2.52, 0, 1.538]}
+        scale={[0.755, 0.958, 0.958]}
       />
       <group
-        position={[2.81, 1.18, -14.32]}
-        rotation={[-Math.PI, 1.17, -Math.PI]}
-        scale={0.16}
+        position={[2.813, 1.184, -14.322]}
+        rotation={[-Math.PI, 1.174, -Math.PI]}
+        scale={0.158}
       >
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube192.geometry}
-          material={materials["gold LOW"]}
+          geometry={nodes.Cube023.geometry}
+          material={materials["gold LOW.001"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube192_1.geometry}
-          material={materials.Bonsai_Leaves}
+          geometry={nodes.Cube023_1.geometry}
+          material={materials["Bonsai_Leaves.001"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube192_2.geometry}
-          material={materials["Material.022"]}
+          geometry={nodes.Cube023_2.geometry}
+          material={materials["Material.061"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube192_3.geometry}
-          material={materials["wood low.001"]}
+          geometry={nodes.Cube023_3.geometry}
+          material={materials["wood low.005"]}
         />
       </group>
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Cube017.geometry}
-        material={materials["wood low"]}
-        position={[17.91, 2.94, -10.66]}
+        material={materials["wood low.003"]}
+        position={[17.913, 2.939, -10.659]}
         rotation={[0, 0, Math.PI]}
-        scale={0.37}
+        scale={0.365}
       />
       <group
-        position={[30.37, 1.51, -14.05]}
-        rotation={[Math.PI / 2, 0, -2.64]}
-        scale={1.39}
+        position={[30.374, 1.513, -14.051]}
+        rotation={[Math.PI / 2, 0, -2.641]}
+        scale={1.393}
       >
         <mesh
-          castShadow
-          receiveShadow
           geometry={nodes.Cube026.geometry}
-          material={materials.gold}
+          material={materials["gold.004"]}
         />
         <mesh
-          castShadow
-          receiveShadow
           geometry={nodes.Cube026_1.geometry}
           material={materials["Light.004"]}
         />
       </group>
-      <RigidBody type="fixed" colliders="hull">
-        <group
-          position={[18.93, -0.06, -16.69]}
-          rotation={[0, -0.51, 0]}
-          scale={[0.91, 0.31, 0.75]}
-        >
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Cube015.geometry}
-            material={materials["white mat"]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Cube015_1.geometry}
-            material={materials["black mat"]}
-          />
-        </group>
-      </RigidBody>
-      <group position={[56.85, 1.23, -10.8]}>
+      <group
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        position={[18.935, -0.063, -16.693]}
+        rotation={[0, -0.505, 0]}
+        scale={[0.912, 0.306, 0.749]}
+      >
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube199.geometry}
-          material={materials["Black murble low.001"]}
+          geometry={nodes.Cube024.geometry}
+          material={materials["white mat.001"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube199_1.geometry}
-          material={materials["Material.053"]}
-        />
-      </group>
-      <RigidBody type="fixed" colliders="trimesh">
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube008.geometry}
-          material={materials["Black murble low.001"]}
-          position={[56.85, 1.23, -10.8]}
-        />
-      </RigidBody>
-      <RigidBody type="fixed" colliders="hull">
-        <group
-          position={[16.42, 1.21, -0.52]}
-          rotation={[Math.PI, 0, Math.PI]}
-          scale={[0.76, 0.96, 0.96]}
-        >
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Cube021.geometry}
-            material={materials["wall met"]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Cube021_1.geometry}
-            material={materials["pink glow"]}
-          />
-        </group>
-      </RigidBody>
-      <group position={[-2.52, 0, 1.54]} scale={[0.76, 0.96, 0.96]}>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube019.geometry}
-          material={materials["wall met"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube019_1.geometry}
-          material={materials["pink glow"]}
-        />
-      </group>
-      <group position={[2.45, 1.26, -1.32]} scale={[0.76, 0.96, 0.96]}>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube016_1.geometry}
-          material={materials["wall met"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube016_2.geometry}
-          material={materials["pink glow"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube016_3.geometry}
-          material={materials["neon green glow.001"]}
+          geometry={nodes.Cube024_1.geometry}
+          material={materials["black mat.001"]}
         />
       </group>
       <group
-        position={[18.33, -0.07, -20.86]}
-        rotation={[-Math.PI, 0.52, -Math.PI]}
+        position={[16.425, 1.211, -0.518]}
+        rotation={[Math.PI, 0, Math.PI]}
+        scale={[0.755, 0.958, 0.958]}
+      >
+        <mesh
+          geometry={nodes.Cube029.geometry}
+          material={materials["wall met.002"]}
+        />
+        <mesh
+          geometry={nodes.Cube029_1.geometry}
+          material={materials["pink glow.001"]}
+        />
+      </group>
+      <group
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        position={[-2.52, 0, 1.538]}
+        scale={[0.755, 0.958, 0.958]}
+      >
+        <mesh
+          geometry={nodes.Cube030.geometry}
+          material={materials["wall met.002"]}
+        />
+        <mesh
+          geometry={nodes.Cube030_1.geometry}
+          material={materials["pink glow.001"]}
+        />
+      </group>
+      <group
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        position={[2.455, 1.263, -1.317]}
+        scale={[0.755, 0.958, 0.958]}
+      >
+        <mesh
+          geometry={nodes.Cube031.geometry}
+          material={materials["wall met.002"]}
+        />
+        <mesh
+          geometry={nodes.Cube031_1.geometry}
+          material={materials["pink glow.001"]}
+        />
+        <mesh
+          geometry={nodes.Cube031_2.geometry}
+          material={materials["neon green glow.002"]}
+        />
+      </group>
+      <group
+        position={[18.327, -0.071, -20.856]}
+        rotation={[-Math.PI, 0.523, -Math.PI]}
         scale={1.17}
       >
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube004_1.geometry}
-          material={materials["Metal Facade Aged"]}
+          geometry={nodes.Cube032.geometry}
+          material={materials["Metal Facade Aged.001"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube004_2.geometry}
-          material={materials["Material.012"]}
-        />
-      </group>
-      <group
-        position={[50.17, -1.3, -17.43]}
-        rotation={[0, -0.04, 0]}
-        scale={0}
-      >
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Mesh014.geometry}
-          material={materials["Material #3.001"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Mesh014_1.geometry}
-          material={materials["Lights - couch.001"]}
-        />
-      </group>
-      <group
-        position={[63.42, -1.3, -4.19]}
-        rotation={[-Math.PI, 0.04, -Math.PI]}
-        scale={0}
-      >
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Mesh014.geometry}
-          material={materials["Material #3.001"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Mesh014_1.geometry}
-          material={materials["Lights - couch.001"]}
+          geometry={nodes.Cube032_1.geometry}
+          material={materials["Material.063"]}
         />
       </group>
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Circle043.geometry}
         material={materials["screw material"]}
-        position={[16.49, 2.9, -3.14]}
-        rotation={[-3.07, 0, 3.08]}
-        scale={1.12}
+        position={[16.489, 2.905, -3.14]}
+        rotation={[-3.072, 0, 3.076]}
+        scale={1.122}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Circle042.geometry}
-        material={nodes.Circle042.material}
-        position={[16.39, 2.03, -2.76]}
-        rotation={[2.77, 0.7, -2.7]}
-        scale={1.12}
+        material={materials["default"]}
+        position={[16.387, 2.031, -2.759]}
+        rotation={[2.774, 0.698, -2.701]}
+        scale={1.122}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Circle041.geometry}
-        material={nodes.Circle041.material}
-        position={[16.6, 2.05, -3.43]}
-        rotation={[0.51, -0.86, 0.49]}
-        scale={1.12}
+        material={materials["default"]}
+        position={[16.6, 2.05, -3.431]}
+        rotation={[0.506, -0.855, 0.486]}
+        scale={1.122}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Circle040.geometry}
-        material={nodes.Circle040.material}
-        position={[16.94, 2.01, -2.87]}
-        rotation={[2.8, -1.2, 2.73]}
-        scale={1.12}
+        material={materials["default"]}
+        position={[16.938, 2.008, -2.865]}
+        rotation={[2.804, -1.196, 2.733]}
+        scale={1.122}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Circle039.geometry}
         material={materials["body material"]}
-        position={[16.43, 2.89, -3.04]}
-        rotation={[-3.07, 0, 3.08]}
-        scale={1.12}
+        position={[16.432, 2.894, -3.036]}
+        rotation={[-3.072, 0, 3.076]}
+        scale={1.122}
       />
       <group
-        position={[16.49, 1.97, -3.1]}
-        rotation={[-3.07, 0, 3.08]}
-        scale={1.12}
+        position={[16.493, 1.971, -3.101]}
+        rotation={[-3.072, 0, 3.076]}
+        scale={1.122}
       >
         <mesh
-          castShadow
-          receiveShadow
           geometry={nodes.Circle026.geometry}
           material={materials["body material"]}
         />
         <mesh
-          castShadow
-          receiveShadow
           geometry={nodes.Circle026_1.geometry}
           material={materials["light material"]}
         />
       </group>
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Circle036.geometry}
-        material={nodes.Circle036.material}
-        position={[16.06, 1.96, -3.41]}
-        rotation={[0.02, 0.93, 0.08]}
-        scale={1.12}
+        material={materials["default"]}
+        position={[16.062, 1.959, -3.408]}
+        rotation={[0.019, 0.928, 0.077]}
+        scale={1.122}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Circle005.geometry}
-        material={materials["gold LOW"]}
-        position={[23.42, 1.56, -17.49]}
-        rotation={[Math.PI, -0.33, Math.PI]}
-        scale={1.86}
+        material={materials["gold LOW.001"]}
+        position={[23.417, 1.56, -17.49]}
+        rotation={[Math.PI, -0.333, Math.PI]}
+        scale={1.864}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Circle.geometry}
         material={materials["LED-Lighitng.001"]}
-        position={[17.91, 2.94, -10.66]}
+        position={[17.913, 2.939, -10.659]}
         rotation={[0, 0, Math.PI]}
-        scale={0.37}
-      />
-      <RigidBody type="fixed" colliders="hull">
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.chesterfield_couch.geometry}
-          material={materials["rubber browen low"]}
-          position={[64.52, -1.73, -18.64]}
-          rotation={[0, -Math.PI / 4, 0]}
-          scale={0.44}
-        />
-      </RigidBody>
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.chandelier_wire.geometry}
-        material={materials.black_plastic}
-        position={[56.38, 1.11, -10.67]}
-        rotation={[Math.PI, 0, Math.PI]}
-        scale={1.24}
+        scale={0.365}
       />
       <group
-        position={[56.38, 2.67, -10.67]}
-        rotation={[Math.PI, 0, Math.PI]}
-        scale={1.24}
+        position={[0.393, -0.063, -15.192]}
+        rotation={[0, 0.369, 0]}
+        scale={1.29}
       >
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Circle139.geometry}
-          material={materials.silver}
+          geometry={nodes.Cylinder010.geometry}
+          material={materials["Material.064"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Circle139_1.geometry}
-          material={materials["Glass clean"]}
+          geometry={nodes.Cylinder010_1.geometry}
+          material={materials["Material.065"]}
+        />
+        <mesh
+          geometry={nodes.Cube011.geometry}
+          material={materials["Fabric.001"]}
+          rotation={[-0.166, 0, 0]}
+        />
+        <mesh
+          geometry={nodes.Cube012.geometry}
+          material={materials["Fabric.001"]}
+          rotation={[-1.658, 0, -Math.PI]}
+        />
+        <mesh
+          geometry={nodes.Cube015.geometry}
+          material={materials["Material.066"]}
+          position={[0, -0.002, 0]}
+          rotation={[-0.166, 0, 0]}
+        />
+        <mesh
+          geometry={nodes.Cylinder.geometry}
+          material={materials["Material.065"]}
         />
       </group>
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.chandelier_cover.geometry}
-        material={materials.black_plastic}
-        position={[56.38, 1.11, -10.67]}
-        rotation={[Math.PI, 0, Math.PI]}
-        scale={1.24}
-      />
-      <RigidBody type="fixed" colliders="hull">
-        <group
-          position={[0.39, -0.06, -15.19]}
-          rotation={[0, 0.37, 0]}
-          scale={1.29}
-        >
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder011.geometry}
-            material={materials["Material.011"]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder011_1.geometry}
-            material={materials["Material.009"]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Cube011.geometry}
-            material={materials.Fabric}
-            rotation={[-0.17, 0, 0]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Cube012.geometry}
-            material={materials.Fabric}
-            rotation={[-1.66, 0, -Math.PI]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Cube015_2.geometry}
-            material={materials["Material.010"]}
-            rotation={[-0.17, 0, 0]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder.geometry}
-            material={materials["Material.009"]}
-          />
-        </group>
-      </RigidBody>
       <group
-        position={[23.31, 0.94, -17.88]}
+        position={[23.306, 0.937, -17.88]}
         rotation={[Math.PI, 0, Math.PI]}
-        scale={1.25}
+        scale={1.249}
       >
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Circle010.geometry}
-          material={materials.Vaso}
+          geometry={nodes.Circle006.geometry}
+          material={materials["Vaso.001"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Circle010_1.geometry}
-          material={materials.Folhas}
+          geometry={nodes.Circle006_1.geometry}
+          material={materials["Folhas.001"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Circle010_2.geometry}
-          material={materials.Terra}
+          geometry={nodes.Circle006_2.geometry}
+          material={materials["Terra.001"]}
         />
       </group>
-      <group position={[20.73, 2.94, -2.48]} rotation={[-Math.PI, -0.12, 0]}>
+      <group position={[20.733, 2.938, -2.48]} rotation={[-Math.PI, -0.122, 0]}>
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube018.geometry}
+          geometry={nodes.Cube036.geometry}
           material={materials["Base.001"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube018_1.geometry}
+          geometry={nodes.Cube036_1.geometry}
           material={materials["Wire.001"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube018_2.geometry}
+          geometry={nodes.Cube036_2.geometry}
           material={materials["Spotlights.001"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube018_3.geometry}
+          geometry={nodes.Cube036_3.geometry}
           material={materials["Light.001"]}
         />
       </group>
-      <group position={[12.42, 2.94, -3.3]} rotation={[Math.PI, 0.46, 0]}>
+      <group position={[12.418, 2.938, -3.297]} rotation={[Math.PI, 0.458, 0]}>
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube001.geometry}
+          geometry={nodes.Cube037.geometry}
           material={materials["Base.002"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube001_1.geometry}
+          geometry={nodes.Cube037_1.geometry}
           material={materials["Wire.002"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube001_2.geometry}
+          geometry={nodes.Cube037_2.geometry}
           material={materials["Spotlights.002"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube001_3.geometry}
+          geometry={nodes.Cube037_3.geometry}
           material={materials["Light.002"]}
         />
       </group>
-      <group position={[25.05, 2.94, -16.62]} rotation={[0, 0, Math.PI]}>
+      <group position={[25.048, 2.939, -16.621]} rotation={[0, 0, Math.PI]}>
         <mesh
-          castShadow
-          receiveShadow
           geometry={nodes.Cylinder015.geometry}
-          material={materials["gold LOW"]}
+          material={materials["gold LOW.001"]}
         />
         <mesh
-          castShadow
-          receiveShadow
           geometry={nodes.Cylinder015_1.geometry}
-          material={materials["Material.015"]}
+          material={materials["Material.067"]}
         />
         <mesh
-          castShadow
-          receiveShadow
           geometry={nodes.Cylinder015_2.geometry}
           material={materials["light 50"]}
         />
       </group>
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Cactus.geometry}
-        material={materials.clay}
-        position={[23.17, 0.44, -17.69]}
+        material={materials["clay.001"]}
+        position={[23.166, 0.437, -17.69]}
         rotation={[Math.PI, 0, Math.PI]}
-        scale={1.9}
+        scale={1.898}
       />
       <mesh
-        onClick={(e) =>
-          handleShoe(
-            e.object,
-            {
-              heading: "LUNAR",
-              subheading: "(hooks low top)",
-              detail: [
-                "Textyle blue special material",
-                "White calf leather",
-                "White cotton",
-                "White rubber",
-                "Black nylon",
-                "Gold eyelet metal",
-              ],
-              price: 234.95,
-              stripePrice: "",
-            },
-            {
-              x: 14.1,
-              y: 3.1,
-              z: -7.2,
-            }
-          )
-        }
-        onPointerEnter={() => setHovered(true)}
-        onPointerLeave={() => setHovered(false)}
-        castShadow
-        receiveShadow
-        geometry={nodes.bumper003.geometry}
-        material={materials["Shoe 9"]}
-        position={[7.88, 1.61, -3.04]}
-        rotation={[0, -1.47, -Math.PI]}
-        scale={-0.12}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.bumper002.geometry}
-        material={materials["black pyramid low.001"]}
-        position={[56.57, -0.71, -10.69]}
-        rotation={[-Math.PI / 2, 0.7, Math.PI / 2]}
-        scale={0.17}
-      />
-      <mesh
-        castShadow
-        receiveShadow
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
         geometry={nodes.bubble_panel_2_white_metall_0001.geometry}
-        material={materials["white_metall.001"]}
-        position={[15.9, 1.22, -21.88]}
-        rotation={[0, -1.49, 0]}
-        scale={0.02}
+        material={materials["white_metall.002"]}
+        position={[15.902, 1.221, -21.879]}
+        rotation={[0, -1.492, 0]}
+        scale={0.016}
       />
       <mesh
-        castShadow
-        receiveShadow
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
         geometry={nodes.bubble_panel_2_Silver_0002.geometry}
-        material={materials["Silver.001"]}
-        position={[15.9, -0.24, -21.88]}
-        rotation={[0, -1.49, 0]}
-        scale={0.02}
+        material={materials["Silver.002"]}
+        position={[15.902, -0.236, -21.879]}
+        rotation={[0, -1.492, 0]}
+        scale={0.016}
       />
       <mesh
-        castShadow
-        receiveShadow
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
         geometry={nodes.bubble_panel_2_LAMP2_0001.geometry}
-        material={materials["LAMP2.001"]}
-        position={[16.07, -0.24, -21.92]}
-        rotation={[0, -1.55, 0]}
-        scale={0.02}
+        material={materials["LAMP2.002"]}
+        position={[16.067, -0.236, -21.921]}
+        rotation={[0, -1.554, 0]}
+        scale={0.016}
       />
       <mesh
-        castShadow
-        receiveShadow
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
         geometry={nodes.bubble_panel_2_GLASS2_0001.geometry}
-        material={materials["GLASS2.001"]}
-        position={[15.9, -0.24, -21.88]}
-        rotation={[0, -1.49, 0]}
-        scale={0.02}
+        material={materials["GLASS2.002"]}
+        position={[15.902, -0.236, -21.879]}
+        rotation={[0, -1.492, 0]}
+        scale={0.016}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.bottom002.geometry}
         material={materials.metal_shower}
-        position={[-0.05, -0.06, 1.96]}
+        position={[-0.052, -0.063, 1.965]}
         rotation={[-Math.PI / 2, 0, -Math.PI]}
-        scale={[-0.03, -0.01, -0.01]}
+        scale={[-0.031, -0.011, -0.015]}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Bolt010.geometry}
         material={materials["screw material"]}
-        position={[16.39, 2.03, -2.76]}
-        rotation={[1.5, -0.33, -2.39]}
-        scale={0}
+        position={[16.387, 2.031, -2.759]}
+        rotation={[1.497, -0.333, -2.394]}
+        scale={0.001}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Bolt009.geometry}
         material={materials["screw material"]}
-        position={[16.6, 2.05, -3.43]}
-        rotation={[1.7, 0.31, 0.92]}
-        scale={0}
+        position={[16.6, 2.05, -3.431]}
+        rotation={[1.698, 0.311, 0.916]}
+        scale={0.001}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Bolt005.geometry}
         material={materials["screw material"]}
-        position={[16.94, 2.01, -2.87]}
-        rotation={[1.62, 0.15, 1.92]}
-        scale={0}
+        position={[16.938, 2.008, -2.865]}
+        rotation={[1.617, 0.146, 1.917]}
+        scale={0.001}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Bolt004.geometry}
         material={materials["screw material"]}
-        position={[16.06, 1.96, -3.41]}
-        rotation={[1.65, 0.05, -0.93]}
-        scale={1.12}
+        position={[16.062, 1.959, -3.408]}
+        rotation={[1.652, 0.046, -0.93]}
+        scale={1.122}
       />
       <group
-        position={[61.48, -1.75, -19.48]}
-        rotation={[0, 0, -Math.PI]}
-        scale={0.77}
+        position={[0.161, 2.788, -14.486]}
+        rotation={[0, 0.323, Math.PI]}
+        scale={1.144}
       >
+        <mesh geometry={nodes.Cube193.geometry} material={materials.Base} />
+        <mesh geometry={nodes.Cube193_1.geometry} material={materials.Wire} />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane047.geometry}
-          material={materials["gold LOW"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane047_1.geometry}
-          material={materials["ground 1.003"]}
-        />
-        <RigidBody type="fixed" colliders="hull">
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane047_2.geometry}
-            material={materials["Black murble low"]}
-          />
-        </RigidBody>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane047_3.geometry}
-          material={materials["rubber black low"]}
-        />
-      </group>
-      <group
-        position={[0.16, 2.79, -14.49]}
-        rotation={[0, 0.32, Math.PI]}
-        scale={1.14}
-      >
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube193.geometry}
-          material={materials.Base}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube193_1.geometry}
-          material={materials.Wire}
-        />
-        <mesh
-          castShadow
-          receiveShadow
           geometry={nodes.Cube193_2.geometry}
           material={materials.Spotlights}
         />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube193_3.geometry}
-          material={materials.Light}
-        />
+        <mesh geometry={nodes.Cube193_3.geometry} material={materials.Light} />
       </group>
       <group
-        position={[23.4, 1.55, -17.49]}
-        rotation={[Math.PI / 2, 0, 2.81]}
-        scale={0.02}
+        position={[23.404, 1.549, -17.485]}
+        rotation={[Math.PI / 2, 0, 2.809]}
+        scale={0.019}
       >
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes["02_1"].geometry}
-          material={materials["bark_Mat.001"]}
+          geometry={nodes["02001"].geometry}
+          material={materials["bark_Mat.002"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes["02_2"].geometry}
-          material={materials.wheat_Mat}
+          geometry={nodes["02001_1"].geometry}
+          material={materials["wheat_Mat.001"]}
         />
         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes["02_3"].geometry}
-          material={materials.leave_1_Mat}
+          geometry={nodes["02001_2"].geometry}
+          material={materials["leave_1_Mat.001"]}
         />
       </group>
+      {/* <Statue />
+      <Statue scale-x={-1} /> */}
       <mesh
-        onClick={(e) =>
-          handleShoe(
-            e.object,
-            {
-              heading: "MEDUSA",
-              subheading: "(Rich slipper design)",
-              detail: [
-                "Python print white special material",
-                "Metal Gold special material",
-                "Beige goat lining",
-                "Gold eyelet metal",
-              ],
-              price: 0,
-              stripePrice: "",
-            },
-            {
-              x: 15.65,
-              y: 1.3,
-              z: -6.8,
-            }
-          )
-        }
-        onPointerEnter={() => setHovered(true)}
-        onPointerLeave={() => setHovered(false)}
-        castShadow
-        receiveShadow
-        geometry={nodes.quarter001.geometry}
-        material={materials["Shoe 11"]}
-        position={[8.74, 0.69, -2.93]}
-        rotation={[3.07, -1.09, 3.12]}
-        scale={0.13}
+        visible={false}
+        geometry={nodes.lionplace001.geometry}
+        material={materials["default"]}
+        position={[2.396, -0.045, 3.529]}
+        scale={[0.276, 1, 0.8]}
       />
       <mesh
-        onClick={(e) =>
-          handleShoe(
-            e.object,
-            {
-              heading: "RAMESSES ll",
-              subheading: "(vintage high top)",
-              detail: [
-                "Gold leather pyramid special material",
-                "Black rubber",
-                "Black calf leather",
-                "Varnish patent leather black special material",
-                "Mouton cotton",
-                "Mouton nylon",
-              ],
-              price: 220.5,
-              stripePrice: "",
-            },
-            {
-              x: 16.7,
-              y: 3.9,
-              z: -8.0,
-            }
-          )
-        }
-        onPointerEnter={() => setHovered(true)}
-        onPointerLeave={() => setHovered(false)}
-        castShadow
-        receiveShadow
-        geometry={nodes.outsole007.geometry}
-        material={materials["rubber black low.001"]}
-        position={[9.38, 2.06, -3.22]}
-        rotation={[-3.01, -1.26, 0]}
+        visible={false}
+        geometry={nodes.lionplace002.geometry}
+        material={materials["default"]}
+        position={[-2.544, -0.045, 3.529]}
+        scale={[0.276, 1, 0.8]}
       />
     </group>
   );

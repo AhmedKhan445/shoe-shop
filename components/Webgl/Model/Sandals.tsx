@@ -44,7 +44,7 @@ export function Sandals(props: JSX.IntrinsicElements["group"]) {
   };
 
   return (
-    <group scale={1.8} {...props} dispose={null}>
+    <group {...props} dispose={null}>
       <mesh
         geometry={nodes.simply_coll002.geometry}
         material={materials["Material.001"]}
