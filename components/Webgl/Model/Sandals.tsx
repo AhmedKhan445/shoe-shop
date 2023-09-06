@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useCursor, useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import { store } from "@/store";
@@ -20,6 +20,12 @@ type GLTFResult = GLTF & {
 export function Sandals(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF("/sandals.glb") as GLTFResult;
 
+  const [width, setWidth] = useState<number>(0);
+
+  useEffect(() => {
+    setWidth(innerWidth);
+  }, []);
+
   const [hovered, setHovered] = useState<boolean>(false);
 
   useCursor(hovered);
@@ -33,7 +39,7 @@ export function Sandals(props: JSX.IntrinsicElements["group"]) {
       price: number;
       stripePrice: string;
     },
-    cameraConfig: { x: number; y: number; z: number }
+    cameraConfig: { x: number; y: number; z: number; rotateY: number }
   ) => {
     store.ladyshoeCameraDefault = true;
     store.animatedSecondCameraConfig = cameraConfig;
@@ -68,9 +74,10 @@ export function Sandals(props: JSX.IntrinsicElements["group"]) {
               stripePrice: "",
             },
             {
-              x: 46.3,
-              y: 1.6,
-              z: -28.8,
+              x: width < 600 ? 25.2 : 25.6,
+              y: width < 600 ? 0.6 : 0.8,
+              z: width < 600 ? -15.63 : -15.52,
+              rotateY: 5.68,
             }
           )
         }
@@ -98,9 +105,10 @@ export function Sandals(props: JSX.IntrinsicElements["group"]) {
               stripePrice: "",
             },
             {
-              x: 44.5,
-              y: 1.6,
-              z: -29.7,
+              x: width < 600 ? 24.13 : 24.62,
+              y: width < 600 ? 0.6 : 0.82,
+              z: width < 600 ? -16.09 : -16.09,
+              rotateY: 5.68,
             }
           )
         }
@@ -127,9 +135,10 @@ export function Sandals(props: JSX.IntrinsicElements["group"]) {
               stripePrice: "",
             },
             {
-              x: 45.6,
-              y: 1.7,
-              z: -29.9,
+              x: width < 600 ? 24.72 : 25.2,
+              y: width < 600 ? 0.67 : 0.9,
+              z: width < 600 ? -16.03 : -16.13,
+              rotateY: 5.68,
             }
           )
         }

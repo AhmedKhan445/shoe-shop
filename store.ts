@@ -14,6 +14,7 @@ type animatedCameraConfigType = {
   x: number;
   y: number;
   z: number;
+  rotateY: number;
 };
 
 type storeType = {
@@ -53,8 +54,8 @@ export const store = proxy<storeType>({
     stripePrice: "",
   },
   isShowSignIn: false,
-  animatedCameraConfig: { x: 18, y: 2.5, z: -14.4 },
-  animatedSecondCameraConfig: { x: 42, y: 2.5, z: -25.3 },
+  animatedCameraConfig: { x: 18, y: 2.5, z: -14.4, rotateY: 2.84 },
+  animatedSecondCameraConfig: { x: 21.5, y: 1.6, z: -12, rotateY: 5.68 },
   shoeRotatingMesh: null,
   shoeCameraDefault: false,
   ladyshoeCameraDefault: false,

@@ -933,6 +933,7 @@ export function Building({
         />
       </group>
       <mesh
+        onClick={(e) => e.stopPropagation()}
         geometry={nodes.Cylinder003.geometry}
         material={materials["Material.060"]}
         position={[41.083, 0.586, -10.971]}

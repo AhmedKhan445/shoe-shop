@@ -22,8 +22,6 @@ const AnimatedCamera = () => {
   // useHelper(cameraRef, THREE.CameraHelper);
   // useHelper(cameraRefOne, THREE.CameraHelper);
 
-  // const [isDefault, setIsDefault] = useState<boolean>(false);
-
   // useEffect(() => {
   //   const pane = new Pane();
 
@@ -48,13 +46,10 @@ const AnimatedCamera = () => {
   //     step: 0.01,
   //     label: "RotationY",
   //   });
-  //   pane
-  //     .addButton({ title: "Make Default" })
-  //     .on("click", () => setIsDefault(!isDefault));
   // }, []);
 
   useEffect(() => {
-    const { x, y, z } = animatedCameraConfig;
+    const { x, y, z, rotateY } = animatedCameraConfig;
 
     if (ladyshoeCameraDefault) {
       gsap.timeline().to(cameraRefOne.current!.position, {
@@ -63,7 +58,10 @@ const AnimatedCamera = () => {
         z: animatedSecondCameraConfig.z,
       });
     } else {
-      gsap.timeline().to(cameraRef.current!.position, { x, y, z });
+      gsap
+        .timeline()
+        .to(cameraRef.current!.position, { x, y, z })
+        .to(cameraRef.current!.rotation, { y: rotateY }, "<");
     }
 
     if (shoeRotatingMesh !== null) {
@@ -90,8 +88,10 @@ const AnimatedCamera = () => {
 
   useEffect(() => {
     if (shoeCameraDefault === false) {
-      gsap.set(cameraRefOne.current!.position, { x: 42, y: 2.5, z: -25.3 });
+      gsap.set(cameraRefOne.current!.position, { x: 21.5, y: 1.6, z: -12 });
+      gsap.set(cameraRefOne.current!.rotation, { y: 5.68 });
       gsap.set(cameraRef.current!.position, { x: 18, y: 2.5, z: -14.4 });
+      gsap.set(cameraRef.current!.rotation, { y: 2.84 });
     }
   }, [shoeCameraDefault, ladyshoeCameraDefault]);
 
@@ -107,7 +107,7 @@ const AnimatedCamera = () => {
       />
       <PerspectiveCamera
         ref={cameraRefOne}
-        position={[42, 2.5, -25.3]}
+        position={[21.5, 1.6, -12]}
         far={100}
         near={1}
         rotation-y={5.68}

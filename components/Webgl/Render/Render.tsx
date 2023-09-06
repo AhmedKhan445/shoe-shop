@@ -40,7 +40,7 @@ import Player from "../Player/Player";
 
 const Render = () => {
   //STATES
-  const { isShowSignIn } = useSnapshot(store);
+  const { isShowSignIn, shoeCameraDefault } = useSnapshot(store);
   const [playerPositionX, setPlayerPositionX] = useState<number>(0);
   const [playerPositionY, setPlayerPositionY] = useState<number>(0);
   const [playerPositionZ, setPlayerPositionZ] = useState<number>(10);
@@ -132,7 +132,7 @@ const Render = () => {
         <Environment files="/env.hdr" />
 
         <AnimatedCamera />
-        {/* <OrbitControls /> */}
+        {/* <OrbitControls  /> */}
         <Suspense
           fallback={
             <Html fullscreen>
@@ -144,7 +144,11 @@ const Render = () => {
           {/* <ControlGuide /> */}
 
           {/* <Physics> */}
-          <Viproom />
+          <Viproom
+            setPositionX={setPlayerPositionX}
+            setPositionZ={setPlayerPositionZ}
+            setPositionY={setPlayerPositionY}
+          />
           <Vipshoe />
           <Building
             setPositionX={setPlayerPositionX}
@@ -152,7 +156,8 @@ const Render = () => {
             setPositionY={setPlayerPositionY}
           />
           <Player
-            cameraDefault
+            cameraDefault={shoeCameraDefault ? false : true}
+            // cameraDefault={false}
             positionX={playerPositionX}
             positionY={playerPositionY}
             positionZ={playerPositionZ}

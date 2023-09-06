@@ -141,8 +141,8 @@ const ProductDetail = () => {
           <IoClose />
         </div>
         <div className={s.main_heading}>
-          <h1>{shoeDetail.heading}</h1>
-          <h2>{shoeDetail.subheading}</h2>
+          <h2>{shoeDetail.heading}</h2>
+          <h3>{shoeDetail.subheading}</h3>
         </div>
         <ul>
           {shoeDetail.detail.map((e, i) => {
