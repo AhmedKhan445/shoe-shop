@@ -33,7 +33,7 @@ const Player = ({
       z: positionZ,
       ease: Sine.easeInOut,
     });
-  }, [positionX, positionZ]);
+  }, [positionX, positionY, positionZ]);
 
   useEffect(() => {
     const renderer = document.getElementById("render");
