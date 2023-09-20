@@ -5,30 +5,31 @@ import { BsFillCaretUpFill } from "react-icons/bs";
 const MobileControls = () => {
   return (
     <div className={s.main}>
-      <button
+      {/* <button
         onPointerDown={() => (store.mobileTurnLeft = true)}
         onPointerUp={() => (store.mobileTurnLeft = false)}
         data-turnleft
       >
         <BsFillCaretUpFill />
-      </button>
+      </button> */}
       <button
+        style={{ gridColumn: "1/4", margin: "auto" }}
         onPointerDown={() => (store.mobileForward = true)}
         onPointerUp={() => (store.mobileForward = false)}
       >
         <BsFillCaretUpFill />
       </button>
-      <button
+      {/* <button
         data-turnright
         onPointerDown={() => (store.mobileTurnRight = true)}
         onPointerUp={() => (store.mobileTurnRight = false)}
       >
         <BsFillCaretUpFill />
-      </button>
+      </button> */}
       <button
         data-left
-        onPointerDown={() => (store.mobileLeft = true)}
-        onPointerUp={() => (store.mobileLeft = false)}
+        onPointerDown={() => (store.mobileTurnLeft = true)}
+        onPointerUp={() => (store.mobileTurnLeft = false)}
       >
         <BsFillCaretUpFill />
       </button>
@@ -41,8 +42,8 @@ const MobileControls = () => {
       </button>
       <button
         data-right
-        onPointerDown={() => (store.mobileRight = true)}
-        onPointerUp={() => (store.mobileRight = false)}
+        onPointerDown={() => (store.mobileTurnRight = true)}
+        onPointerUp={() => (store.mobileTurnRight = false)}
       >
         <BsFillCaretUpFill />
       </button>
