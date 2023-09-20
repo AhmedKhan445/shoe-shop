@@ -17,7 +17,16 @@ type GLTFResult = GLTF & {
   };
 };
 
-export function Sandals(props: JSX.IntrinsicElements["group"]) {
+export function Sandals({
+  setSelectedShoe,
+}: {
+  setSelectedShoe: React.Dispatch<
+    React.SetStateAction<
+      | THREE.Mesh<THREE.BufferGeometry, THREE.Material | THREE.Material[]>
+      | undefined
+    >
+  >;
+}) {
   const { nodes, materials } = useGLTF("/sandals.glb") as GLTFResult;
 
   const [width, setWidth] = useState<number>(0);
@@ -46,11 +55,11 @@ export function Sandals(props: JSX.IntrinsicElements["group"]) {
 
     store.shoeDetailPopupIsActive = true;
     store.shoeDetail = detail;
-    store.shoeRotatingMesh = object;
+    setSelectedShoe(object as THREE.Mesh);
   };
 
   return (
-    <group {...props} dispose={null}>
+    <group dispose={null}>
       <mesh
         geometry={nodes.simply_coll002.geometry}
         material={materials["Material.001"]}

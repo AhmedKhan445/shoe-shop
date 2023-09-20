@@ -1,0 +1,56 @@
+@import "../../../styles/breakpoint";
+
+$white: rgb(255, 255, 255);
+$black: rgb(0, 0, 0);
+$light-gray: rgb(128, 128, 128, 0.3);
+$gray: rgba(39, 39, 39, 0.8);
+
+.main {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  position: fixed;
+  bottom: 20px;
+  transform: translateX(-50%);
+  left: 50%;
+  z-index: 10;
+  gap: 10px;
+  @include lg {
+    display: none;
+  }
+  button {
+    pointer-events: auto;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 1px solid $light-gray;
+    background-color: transparent;
+    height: 50px;
+    width: 50px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1.75rem;
+    background-color: $black;
+    color: $white;
+    text-transform: uppercase;
+    transition: 0.3s all var(--smooth-ease);
+    &[data-bottom] {
+      transform: rotate(180deg);
+    }
+    &[data-left] {
+      transform: rotate(-90deg);
+    }
+    &[data-right] {
+      transform: rotate(90deg);
+    }
+    &[data-turnright] {
+      transform: rotate(45deg);
+      border-radius: 999px;
+    }
+    &[data-turnleft] {
+      transform: rotate(-45deg);
+      border-radius: 999px;
+    }
+  }
+}

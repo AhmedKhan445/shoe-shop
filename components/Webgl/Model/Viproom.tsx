@@ -54,39 +54,16 @@ type GLTFResult = GLTF & {
   };
 };
 
-export const Viproom = ({
-  setPositionX,
-  setPositionY,
-  setPositionZ,
-}: {
-  setPositionX: React.Dispatch<React.SetStateAction<number>>;
-  setPositionY: React.Dispatch<React.SetStateAction<number>>;
-  setPositionZ: React.Dispatch<React.SetStateAction<number>>;
-}) => {
+export const Viproom = () => {
   const { scene } = useGLTF("/viproom.glb") as GLTFResult;
   return (
     <>
       <Plane
-        onPointerEnter={() => {
-          const renderer = document.getElementById("render");
-          renderer!.style.cursor = "pointer";
-        }}
-        onPointerLeave={() => {
-          const renderer = document.getElementById("render");
-          renderer!.style.cursor = "grab";
-        }}
-        onClick={(e) => {
-          setPositionX(e.point.x);
-          setPositionY(e.point.y);
-          setPositionZ(e.point.z);
-        }}
-        visible={false}
         args={[20, 20]}
         rotation-x={-Math.PI * 0.5}
         position={[56.427, -1.76, -10.687]}
       />
-
-      <group onClick={(e) => e.stopPropagation()}>
+      <group>
         <primitive object={scene} />
       </group>
     </>

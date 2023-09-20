@@ -6,11 +6,16 @@ import * as THREE from "three";
 import { Pane } from "tweakpane";
 import { useSnapshot } from "valtio";
 
-const AnimatedCamera = () => {
+const AnimatedCamera = ({
+  selectedShoe,
+}: {
+  selectedShoe:
+    | THREE.Mesh<THREE.BufferGeometry, THREE.Material | THREE.Material[]>
+    | undefined;
+}) => {
   const {
     animatedSecondCameraConfig,
     animatedCameraConfig,
-    shoeRotatingMesh,
     shoeCameraDefault,
     ladyshoeCameraDefault,
   } = useSnapshot(store);
@@ -57,34 +62,31 @@ const AnimatedCamera = () => {
         y: animatedSecondCameraConfig.y,
         z: animatedSecondCameraConfig.z,
       });
-    } else {
+    } else if (shoeCameraDefault) {
       gsap
         .timeline()
         .to(cameraRef.current!.position, { x, y, z })
         .to(cameraRef.current!.rotation, { y: rotateY }, "<");
     }
+  }, [
+    animatedCameraConfig,
+    animatedSecondCameraConfig,
+    ladyshoeCameraDefault,
+    shoeCameraDefault,
+  ]);
 
-    if (shoeRotatingMesh !== null) {
+  useEffect(() => {
+    if (selectedShoe !== undefined) {
       store.shoeRotateRight = () => {
-        gsap
-          .timeline()
-          .to(shoeRotatingMesh.rotation, { y: Math.PI * rotateAngel });
+        gsap.timeline().to(selectedShoe.rotation, { y: Math.PI * rotateAngel });
         setRotate(rotateAngel - 0.1);
       };
       store.shoeRotateLeft = () => {
-        gsap
-          .timeline()
-          .to(shoeRotatingMesh.rotation, { y: Math.PI * rotateAngel });
+        gsap.timeline().to(selectedShoe.rotation, { y: Math.PI * rotateAngel });
         setRotate(rotateAngel + 0.1);
       };
     }
-  }, [
-    animatedCameraConfig,
-    rotateAngel,
-    animatedSecondCameraConfig,
-    ladyshoeCameraDefault,
-    shoeRotatingMesh,
-  ]);
+  }, [rotateAngel, selectedShoe]);
 
   useEffect(() => {
     if (shoeCameraDefault === false) {
@@ -100,17 +102,17 @@ const AnimatedCamera = () => {
       <PerspectiveCamera
         ref={cameraRef}
         position={[18, 2.5, -14.4]}
+        rotation-y={2.84}
         far={100}
         near={1}
-        rotation-y={2.84}
         makeDefault={shoeCameraDefault}
       />
       <PerspectiveCamera
         ref={cameraRefOne}
         position={[21.5, 1.6, -12]}
+        rotation-y={5.68}
         far={100}
         near={1}
-        rotation-y={5.68}
         makeDefault={ladyshoeCameraDefault}
       />
     </>

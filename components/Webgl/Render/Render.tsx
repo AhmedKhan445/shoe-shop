@@ -1,23 +1,15 @@
 import { Canvas } from "@react-three/fiber";
 import s from "./render.module.scss";
-import {
-  AdaptiveDpr,
-  Environment,
-  Html,
-  OrbitControls,
-  Stats,
-} from "@react-three/drei";
-import { Suspense, useEffect, useState } from "react";
-import { Debug, Physics } from "@react-three/rapier";
-import { Door } from "../Model/Door";
-import { BsFillCaretUpFill } from "react-icons/bs";
+import { AdaptiveDpr, Environment, Html, Stats } from "@react-three/drei";
+import { Suspense, useState } from "react";
+// import { Door } from "../Model/Door";
 import { TiArrowBack } from "react-icons/ti";
 import { store } from "@/store";
 import { useSnapshot } from "valtio";
 import ProductDetail from "@/components/Html/ProductDetail/ProductDetail";
 import AnimatedCamera from "../AnimatedCamera/AnimatedCamera";
 import SubscriptionPopup from "@/components/Html/SubscriptionPopup/SubscriptionPopup";
-import InvisibleWall from "../Model/InvisibleWall";
+// import InvisibleWall from "../Model/InvisibleWall";
 import SignIn from "@/components/Html/SignIn/SignIn";
 import TrackingPopup from "@/components/Html/TrackingPopup/TrackingPopup";
 import { Sandals } from "../Model/Sandals";
@@ -36,19 +28,21 @@ import ControlGuide from "@/components/Html/ControlGuide/ControlGuide";
 import { Viproom } from "../Model/Viproom";
 import { Vipshoe } from "../Model/Vipshoe";
 import { Shoes } from "../Model/Shoes";
-import Player from "../Player/Player";
+import { Debug, Physics } from "@react-three/cannon";
+import BaseCharacter from "../Physics/BaseCharacter";
+import Skeleton from "../Physics/Skeleton";
+import { Mesh } from "three";
+import MobileControls from "@/components/Html/MobileControls/MobileControls";
 
 const Render = () => {
   //STATES
-  const { isShowSignIn, shoeCameraDefault } = useSnapshot(store);
-  const [playerPositionX, setPlayerPositionX] = useState<number>(0);
-  const [playerPositionY, setPlayerPositionY] = useState<number>(0);
-  const [playerPositionZ, setPlayerPositionZ] = useState<number>(10);
+  const { isShowSignIn } = useSnapshot(store);
   const [isOrderHistoryShow, setIsOrderHistoryShow] = useState<boolean>(false);
   const [isOrderTrackShow, setIsOrderTrackShow] = useState<boolean>(false);
   const [isSettingShow, setIsSettingShow] = useState<boolean>(false);
   const [isPhoneVerify, setIsPhoneVerify] = useState<boolean>(false);
   const [isCodeVerify, setIsCodeVerify] = useState<boolean>(false);
+  const [selectedShoe, setSelectedShoe] = useState<Mesh>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
   const [isWallOpen, setIsWallOpen] = useState<boolean>(false);
@@ -65,11 +59,9 @@ const Render = () => {
     }
   };
 
-  const { touchTurnLeft, touchTurnRight, touchForwardDown, touchForwardUp } =
-    useSnapshot(store);
-
   return (
     <main id="render" className={s.main}>
+      <div className={s.pointer} />
       {/* POPUPS */}
       {conditionalLogin()}
       <VerificationCode
@@ -102,19 +94,6 @@ const Render = () => {
         setIsOrderHistoryShow={setIsOrderHistoryShow}
       />
 
-      {/* OLD CODE */}
-      {/* <div className={s.buttongroup}>
-        <button onClick={touchTurnLeft}>
-          <TiArrowBack />
-        </button>
-        <button onPointerDown={touchForwardDown} onPointerUp={touchForwardUp}>
-          <BsFillCaretUpFill />
-        </button>
-        <button onClick={touchTurnRight} data-flip>
-          <TiArrowBack />
-        </button>
-      </div> */}
-
       <ProductDetail />
 
       {/* <SubscriptionPopup
@@ -124,15 +103,18 @@ const Render = () => {
       /> */}
 
       {/* <TrackingPopup /> */}
-      <Canvas camera={{ position: [2, 2, 5] }}>
+
+      {/* MOBILE CONTROLS */}
+      <MobileControls />
+
+      <Canvas id="three-canvas" camera={{ position: [2, 2, 5] }}>
         <Stats />
         <AdaptiveDpr />
 
         <ambientLight intensity={0.5} />
         <Environment files="/env.hdr" />
 
-        <AnimatedCamera />
-        {/* <OrbitControls  /> */}
+        <AnimatedCamera selectedShoe={selectedShoe} />
         <Suspense
           fallback={
             <Html fullscreen>
@@ -142,36 +124,28 @@ const Render = () => {
         >
           {/* GUIDE */}
           {/* <ControlGuide /> */}
+          {/* <OrbitControls /> */}
 
-          {/* <Physics> */}
-          <Viproom
-            setPositionX={setPlayerPositionX}
-            setPositionZ={setPlayerPositionZ}
-            setPositionY={setPlayerPositionY}
-          />
+          <Viproom />
           <Vipshoe />
-          <Building
-            setPositionX={setPlayerPositionX}
-            setPositionZ={setPlayerPositionZ}
-            setPositionY={setPlayerPositionY}
-          />
-          <Player
-            cameraDefault={shoeCameraDefault ? false : true}
-            // cameraDefault={false}
-            positionX={playerPositionX}
-            positionY={playerPositionY}
-            positionZ={playerPositionZ}
-          />
-          <Sandals />
-          <Shoes />
+          <Building />
+          <Sandals setSelectedShoe={setSelectedShoe} />
+          <Shoes setSelectedShoe={setSelectedShoe} />
 
+          {/* Physics Engine */}
+          <Physics gravity={[0, -9.8, 0]}>
+            {/* <Debug color="white" scale={1.1}> */}
+            <Skeleton />
+            <BaseCharacter args={[1.5]} position={[0, 1.5, 0]} />
+            {/* </Debug> */}
+          </Physics>
+          {/* <PerspectiveCamera makeDefault={true} position={[0, 2, 15]} /> */}
           {/* <Door isOpen={isOpen} /> */}
           {/* <InvisibleWall
               setIsOpen={setIsOpen}
               isWallOpen={isWallOpen}
               setIsPopupOpen={setIsPopupOpen}
             /> */}
-          {/* </Physics> */}
         </Suspense>
       </Canvas>
       {/* <h1

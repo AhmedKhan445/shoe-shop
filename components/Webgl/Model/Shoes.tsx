@@ -44,7 +44,16 @@ type GLTFResult = GLTF & {
   };
 };
 
-export function Shoes(props: JSX.IntrinsicElements["group"]) {
+export function Shoes({
+  setSelectedShoe,
+}: {
+  setSelectedShoe: React.Dispatch<
+    React.SetStateAction<
+      | THREE.Mesh<THREE.BufferGeometry, THREE.Material | THREE.Material[]>
+      | undefined
+    >
+  >;
+}) {
   const { nodes, materials } = useGLTF("/shoes.glb") as GLTFResult;
 
   const [hovered, setHovered] = useState<boolean>(false);
@@ -67,12 +76,13 @@ export function Shoes(props: JSX.IntrinsicElements["group"]) {
     },
     cameraConfig: { x: number; y: number; z: number; rotateY: number }
   ) => {
+    store.pointerLockCameraDefault = false;
     store.shoeCameraDefault = true;
     store.animatedCameraConfig = cameraConfig;
 
     store.shoeDetailPopupIsActive = true;
     store.shoeDetail = detail;
-    store.shoeRotatingMesh = object;
+    setSelectedShoe(object as THREE.Mesh);
   };
 
   //FIXING PIVOT POINT FOR ROTATION
@@ -87,7 +97,7 @@ export function Shoes(props: JSX.IntrinsicElements["group"]) {
   }, []);
 
   return (
-    <group {...props} dispose={null}>
+    <group dispose={null}>
       <Shoe />
       <mesh
         visible={true}

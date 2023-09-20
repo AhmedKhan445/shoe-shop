@@ -20,10 +20,6 @@ type animatedCameraConfigType = {
 type storeType = {
   verificationId: string | undefined;
   signInMultiFactorAuthError: AuthError | undefined;
-  touchTurnLeft: () => void;
-  touchTurnRight: () => void;
-  touchForwardDown: () => void;
-  touchForwardUp: () => void;
   shoeRotateRight: () => void;
   shoeRotateLeft: () => void;
   shoeDetailPopupIsActive: boolean;
@@ -31,18 +27,20 @@ type storeType = {
   isShowSignIn: boolean;
   animatedCameraConfig: animatedCameraConfigType;
   animatedSecondCameraConfig: animatedCameraConfigType;
-  shoeRotatingMesh: THREE.Object3D<THREE.Event> | null;
   shoeCameraDefault: boolean;
   ladyshoeCameraDefault: boolean;
+  pointerLockCameraDefault: boolean;
+  mobileForward: boolean;
+  mobileBackward: boolean;
+  mobileRight: boolean;
+  mobileLeft: boolean;
+  mobileTurnLeft: boolean;
+  mobileTurnRight: boolean;
 };
 
 export const store = proxy<storeType>({
   verificationId: undefined,
   signInMultiFactorAuthError: undefined,
-  touchTurnLeft: () => console.log("working"),
-  touchTurnRight: () => console.log("working"),
-  touchForwardDown: () => console.log("working"),
-  touchForwardUp: () => console.log("working"),
   shoeRotateRight: () => console.log("working"),
   shoeRotateLeft: () => console.log("working"),
   shoeDetailPopupIsActive: false,
@@ -56,7 +54,13 @@ export const store = proxy<storeType>({
   isShowSignIn: false,
   animatedCameraConfig: { x: 18, y: 2.5, z: -14.4, rotateY: 2.84 },
   animatedSecondCameraConfig: { x: 21.5, y: 1.6, z: -12, rotateY: 5.68 },
-  shoeRotatingMesh: null,
   shoeCameraDefault: false,
   ladyshoeCameraDefault: false,
+  pointerLockCameraDefault: true,
+  mobileForward: false,
+  mobileBackward: false,
+  mobileLeft: false,
+  mobileRight: false,
+  mobileTurnLeft: false,
+  mobileTurnRight: false,
 });

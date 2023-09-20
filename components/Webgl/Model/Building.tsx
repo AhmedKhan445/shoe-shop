@@ -3,6 +3,7 @@ import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import { Statue } from "./Statue";
+import { usePlane } from "@react-three/cannon";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -281,16 +282,9 @@ type GLTFResult = GLTF & {
   };
 };
 
-export function Building({
-  setPositionX,
-  setPositionY,
-  setPositionZ,
-}: {
-  setPositionX: React.Dispatch<React.SetStateAction<number>>;
-  setPositionY: React.Dispatch<React.SetStateAction<number>>;
-  setPositionZ: React.Dispatch<React.SetStateAction<number>>;
-}) {
+export function Building() {
   const { nodes, materials } = useGLTF("/building.glb") as GLTFResult;
+
   return (
     <group dispose={null}>
       <group
@@ -327,11 +321,13 @@ export function Building({
         />
       </group>
       <mesh
+        // visible={false}
         geometry={nodes.Torus002.geometry}
         material={materials["wall met.002"]}
         position={[25.978, 3.06, -9.8]}
       />
       <mesh
+        // visible={false}
         geometry={nodes.Torus001.geometry}
         material={materials["wall met.002"]}
         position={[9.15, 3.06, -10.62]}
@@ -495,9 +491,6 @@ export function Building({
         scale={0.166}
       />
       <group
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
         position={[32.033, -0.063, -12.817]}
         rotation={[-Math.PI, 0.435, -Math.PI]}
         scale={1.268}
@@ -512,9 +505,6 @@ export function Building({
         />
       </group>
       <group
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
         position={[32.033, -0.063, -12.817]}
         rotation={[-Math.PI, 0.435, -Math.PI]}
         scale={1.268}
@@ -529,9 +519,6 @@ export function Building({
         />
       </group>
       <group
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
         position={[32.033, -0.063, -12.817]}
         rotation={[-Math.PI, 0.435, -Math.PI]}
         scale={1.268}
@@ -553,9 +540,6 @@ export function Building({
         scale={[-0.028, -0.011, -0.015]}
       />
       <mesh
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
         geometry={nodes.Seat.geometry}
         material={materials["rubber black low.001"]}
         position={[20.087, -0.063, -18.896]}
@@ -617,27 +601,28 @@ export function Building({
         scale={1.122}
       />
       <mesh
+        // visible={false}
         geometry={nodes.Plane002.geometry}
         material={materials["animation.001"]}
         position={[24.823, 4.747, -9.727]}
         scale={7.031}
       />
       <mesh
+        // visible={false}
         geometry={nodes.Plane001.geometry}
         material={materials.animation}
         position={[10.618, 4.747, -10.332]}
         scale={7.031}
       />
       <mesh
+        // visible={false}
         geometry={nodes.Plane.geometry}
         material={materials["wall met.002"]}
         position={[15.973, 2.939, -10.128]}
         scale={[18.7, 13.77, 13.77]}
       />
       <mesh
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
+        onClick={() => console.log("work")}
         geometry={nodes.Object_2002.geometry}
         material={materials["ground 1.006"]}
         position={[17.672, 1.443, -7.04]}
@@ -645,9 +630,6 @@ export function Building({
         scale={[0.078, 0.078, 0.06]}
       />
       <mesh
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
         geometry={nodes.Object_2001.geometry}
         material={materials["ground 1.006"]}
         position={[17.691, 1.443, -14.713]}
@@ -682,9 +664,6 @@ export function Building({
         scale={[-0.028, -0.011, -0.015]}
       />
       <group
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
         position={[9.41, -0.027, -9.532]}
         rotation={[-Math.PI, 0.09, -Math.PI]}
         scale={0.052}
@@ -699,45 +678,30 @@ export function Building({
         />
       </group>
       <mesh
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
         geometry={nodes.long008.geometry}
         material={materials["wall met.002"]}
         position={[24.003, 0, -18.296]}
         rotation={[0, -Math.PI / 6, 0]}
       />
       <mesh
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
         geometry={nodes.long007.geometry}
         material={materials["wall met.002"]}
         position={[24.003, 0, -3.948]}
         rotation={[0, Math.PI / 6, 0]}
       />
       <mesh
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
         geometry={nodes.long006.geometry}
         material={materials["wall met.002"]}
         position={[7.736, 0, -19.43]}
         rotation={[0, 0.364, 0]}
       />
       <mesh
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
         geometry={nodes.long005.geometry}
         material={materials["wall met.002"]}
         position={[9.097, 0, -2.283]}
         rotation={[0, -0.373, 0]}
       />
       <mesh
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
         geometry={nodes.long002.geometry}
         material={materials["wall met.002"]}
         position={[-2.5, 0, -7.301]}
@@ -757,9 +721,6 @@ export function Building({
         scale={[4.27, 2.503, 4.27]}
       />
       <group
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
         position={[28.569, -0.063, -14.748]}
         rotation={[-Math.PI, 0.484, -Math.PI]}
         scale={1.526}
@@ -804,9 +765,6 @@ export function Building({
         />
       </group>
       <group
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
         position={[1.053, 0.929, -13.577]}
         rotation={[Math.PI / 2, 0, 2.78]}
         scale={1.409}
@@ -835,19 +793,6 @@ export function Building({
         rotation={[Math.PI, 0, Math.PI]}
       />
       <mesh
-        onPointerEnter={() => {
-          const renderer = document.getElementById("render");
-          renderer!.style.cursor = "pointer";
-        }}
-        onPointerLeave={() => {
-          const renderer = document.getElementById("render");
-          renderer!.style.cursor = "grab";
-        }}
-        onClick={(e) => {
-          setPositionX(e.point.x);
-          setPositionY(e.point.y);
-          setPositionZ(e.point.z);
-        }}
         geometry={nodes.ground.geometry}
         material={materials["ground 1.008"]}
         position={[21.344, -0.063, -8.679]}
@@ -933,7 +878,6 @@ export function Building({
         />
       </group>
       <mesh
-        onClick={(e) => e.stopPropagation()}
         geometry={nodes.Cylinder003.geometry}
         material={materials["Material.060"]}
         position={[41.083, 0.586, -10.971]}
@@ -941,9 +885,7 @@ export function Building({
         scale={[1.251, 7.426, 1.251]}
       />
       <mesh
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
+        // visible={false}
         geometry={nodes.Cube206.geometry}
         material={materials["wall met.003"]}
         position={[0, 3.528, -1.763]}
@@ -1032,9 +974,6 @@ export function Building({
         />
       </group>
       <group
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
         position={[18.935, -0.063, -16.693]}
         rotation={[0, -0.505, 0]}
         scale={[0.912, 0.306, 0.749]}
@@ -1062,13 +1001,7 @@ export function Building({
           material={materials["pink glow.001"]}
         />
       </group>
-      <group
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-        position={[-2.52, 0, 1.538]}
-        scale={[0.755, 0.958, 0.958]}
-      >
+      <group position={[-2.52, 0, 1.538]} scale={[0.755, 0.958, 0.958]}>
         <mesh
           geometry={nodes.Cube030.geometry}
           material={materials["wall met.002"]}
@@ -1078,13 +1011,7 @@ export function Building({
           material={materials["pink glow.001"]}
         />
       </group>
-      <group
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-        position={[2.455, 1.263, -1.317]}
-        scale={[0.755, 0.958, 0.958]}
-      >
+      <group position={[2.455, 1.263, -1.317]} scale={[0.755, 0.958, 0.958]}>
         <mesh
           geometry={nodes.Cube031.geometry}
           material={materials["wall met.002"]}
@@ -1292,9 +1219,6 @@ export function Building({
         scale={1.898}
       />
       <mesh
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
         geometry={nodes.bubble_panel_2_white_metall_0001.geometry}
         material={materials["white_metall.002"]}
         position={[15.902, 1.221, -21.879]}
@@ -1302,9 +1226,6 @@ export function Building({
         scale={0.016}
       />
       <mesh
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
         geometry={nodes.bubble_panel_2_Silver_0002.geometry}
         material={materials["Silver.002"]}
         position={[15.902, -0.236, -21.879]}
@@ -1312,9 +1233,6 @@ export function Building({
         scale={0.016}
       />
       <mesh
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
         geometry={nodes.bubble_panel_2_LAMP2_0001.geometry}
         material={materials["LAMP2.002"]}
         position={[16.067, -0.236, -21.921]}
@@ -1322,9 +1240,6 @@ export function Building({
         scale={0.016}
       />
       <mesh
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
         geometry={nodes.bubble_panel_2_GLASS2_0001.geometry}
         material={materials["GLASS2.002"]}
         position={[15.902, -0.236, -21.879]}
@@ -1400,14 +1315,14 @@ export function Building({
       {/* <Statue />
       <Statue scale-x={-1} /> */}
       <mesh
-        visible={false}
+        // visible={false}
         geometry={nodes.lionplace001.geometry}
         material={materials["default"]}
         position={[2.396, -0.045, 3.529]}
         scale={[0.276, 1, 0.8]}
       />
       <mesh
-        visible={false}
+        // visible={false}
         geometry={nodes.lionplace002.geometry}
         material={materials["default"]}
         position={[-2.544, -0.045, 3.529]}
