@@ -136,7 +136,7 @@ const Render = () => {
           <Physics gravity={[0, -9.8, 0]}>
             {/* <Debug color="white" scale={1.1}> */}
             <Skeleton />
-            <BaseCharacter args={[1.5]} position={[0, 1.5, 0]} />
+            <BaseCharacter args={[1.5]} position={[0, 1.5, 10]} />
             {/* </Debug> */}
           </Physics>
           {/* <PerspectiveCamera makeDefault={true} position={[0, 2, 15]} /> */}

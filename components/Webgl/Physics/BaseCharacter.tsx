@@ -101,7 +101,7 @@ const BaseCharacter = (props: SphereProps) => {
         <PerspectiveCamera
           ref={mobileCamera}
           makeDefault={innerWidth < 600 ? true : false}
-          position={[0, 1.5, 0]}
+          position={props.position}
         />
       )}
 
