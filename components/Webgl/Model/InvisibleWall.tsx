@@ -1,37 +1,44 @@
-// import { CuboidCollider } from "@react-three/rapier";
+import { store } from "@/store";
+import { useBox } from "@react-three/cannon";
+import { useSnapshot } from "valtio";
 
-// type props = {
-//   setIsPopupOpen: React.Dispatch<React.SetStateAction<boolean>>;
-//   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-//   isWallOpen: boolean;
-// };
+const InvisibleWall = () => {
+  const { invisibleWallIsOpen } = useSnapshot(store);
 
-// const InvisibleWall: React.FC<props> = ({
-//   isWallOpen,
-//   setIsOpen,
-//   setIsPopupOpen,
-// }) => {
-//   return (
-//     <>
-//       <CuboidCollider
-//         position={[0, 3, 4]}
-//         args={[3, 3, 6]}
-//         sensor
-//         onIntersectionEnter={() => setIsOpen(true)}
-//       />
-//       <CuboidCollider
-//         sensor={isWallOpen}
-//         position={[65, 3, -20]}
-//         args={[3, 3, 20]}
-//       />
-//       <CuboidCollider
-//         position={[60, 3, -20]}
-//         args={[3, 3, 20]}
-//         sensor
-//         onIntersectionEnter={() => setIsPopupOpen(true)}
-//       />
-//     </>
-//   );
-// };
+  const [wallOneRef] = useBox(() => ({
+    type: "Static",
+    mass: 0,
+    isTrigger: true,
+    position: [35, 1.3, -10],
+    args: [5, 2.6, 7],
+    onCollide: () => {
+      if (invisibleWallIsOpen === false) {
+        store.subscriptionPopupIsActive = true;
+      }
+    },
+  }));
+  const [wallTwoRef] = useBox(
+    () => ({
+      type: "Static",
+      mass: 0,
+      isTrigger: invisibleWallIsOpen,
+      position: [40, 1.3, -10],
+      args: [5, 2.6, 7],
+    }),
+    undefined,
+    [invisibleWallIsOpen]
+  );
 
-// export default InvisibleWall;
+  return (
+    <>
+      <mesh
+        ref={wallOneRef as React.RefObject<THREE.Mesh<THREE.BufferGeometry>>}
+      />
+      <mesh
+        ref={wallTwoRef as React.RefObject<THREE.Mesh<THREE.BufferGeometry>>}
+      />
+    </>
+  );
+};
+
+export default InvisibleWall;

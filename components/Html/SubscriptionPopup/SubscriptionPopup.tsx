@@ -9,23 +9,18 @@ import {
 import { loadStripe } from "@stripe/stripe-js";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/clientApp";
+import { useSnapshot } from "valtio";
+import { store } from "@/store";
 
 export const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 );
 
-type props = {
-  setIsPopupOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsWallOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isPopupOpen: boolean;
-};
+type props = {};
 
-type formprops = {
-  setIsPopupOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsWallOpen: React.Dispatch<React.SetStateAction<boolean>>;
-};
+type formprops = {};
 
-const Form: React.FC<formprops> = ({ setIsWallOpen, setIsPopupOpen }) => {
+const Form: React.FC<formprops> = ({}) => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -56,8 +51,8 @@ const Form: React.FC<formprops> = ({ setIsWallOpen, setIsPopupOpen }) => {
       if (confirm?.error) return alert("Payment Unsuccessful");
       alert("Payment Successful Active");
       alert("Now You Access Lock Area");
-      setIsWallOpen(true);
-      setIsPopupOpen(false);
+      store.invisibleWallIsOpen = true;
+      store.subscriptionPopupIsActive = false;
     } catch (error) {
       alert(`Payment Failed`);
       console.log(error);
@@ -71,14 +66,12 @@ const Form: React.FC<formprops> = ({ setIsWallOpen, setIsPopupOpen }) => {
   );
 };
 
-const SubscriptionPopup: React.FC<props> = ({
-  setIsPopupOpen,
-  isPopupOpen,
-  setIsWallOpen,
-}) => {
+const SubscriptionPopup: React.FC<props> = ({}) => {
+  const { subscriptionPopupIsActive } = useSnapshot(store);
+
   return (
-    <div data-active={isPopupOpen} className={s.main}>
-      <IoClose onClick={() => setIsPopupOpen(false)} />
+    <div data-active={subscriptionPopupIsActive} className={s.main}>
+      <IoClose onClick={() => (store.subscriptionPopupIsActive = false)} />
       <h1>Buy Subscription Plan To Unlock Area</h1>
       <h2>Premium Plan</h2>
       <ul>
@@ -87,7 +80,7 @@ const SubscriptionPopup: React.FC<props> = ({
         <li>Nothing everything free</li>
       </ul>
       <Elements stripe={stripePromise}>
-        <Form setIsWallOpen={setIsWallOpen} setIsPopupOpen={setIsPopupOpen} />
+        <Form />
       </Elements>
     </div>
   );

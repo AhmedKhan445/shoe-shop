@@ -1,19 +1,21 @@
 import { Canvas } from "@react-three/fiber";
 import s from "./render.module.scss";
-import { AdaptiveDpr, Environment, Html, Stats } from "@react-three/drei";
+import {
+  AdaptiveDpr,
+  Environment,
+  Html,
+  OrbitControls,
+  Stats,
+} from "@react-three/drei";
 import { Suspense, useState } from "react";
-// import { Door } from "../Model/Door";
-import { TiArrowBack } from "react-icons/ti";
 import { store } from "@/store";
 import { useSnapshot } from "valtio";
 import ProductDetail from "@/components/Html/ProductDetail/ProductDetail";
 import AnimatedCamera from "../AnimatedCamera/AnimatedCamera";
 import SubscriptionPopup from "@/components/Html/SubscriptionPopup/SubscriptionPopup";
-// import InvisibleWall from "../Model/InvisibleWall";
 import SignIn from "@/components/Html/SignIn/SignIn";
 import TrackingPopup from "@/components/Html/TrackingPopup/TrackingPopup";
 import { Sandals } from "../Model/Sandals";
-import { useRouter } from "next/router";
 import Loader from "@/components/Html/Loader/Loader";
 import Avatar from "@/components/Html/Avatar/Avatar";
 import OrderList from "@/components/Html/OrderList/OrderList";
@@ -33,6 +35,8 @@ import BaseCharacter from "../Physics/BaseCharacter";
 import Skeleton from "../Physics/Skeleton";
 import { Mesh } from "three";
 import MobileControls from "@/components/Html/MobileControls/MobileControls";
+import { Door } from "../Physics/Door";
+import InvisibleWall from "../Model/InvisibleWall";
 
 const Render = () => {
   //STATES
@@ -43,9 +47,6 @@ const Render = () => {
   const [isPhoneVerify, setIsPhoneVerify] = useState<boolean>(false);
   const [isCodeVerify, setIsCodeVerify] = useState<boolean>(false);
   const [selectedShoe, setSelectedShoe] = useState<Mesh>();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
-  const [isWallOpen, setIsWallOpen] = useState<boolean>(false);
 
   //LOGIN SESSTION DETAIL
   const [user] = useAuthState(auth);
@@ -96,11 +97,7 @@ const Render = () => {
 
       <ProductDetail />
 
-      {/* <SubscriptionPopup
-        setIsWallOpen={setIsWallOpen}
-        isPopupOpen={isPopupOpen}
-        setIsPopupOpen={setIsPopupOpen}
-      /> */}
+      <SubscriptionPopup />
 
       {/* <TrackingPopup /> */}
 
@@ -112,7 +109,7 @@ const Render = () => {
         <AdaptiveDpr />
 
         <ambientLight intensity={0.5} />
-        <Environment files="/env.hdr" />
+        <Environment background files="/env.hdr" />
 
         <AnimatedCamera selectedShoe={selectedShoe} />
         <Suspense
@@ -123,7 +120,7 @@ const Render = () => {
           }
         >
           {/* GUIDE */}
-          {/* <ControlGuide /> */}
+          <ControlGuide />
           {/* <OrbitControls /> */}
 
           <Viproom />
@@ -135,17 +132,12 @@ const Render = () => {
           {/* Physics Engine */}
           <Physics gravity={[0, -9.8, 0]}>
             {/* <Debug color="white" scale={1.1}> */}
+            <InvisibleWall />
+            <Door />
             <Skeleton />
             <BaseCharacter args={[1.5]} position={[0, 1.5, 10]} />
             {/* </Debug> */}
           </Physics>
-          {/* <PerspectiveCamera makeDefault={true} position={[0, 2, 15]} /> */}
-          {/* <Door isOpen={isOpen} /> */}
-          {/* <InvisibleWall
-              setIsOpen={setIsOpen}
-              isWallOpen={isWallOpen}
-              setIsPopupOpen={setIsPopupOpen}
-            /> */}
         </Suspense>
       </Canvas>
       {/* <h1

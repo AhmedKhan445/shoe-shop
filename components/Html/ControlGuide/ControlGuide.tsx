@@ -24,10 +24,22 @@ const ControlGuide = () => {
   }, []);
 
   return (
-    <Html style={{ display: isVisible ? "block" : "none" }} fullscreen>
+    <Html
+      position={innerWidth < 600 ? [0, 1.5, 0] : [-4, -2, 0]}
+      style={{ display: isVisible ? "block" : "none" }}
+      fullscreen
+    >
       <div data-hide={isHide} className={s.main}>
         <div className={s.container}>
-          <Image src="/control-guide.png" fill alt="guide" />
+          <Image
+            src={
+              innerWidth < 600
+                ? "/controls-guide-mobile.png"
+                : "/control-guide.png"
+            }
+            fill
+            alt="guide"
+          />
         </div>
       </div>
     </Html>

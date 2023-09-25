@@ -146,6 +146,7 @@ $gray: rgb(128, 128, 128, 1);
   animation-duration: 0.5s;
   animation-fill-mode: forwards;
   animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+
   @include lg {
     display: block;
   }

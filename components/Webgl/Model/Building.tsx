@@ -1312,8 +1312,8 @@ export function Building() {
           material={materials["leave_1_Mat.001"]}
         />
       </group>
-      {/* <Statue />
-      <Statue scale-x={-1} /> */}
+      <Statue />
+      <Statue scale-x={-1} />
       <mesh
         // visible={false}
         geometry={nodes.lionplace001.geometry}

@@ -23,6 +23,8 @@ type storeType = {
   shoeRotateRight: () => void;
   shoeRotateLeft: () => void;
   shoeDetailPopupIsActive: boolean;
+  subscriptionPopupIsActive: boolean;
+  invisibleWallIsOpen: boolean;
   shoeDetail: shoeDetailType;
   isShowSignIn: boolean;
   animatedCameraConfig: animatedCameraConfigType;
@@ -44,6 +46,8 @@ export const store = proxy<storeType>({
   shoeRotateRight: () => console.log("working"),
   shoeRotateLeft: () => console.log("working"),
   shoeDetailPopupIsActive: false,
+  subscriptionPopupIsActive: false,
+  invisibleWallIsOpen: false,
   shoeDetail: {
     heading: "",
     subheading: "",
