@@ -99,6 +99,7 @@ export function Shoes({
   return (
     <group dispose={null}>
       <Shoe />
+
       <mesh
         visible={true}
         onClick={(e) =>
@@ -114,8 +115,8 @@ export function Shoes({
                 "Black rubber",
                 "Black nylon",
               ],
-              price: 0,
-              stripePrice: "",
+              price: 600,
+              stripePrice: "price_1OrJV5L3nKF4Bf9heALNpAOi",
             },
             {
               x: width < 600 ? 14.53 : 13.6,
@@ -148,8 +149,8 @@ export function Shoes({
                 "Arrow white black special laces",
                 "Black rubber",
               ],
-              price: 0,
-              stripePrice: "",
+              price: 250,
+              stripePrice: "price_1OrJXbL3nKF4Bf9h6nlIiPFy",
             },
             {
               x: width < 600 ? 10.43 : 9.95,
@@ -181,8 +182,8 @@ export function Shoes({
                 "Black elastic",
                 "Black rubber",
               ],
-              price: 227.99,
-              stripePrice: "",
+              price: 227.0,
+              stripePrice: "price_1OrJZnL3nKF4Bf9hEpRVYRHl",
             },
             {
               x: width < 600 ? 9.3 : 8.91,
@@ -215,8 +216,8 @@ export function Shoes({
                 "Black cotton",
                 "White rubber",
               ],
-              price: 0,
-              stripePrice: "",
+              price: 250,
+              stripePrice: "price_1OrJcKL3nKF4Bf9hJbC5UHSo",
             },
             {
               x: width < 600 ? 13.7 : 13.27,
@@ -249,8 +250,8 @@ export function Shoes({
                 "Arrow white black laces",
                 "White rubber",
               ],
-              price: 0,
-              stripePrice: "",
+              price: 250,
+              stripePrice: "price_1OrJYWL3nKF4Bf9hfjFlb51j",
             },
             {
               x: width < 600 ? 7.29 : 7.1,
@@ -285,7 +286,7 @@ export function Shoes({
                 "Gold eyelet metal",
               ],
               price: 210,
-              stripePrice: "",
+              stripePrice: "price_1OrJZLL3nKF4Bf9hUeFXNGlP",
             },
             {
               x: width < 600 ? 6.81 : 6.4,
@@ -354,7 +355,7 @@ export function Shoes({
                 "Gold eyelet metal",
               ],
               price: 234.95,
-              stripePrice: "",
+              stripePrice: "price_1OrJbfL3nKF4Bf9hnSd8MSjZ",
             },
             {
               x: width < 600 ? 8.33 : 7.83,
@@ -413,8 +414,8 @@ export function Shoes({
                 "Beige goat lining",
                 "Gold eyelet metal",
               ],
-              price: 0,
-              stripePrice: "",
+              price: 240,
+              stripePrice: "price_1OrJVmL3nKF4Bf9h50D6qhPC",
             },
             {
               x: width < 600 ? 9.16 : 8.76,
@@ -448,7 +449,7 @@ export function Shoes({
                 "Mouton nylon",
               ],
               price: 220.5,
-              stripePrice: "",
+              stripePrice: "price_1OrJb2L3nKF4Bf9hwwOsalqi",
             },
             {
               x: width < 600 ? 9.87 : 9.32,

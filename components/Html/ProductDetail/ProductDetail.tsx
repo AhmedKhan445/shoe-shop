@@ -100,7 +100,7 @@ const ProductDetail = () => {
       const { data } = await axios.post(
         "/api/checkout_sessions",
         {
-          price: "price_1MyTRcL3nKF4Bf9hmZMbXPJ2",
+          price: shoeDetail.stripePrice,
           orderId: orderData.createOrder.id,
         },
         {

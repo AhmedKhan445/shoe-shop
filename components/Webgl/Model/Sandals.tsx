@@ -79,8 +79,8 @@ export function Sandals({
                 "Varnish patent leather",
                 "Gold varnish",
               ],
-              price: 245.99,
-              stripePrice: "",
+              price: 250,
+              stripePrice: "price_1OrJUEL3nKF4Bf9heajCuBVB",
             },
             {
               x: width < 600 ? 25.2 : 25.6,
@@ -110,8 +110,8 @@ export function Sandals({
                 "Black goat lining",
                 "Varnish patent leather black varnish",
               ],
-              price: 0,
-              stripePrice: "",
+              price: 250,
+              stripePrice: "price_1OrJWLL3nKF4Bf9hJceUuGw7",
             },
             {
               x: width < 600 ? 24.13 : 24.62,
@@ -140,8 +140,8 @@ export function Sandals({
                 "Fuxia goat lining",
                 "Varnish patent leather white varnish",
               ],
-              price: 0,
-              stripePrice: "",
+              price: 250,
+              stripePrice: "price_1OrJSzL3nKF4Bf9hN3rztODQ",
             },
             {
               x: width < 600 ? 24.72 : 25.2,
