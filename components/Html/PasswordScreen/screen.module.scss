@@ -1,0 +1,92 @@
+@import "../../../styles/breakpoint";
+
+.main {
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  z-index: 9999;
+  height: 100%;
+  width: 100%;
+  background-image: url("/password-screen.jpeg");
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 25px;
+  transition: top 0.5s 0s;
+  pointer-events: all;
+  &[data-active="true"] {
+    pointer-events: none;
+    top: -100%;
+  }
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 36px;
+  gap: 20px;
+  h1 {
+    font-size: 2rem;
+    line-height: calc(2rem * 1.2);
+    text-transform: uppercase;
+    text-align: center;
+    font-family: "Unbounded Variable", sans-serif;
+    color: white;
+    @include lg {
+      font-size: 4rem;
+      line-height: calc(4rem * 1.2);
+    }
+  }
+  h3 {
+    font-size: 1rem;
+    line-height: calc(1rem * 1.2);
+    text-transform: uppercase;
+    text-align: center;
+    font-family: "Unbounded Variable", sans-serif;
+    color: white;
+    @include lg {
+      font-size: 2rem;
+      line-height: calc(2rem * 1.2);
+    }
+  }
+}
+
+.password {
+  display: flex;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  padding: 20px;
+  gap: 16px;
+  align-items: center;
+  svg {
+    font-size: 2rem;
+    color: white;
+  }
+  input {
+    font-size: 1.2rem;
+    line-height: calc(1.2rem * 1.2);
+    background-color: transparent;
+    border: none;
+    color: white;
+    text-align: center;
+    @include lg {
+      font-size: 1.625rem;
+      line-height: calc(1.625rem * 1.2);
+    }
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+      text-transform: uppercase;
+      letter-spacing: 10px;
+      text-align: center;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+}

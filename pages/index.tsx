@@ -1,3 +1,4 @@
+import PasswordScreen from "@/components/Html/PasswordScreen/PasswordScreen";
 import Render from "@/components/Webgl/Render/Render";
 import Head from "next/head";
 import { ToastContainer } from "react-toastify";
@@ -14,6 +15,7 @@ export default function Home() {
       </Head>
       <ToastContainer />
       <Render />
+      <PasswordScreen />
     </>
   );
 }
