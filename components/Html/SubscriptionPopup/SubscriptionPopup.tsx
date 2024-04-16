@@ -72,7 +72,7 @@ const SubscriptionPopup: React.FC<props> = ({}) => {
   return (
     <div data-active={subscriptionPopupIsActive} className={s.main}>
       <IoClose onClick={() => (store.subscriptionPopupIsActive = false)} />
-      <h1>Change it to VIP Area Access</h1>
+      <h1>VIP Area Access</h1>
       <h2>Loyal Program</h2>
       <ul>
         <li>Benefits for Our Community</li>
