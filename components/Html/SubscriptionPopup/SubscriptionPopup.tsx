@@ -72,12 +72,12 @@ const SubscriptionPopup: React.FC<props> = ({}) => {
   return (
     <div data-active={subscriptionPopupIsActive} className={s.main}>
       <IoClose onClick={() => (store.subscriptionPopupIsActive = false)} />
-      <h1>Buy Subscription Plan To Unlock Area</h1>
-      <h2>Premium Plan</h2>
+      <h1>Change it to VIP Area Access</h1>
+      <h2>Loyal Program</h2>
       <ul>
-        <li>Fake point 1000</li>
-        <li>All Unlocked Item</li>
-        <li>Nothing everything free</li>
+        <li>Benefits for Our Community</li>
+        <li>VIP area access</li>
+        <li>Loyalty Program</li>
       </ul>
       <Elements stripe={stripePromise}>
         <Form />
