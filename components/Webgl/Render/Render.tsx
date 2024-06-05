@@ -105,7 +105,7 @@ const Render = () => {
       <MobileControls />
 
       <Canvas id="three-canvas" camera={{ position: [2, 2, 5] }}>
-        <Stats />
+        {/* <Stats /> */}
         <AdaptiveDpr />
 
         <ambientLight intensity={0.5} />

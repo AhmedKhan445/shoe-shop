@@ -5,18 +5,22 @@ import { useSnapshot } from "valtio";
 const InvisibleWall = () => {
   const { invisibleWallIsOpen } = useSnapshot(store);
 
-  const [wallOneRef] = useBox(() => ({
-    type: "Static",
-    mass: 0,
-    isTrigger: true,
-    position: [35, 1.3, -10],
-    args: [5, 2.6, 7],
-    onCollide: () => {
-      if (invisibleWallIsOpen === false) {
-        store.subscriptionPopupIsActive = true;
-      }
-    },
-  }));
+  const [wallOneRef] = useBox(
+    () => ({
+      type: "Static",
+      mass: 0,
+      isTrigger: true,
+      position: [35, 1.3, -10],
+      args: [5, 2.6, 7],
+      onCollide: () => {
+        if (!invisibleWallIsOpen) {
+          store.subscriptionPopupIsActive = true;
+        }
+      },
+    }),
+    undefined,
+    [invisibleWallIsOpen]
+  );
   const [wallTwoRef] = useBox(
     () => ({
       type: "Static",
