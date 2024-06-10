@@ -102,44 +102,8 @@ const Render = () => {
       {/* <TrackingPopup /> */}
 
       {/* MOBILE CONTROLS */}
-      {/* <MobileControls /> */}
+      <MobileControls />
 
-      <Canvas id="three-canvas" camera={{ position: [2, 2, 5] }}>
-        {/* <Stats /> */}
-        <AdaptiveDpr />
-
-        <ambientLight intensity={0.5} />
-        <Environment background files="/env.hdr" />
-
-        <AnimatedCamera selectedShoe={selectedShoe} />
-        <Suspense
-          fallback={
-            <Html fullscreen>
-              <Loader />
-            </Html>
-          }
-        >
-          {/* GUIDE */}
-          <ControlGuide />
-          {/* <OrbitControls /> */}
-
-          <Viproom />
-          <Vipshoe />
-          <Building />
-          <Sandals setSelectedShoe={setSelectedShoe} />
-          <Shoes setSelectedShoe={setSelectedShoe} />
-
-          {/* Physics Engine */}
-          <Physics gravity={[0, -9.8, 0]}>
-            {/* <Debug color="white" scale={1.1}> */}
-            <InvisibleWall />
-            <Door />
-            <Skeleton />
-            <BaseCharacter args={[1.5]} position={[0, 1.5, 10]} />
-            {/* </Debug> */}
-          </Physics>
-        </Suspense>
-      </Canvas>
       {/* <h1
         style={{
           fontSize: 62,
