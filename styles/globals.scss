@@ -22,8 +22,15 @@ body,
   background-color: $background;
 }
 
-button {
+body,
+button,
+input,
+select,
+textarea {
   -webkit-tap-highlight-color: transparent;
+}
+
+button {
   &[data-cam] {
     position: fixed;
     inset: 20px;
