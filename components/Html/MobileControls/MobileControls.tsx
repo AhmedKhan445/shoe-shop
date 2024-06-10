@@ -4,7 +4,7 @@ import { BsFillCaretUpFill } from "react-icons/bs";
 
 const MobileControls = () => {
   return (
-    <div className={s.main}>
+    <section className={s.main}>
       {/* <button
         onPointerDown={() => (store.mobileTurnLeft = true)}
         onPointerUp={() => (store.mobileTurnLeft = false)}
@@ -47,7 +47,7 @@ const MobileControls = () => {
       >
         <BsFillCaretUpFill />
       </button>
-    </div>
+    </section>
   );
 };
 
