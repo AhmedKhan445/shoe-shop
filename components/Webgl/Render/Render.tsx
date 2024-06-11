@@ -102,9 +102,13 @@ const Render = () => {
       {/* <TrackingPopup /> */}
 
       {/* MOBILE CONTROLS */}
-      {/* <MobileControls /> */}
+      <MobileControls />
 
-      <Canvas id="three-canvas" camera={{ position: [2, 2, 5] }}>
+      <Canvas
+        style={{ userSelect: "none" }}
+        id="three-canvas"
+        camera={{ position: [2, 2, 5] }}
+      >
         {/* <Stats /> */}
         <AdaptiveDpr />
 
