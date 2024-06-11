@@ -114,14 +114,13 @@ const Render = () => {
         <AnimatedCamera selectedShoe={selectedShoe} />
         <Suspense
           fallback={
-            null
-            // <Html fullscreen>
-            //   <Loader />
-            // </Html>
+            <Html fullscreen>
+              <Loader />
+            </Html>
           }
         >
           {/* GUIDE */}
-          {/* <ControlGuide /> */}
+          <ControlGuide />
           {/* <OrbitControls /> */}
 
           <Viproom />
