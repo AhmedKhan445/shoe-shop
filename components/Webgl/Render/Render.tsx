@@ -65,39 +65,39 @@ const Render = () => {
       <div className={s.pointer} />
       {/* POPUPS */}
       {conditionalLogin()}
-      {/* <VerificationCode
+      <VerificationCode
         isCodeVerify={isCodeVerify}
         setIsCodeVerify={setIsCodeVerify}
-      /> */}
-      {/* <PhoneVerification
+      />
+      <PhoneVerification
         isPhoneVerify={isPhoneVerify}
         setIsPhoneVerify={setIsPhoneVerify}
         setIsCodeVerify={setIsCodeVerify}
-      /> */}
-      {/* <Settings
+      />
+      <Settings
         isSettingShow={isSettingShow}
         setIsSettingShow={setIsSettingShow}
         setIsPhoneVerify={setIsPhoneVerify}
-      /> */}
-      {/* <OrderList
+      />
+      <OrderList
         isOrderHistoryShow={isOrderHistoryShow}
         setIsOrderHistoryShow={setIsOrderHistoryShow}
         setIsOrderTrackShow={setIsOrderTrackShow}
-      /> */}
-      {/* <TrackingOrder
+      />
+      <TrackingOrder
         isOrderTrackShow={isOrderTrackShow}
         setIsOrderTrackShow={setIsOrderTrackShow}
-      /> */}
+      />
 
       {/* HEADER */}
-      {/* <Avatar
+      <Avatar
         setIsSettingShow={setIsSettingShow}
         setIsOrderHistoryShow={setIsOrderHistoryShow}
-      /> */}
+      />
 
-      {/* <ProductDetail /> */}
+      <ProductDetail />
 
-      {/* <SubscriptionPopup /> */}
+      <SubscriptionPopup />
 
       {/* <TrackingPopup /> */}
 
