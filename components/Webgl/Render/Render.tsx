@@ -62,6 +62,9 @@ const Render = () => {
 
   return (
     <main id="render" className={s.main}>
+      <div className={s.fixedheading}>
+        <h1>Please wait , good things take time to come</h1>
+      </div>
       <div className={s.pointer} />
       {/* POPUPS */}
       {conditionalLogin()}
