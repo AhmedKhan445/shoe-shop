@@ -1,14 +1,18 @@
+import { useProgress } from "@react-three/drei";
 import s from "./loader.module.scss";
+import { useState } from "react";
+import Image from "next/image";
 
 const Loader = () => {
+  const { active, progress } = useProgress();
+
   return (
-    <div className={s.main}>
-      <h2>
-        Loading
-        <span>.</span>
-        <span style={{ "--delay": "0.8s" } as React.CSSProperties}>.</span>
-        <span style={{ "--delay": "1.5s" } as React.CSSProperties}>.</span>
-      </h2>
+    <div data-hide={active} className={s.main}>
+      <Image src="/loader.png" height={300} width={300} alt="loader" />
+      <h4>Please wait , good things take time to come</h4>
+      <div className={s.progress}>
+        <div style={{ width: `${progress}%` }} className={s.progress_bar} />
+      </div>
     </div>
   );
 };

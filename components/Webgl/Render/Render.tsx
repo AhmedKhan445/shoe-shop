@@ -62,9 +62,6 @@ const Render = () => {
 
   return (
     <main id="render" className={s.main}>
-      <div className={s.fixedheading}>
-        <h1>Please wait , good things take time to come</h1>
-      </div>
       <div className={s.pointer} />
       {/* POPUPS */}
       {conditionalLogin()}
@@ -112,23 +109,14 @@ const Render = () => {
         id="three-canvas"
         camera={{ position: [2, 2, 5] }}
       >
-        {/* <Stats /> */}
         <AdaptiveDpr />
 
         <ambientLight intensity={0.5} />
         <Environment background files="/env.hdr" />
 
         <AnimatedCamera selectedShoe={selectedShoe} />
-        <Suspense
-          fallback={
-            <Html fullscreen>
-              <Loader />
-            </Html>
-          }
-        >
-          {/* GUIDE */}
+        <Suspense fallback={null}>
           <ControlGuide />
-          {/* <OrbitControls /> */}
 
           <Viproom />
           <Vipshoe />
@@ -136,17 +124,15 @@ const Render = () => {
           <Sandals setSelectedShoe={setSelectedShoe} />
           <Shoes setSelectedShoe={setSelectedShoe} />
 
-          {/* Physics Engine */}
           <Physics gravity={[0, -9.8, 0]}>
-            {/* <Debug color="white" scale={1.1}> */}
             <InvisibleWall />
             <Door />
             <Skeleton />
             <BaseCharacter args={[1.5]} position={[0, 1.5, 10]} />
-            {/* </Debug> */}
           </Physics>
         </Suspense>
       </Canvas>
+      <Loader />
       {/* <h1
         style={{
           fontSize: 62,
