@@ -47,7 +47,6 @@ const SignIn: React.FC<Props> = ({ setIsCodeVerify }) => {
   //GITHUB SAME EMAIL ERROR HANDLE
   useEffect(() => {
     if (githubError?.code === "auth/account-exists-with-different-credential") {
-      console.log("work");
       toast.error("Your email already register try sign in with google.", {
         theme: "colored",
       });

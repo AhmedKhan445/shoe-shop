@@ -4,7 +4,9 @@ import { useState } from "react";
 import Image from "next/image";
 
 const Loader = () => {
-  const { active, progress } = useProgress();
+  const { active, progress, errors } = useProgress();
+
+  console.log(errors);
 
   return (
     <div data-hide={active} className={s.main}>
