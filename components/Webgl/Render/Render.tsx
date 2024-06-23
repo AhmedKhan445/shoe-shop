@@ -132,7 +132,7 @@ const Render = () => {
           </Physics>
         </Suspense>
       </Canvas>
-      <Loader />
+      {/* <Loader /> */}
       {/* <h1
         style={{
           fontSize: 62,
