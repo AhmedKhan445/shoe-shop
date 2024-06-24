@@ -6,7 +6,8 @@ import Image from "next/image";
 const Loader = () => {
   const { active, progress, errors } = useProgress();
 
-  console.log(errors);
+  console.log(active, "active");
+  console.log(progress, "progress");
 
   return (
     <div data-hide={active} className={s.main}>
