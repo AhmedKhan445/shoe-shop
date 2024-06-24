@@ -62,6 +62,7 @@ const Render = () => {
 
   return (
     <main id="render" className={s.main}>
+      <Loader />
       <div className={s.pointer} />
       {/* POPUPS */}
       {conditionalLogin()}
@@ -132,7 +133,7 @@ const Render = () => {
           </Physics>
         </Suspense>
       </Canvas>
-      <Loader />
+
       {/* <h1
         style={{
           fontSize: 62,
