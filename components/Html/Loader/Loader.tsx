@@ -19,9 +19,9 @@ const Loader = () => {
     <div data-hide={!(progress >= 100)} className={s.main}>
       <Image src="/loader.png" height={300} width={300} alt="loader" />
       <h4>Please wait , good things take time to come</h4>
-      <div className={s.progress}>
+      {/* <div className={s.progress}>
         <div style={{ width: `${state}%` }} className={s.progress_bar} />
-      </div>
+      </div> */}
     </div>
   );
 };
