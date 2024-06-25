@@ -6,9 +6,9 @@ import Image from "next/image";
 const Loader = () => {
   const [state, setState] = useState<number>(0);
 
-  const { active, progress, errors } = useProgress();
+  const { progress, errors } = useProgress();
 
-  console.log(active, "active");
+  console.log(errors, "error");
   console.log(Math.round(progress), "progress");
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const Loader = () => {
   }, [progress]);
 
   return (
-    <div data-hide={active} className={s.main}>
+    <div data-hide={!(progress >= 100)} className={s.main}>
       <Image src="/loader.png" height={300} width={300} alt="loader" />
       <h4>Please wait , good things take time to come</h4>
       <div className={s.progress}>
