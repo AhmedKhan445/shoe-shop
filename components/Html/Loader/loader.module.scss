@@ -16,7 +16,7 @@ $black: rgb(0, 0, 0);
   flex-direction: column;
   gap: 40px;
 
-  &[data-hide="false"] {
+  &[data-hide="true"] {
     display: none;
   }
 
