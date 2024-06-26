@@ -43,20 +43,23 @@ $black: rgb(0, 0, 0);
   position: relative;
   background-color: #5a554e;
   overflow: hidden;
+  display: flex;
+  justify-content: flex-end;
+  gap: 40px;
   &_bar {
-    position: absolute;
+    position: relative;
     height: 100%;
-    left: 0px;
     background-color: #9fa29c;
     transition: 0.5s all linear;
+    width: 20%;
+    min-width: 20%;
+    animation: fadeInOut 30s infinite forwards linear;
+    border-radius: 999px;
   }
 }
 
 @keyframes fadeInOut {
-  50% {
-    opacity: 0;
-  }
   100% {
-    opacity: 1;
+    transform: translateX(1000%);
   }
 }
