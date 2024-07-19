@@ -36,7 +36,11 @@ const Avatar: React.FC<Props> = ({
   };
 
   const handleOrderHistory = () => {
-    setIsOrderHistoryShow((prev) => !prev);
+    if (user) {
+      setIsOrderHistoryShow((prev) => !prev);
+    } else {
+      store.isShowSignIn = true;
+    }
   };
 
   const handleSetting = () => {

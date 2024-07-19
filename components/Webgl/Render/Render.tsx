@@ -43,6 +43,10 @@ const Render = () => {
   const { isShowSignIn } = useSnapshot(store);
   const [isOrderHistoryShow, setIsOrderHistoryShow] = useState<boolean>(false);
   const [isOrderTrackShow, setIsOrderTrackShow] = useState<boolean>(false);
+  const [isOrderTrackInfo, setIsOrderTrackInfo] = useState<{
+    trackingId: string;
+    courierCompany: string;
+  }>({ courierCompany: "", trackingId: "" });
   const [isSettingShow, setIsSettingShow] = useState<boolean>(false);
   const [isPhoneVerify, setIsPhoneVerify] = useState<boolean>(false);
   const [isCodeVerify, setIsCodeVerify] = useState<boolean>(false);
@@ -84,8 +88,10 @@ const Render = () => {
         isOrderHistoryShow={isOrderHistoryShow}
         setIsOrderHistoryShow={setIsOrderHistoryShow}
         setIsOrderTrackShow={setIsOrderTrackShow}
+        setIsOrderTrackInfo={setIsOrderTrackInfo}
       />
       <TrackingOrder
+        isOrderTrackInfo={isOrderTrackInfo}
         isOrderTrackShow={isOrderTrackShow}
         setIsOrderTrackShow={setIsOrderTrackShow}
       />

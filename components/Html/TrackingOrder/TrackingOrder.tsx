@@ -4,12 +4,14 @@ import { IoClose } from "react-icons/io5";
 
 type Props = {
   isOrderTrackShow: boolean;
+  isOrderTrackInfo: { trackingId: string; courierCompany: string };
   setIsOrderTrackShow: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const TrackingOrder: React.FC<Props> = ({
   isOrderTrackShow,
   setIsOrderTrackShow,
+  isOrderTrackInfo,
 }) => {
   //FUNCTIONS
   const handleClose = () => {
@@ -30,16 +32,16 @@ const TrackingOrder: React.FC<Props> = ({
 
         <div data-active={isOrderTrackShow} className={s.grid}>
           <div className={s.grid_box}>
-            <h3>Product</h3>
+            {/* <h3>Product</h3> */}
             <h3>Courier Company</h3>
             <h3>Tracking ID</h3>
-            <h3>Tracking Website</h3>
+            {/* <h3>Tracking Website</h3> */}
           </div>
           <div className={s.grid_box}>
-            <p>testing</p>
-            <p>testing</p>
-            <p>testing</p>
-            <Link href="#">testing</Link>
+            <p>{isOrderTrackInfo.courierCompany}</p>
+            <p>{isOrderTrackInfo.trackingId}</p>
+            {/* <p>testing</p> */}
+            {/* <Link href="#">testing</Link> */}
           </div>
         </div>
       </div>
